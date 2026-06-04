@@ -87,7 +87,7 @@ export function OurBusinesses() {
         .ob-root { background: #FBFBF9; position: relative; overflow: hidden; }
         .ob-inner {
           max-width: 1760px; margin: 0 auto;
-          padding: clamp(64px, 9vw, 130px) clamp(24px, 4vw, 64px) clamp(80px, 10vw, 160px);
+          padding: clamp(40px, 5vw, 80px) clamp(24px, 4vw, 64px) clamp(80px, 10vw, 160px);
         }
         .ob-lead { max-width: 1400px; margin: 0 auto clamp(56px, 8vw, 120px); }
         .ob-eyebrow {

@@ -176,8 +176,7 @@ export function OurWorld() {
           overflow: hidden;
         }
 
-        /* Stage length tuned so shapes stay active the whole scroll — no dead space */
-        .ow-stage  { height: 200vh; position: relative; }
+        .ow-stage  { height: 108vh; position: relative; }
         .ow-sticky {
           position: sticky; top: 0;
           height: 100vh;
@@ -260,7 +259,7 @@ export function OurWorld() {
         }
 
         @media (max-width: 680px) {
-          .ow-stage { height: 180vh; }
+          .ow-stage { height: 104vh; }
           .ow-cue   { display: none; }
         }
         @media (prefers-reduced-motion: reduce) {
