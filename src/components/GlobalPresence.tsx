@@ -39,7 +39,7 @@ const STATS = [
   { value: '1',   label: 'Vision'     },
 ]
 
-export function Hero2Section() {
+export function GlobalPresence() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
