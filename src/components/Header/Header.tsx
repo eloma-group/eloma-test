@@ -1,19 +1,19 @@
 import { useState, useRef, useEffect } from 'react'
 import { Menu, X, ChevronDown, ChevronRight, Phone } from 'lucide-react'
-import { navItems, loginItems } from '../../data/navItems'
+import { navItems } from '../../data/navItems'
 import { DropdownMenu } from './DropdownMenu'
 import { useScrollY } from '../../hooks/useScrollY'
+import { openSection } from '../../utils/sectionLink'
 
 export function Header() {
   const scrollY = useScrollY()
 
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
-  const [loginOpen, setLoginOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const anyOpen = openDropdown !== null || loginOpen
+  const anyOpen = openDropdown !== null
 
   // Transparent while the first hero section (100vh) is still in view
   const overHero = scrollY < (typeof window !== 'undefined' ? window.innerHeight - 64 : 700)
@@ -51,7 +51,11 @@ export function Header() {
     return () => window.removeEventListener('scroll', check)
   }, [])
 
-  const transparent = (overHero || overServices || overHeroSection) && !anyOpen && !mobileOpen
+  // The homepage hero is light, so the header must stay solid (dark text) over it.
+  const lightHero =
+    typeof window !== 'undefined' && window.location.pathname === '/'
+  const transparent =
+    !lightHero && (overHero || overServices || overHeroSection) && !anyOpen && !mobileOpen
   const textColor = transparent ? '#ffffff' : '#08213C'
 
   const cancelClose = () => {
@@ -62,30 +66,22 @@ export function Header() {
     cancelClose()
     closeTimer.current = setTimeout(() => {
       setOpenDropdown(null)
-      setLoginOpen(false)
     }, 180)
   }
 
   const handleNavEnter = (label: string) => {
     cancelClose()
     setOpenDropdown(label)
-    setLoginOpen(false)
-  }
-
-  const handleLoginEnter = () => {
-    cancelClose()
-    setLoginOpen(true)
-    setOpenDropdown(null)
   }
 
   const closeAll = () => {
     setOpenDropdown(null)
-    setLoginOpen(false)
   }
 
   return (
     <>
       <header
+        className="eg-hd"
         style={{
           position: 'fixed',
           top: 0,
@@ -104,6 +100,7 @@ export function Header() {
         onMouseLeave={scheduleClose}
       >
         <div
+          className="eg-hd-inner"
           style={{
             maxWidth: '1280px',
             width: '100%',
@@ -114,28 +111,19 @@ export function Header() {
             justifyContent: 'space-between',
           }}
         >
-          {/* Logo — icon + wordmark, both with transparent backgrounds */}
-          <a href="/" style={{ flexShrink: 0, lineHeight: 0, display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+          {/* Logo — single Eloma Group email-sign logo */}
+          <a href="/" style={{ flexShrink: 0, lineHeight: 0, display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
             <img
-              src="/images/Final Eloma Group icon white.png"
-              alt=""
-              aria-hidden
-              style={{ height: '44px', width: 'auto' }}
-            />
-            <img
-              src="/images/eloma-wordmark-t.png"
+              className="eg-hd-logo"
+              src="/images/Eloma Group Email Sign Logo -01.png"
               alt="Eloma Group"
-              style={{
-                height: '30px', width: 'auto',
-                filter: transparent ? 'brightness(0) invert(1)' : 'none',
-                transition: 'filter 0.3s ease',
-              }}
+              style={{ height: '40px', width: 'auto' }}
             />
           </a>
 
           {/* Desktop Nav */}
           <nav
-            className="bivry-desktop-nav"
+            className="eg-desktop-nav"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -151,6 +139,7 @@ export function Header() {
               >
                 <a
                   href={item.href ?? '#'}
+                  className="eg-hd-link"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -188,6 +177,7 @@ export function Header() {
             <a
               href="tel:1800054555"
               onMouseEnter={closeAll}
+              className="eg-hd-tel"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -208,90 +198,12 @@ export function Header() {
             </a>
           </nav>
 
-          {/* Right side - Login + Hamburger */}
+          {/* Right side - Hamburger (mobile) */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            {/* Login dropdown - desktop */}
-            <div
-              className="bivry-desktop-nav"
-              style={{ position: 'relative' }}
-              onMouseEnter={handleLoginEnter}
-            >
-              <button
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '5px',
-                  padding: '8px 18px',
-                  fontSize: '14.5px',
-                  fontWeight: 600,
-                  color: '#ffffff',
-                  background: '#08213C',
-                  border: 'none',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  transition: 'background 0.25s ease, color 0.25s ease',
-                  backdropFilter: 'blur(4px)',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                Login
-                <ChevronDown
-                  size={12}
-                  style={{
-                    transition: 'transform 0.2s ease',
-                    transform: loginOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                  }}
-                />
-              </button>
-
-              {/* Small login dropdown (not full-width) */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 'calc(100% + 8px)',
-                  right: 0,
-                  minWidth: '180px',
-                  background: '#ffffff',
-                  border: '1px solid #E5E5E5',
-                  borderRadius: '10px',
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.10)',
-                  padding: '8px 0',
-                  opacity: loginOpen ? 1 : 0,
-                  pointerEvents: loginOpen ? 'auto' : 'none',
-                  transform: loginOpen ? 'translateY(0)' : 'translateY(-6px)',
-                  transition: 'opacity 0.18s ease, transform 0.18s ease',
-                  zIndex: 100,
-                }}
-              >
-                {loginItems.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    style={{
-                      display: 'block',
-                      padding: '12px 20px',
-                      fontSize: '14px',
-                      fontWeight: 400,
-                      color: '#111111',
-                      transition: 'background 0.15s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      ;(e.currentTarget as HTMLElement).style.background = '#F7F7F7'
-                    }}
-                    onMouseLeave={(e) => {
-                      ;(e.currentTarget as HTMLElement).style.background = 'transparent'
-                    }}
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-
             {/* Hamburger - mobile */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="bivry-mobile-only"
+              className="eg-mobile-only"
               style={{
                 background: 'none',
                 border: 'none',
@@ -401,14 +313,12 @@ export function Header() {
                               href={child.href}
                               onClick={(e) => {
                                 setMobileOpen(false)
-                                if (child.serviceId) {
+                                if (child.companyId) {
                                   e.preventDefault()
-                                  if (window.location.pathname !== '/') {
-                                    sessionStorage.setItem('pendingService', child.serviceId)
-                                    window.location.href = '/'
-                                  } else {
-                                    window.dispatchEvent(new CustomEvent('bivry:service', { detail: { serviceId: child.serviceId } }))
-                                  }
+                                  openSection('company', child.companyId)
+                                } else if (child.businessId) {
+                                  e.preventDefault()
+                                  openSection('business', child.businessId)
                                 }
                               }}
                               style={{
@@ -443,45 +353,37 @@ export function Header() {
               )}
             </div>
           ))}
-
-          <div
-            style={{
-              marginTop: '28px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '12px',
-            }}
-          >
-            {loginItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                style={{
-                  display: 'block',
-                  padding: '14px 0',
-                  textAlign: 'center',
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  color: '#ffffff',
-                  background: '#08213C',
-                  borderRadius: '8px',
-                }}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
 
       <style>{`
         @media (max-width: 900px) {
-          .bivry-desktop-nav { display: none !important; }
-          .bivry-mobile-only { display: flex !important; }
+          .eg-desktop-nav { display: none !important; }
+          .eg-mobile-only { display: flex !important; }
         }
         @media (min-width: 901px) {
-          .bivry-mobile-only { display: none !important; }
-          .bivry-desktop-nav { display: flex !important; }
+          .eg-mobile-only { display: none !important; }
+          .eg-desktop-nav { display: flex !important; }
+        }
+
+        /* large screens: bigger logo + nav text + taller bar */
+        @media (min-width: 1920px) {
+          .eg-hd { height: 78px !important; }
+          .eg-hd-inner { max-width: 1600px !important; }
+          .eg-hd-logo { height: 58px !important; }
+          .eg-hd-word { font-size: 24px !important; }
+          .eg-hd-link { height: 78px !important; font-size: 16.5px !important; padding: 0 18px !important; }
+          .eg-hd-tel  { height: 78px !important; font-size: 16px !important; }
+          .eg-hd-dd   { font-size: 16.5px !important; }
+        }
+        @media (min-width: 2560px) {
+          .eg-hd { height: 92px !important; }
+          .eg-hd-inner { max-width: 2000px !important; }
+          .eg-hd-logo { height: 70px !important; }
+          .eg-hd-word { font-size: 30px !important; }
+          .eg-hd-link { height: 92px !important; font-size: 20px !important; padding: 0 24px !important; }
+          .eg-hd-tel  { height: 92px !important; font-size: 19px !important; }
+          .eg-hd-dd   { font-size: 20px !important; }
         }
       `}</style>
     </>

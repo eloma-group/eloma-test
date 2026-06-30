@@ -1,4 +1,5 @@
 import type { NavColumn } from '../../data/navItems'
+import { openSection } from '../../utils/sectionLink'
 
 const NAVY  = '#08213C'
 const GREEN = '#3CB98C'
@@ -83,15 +84,16 @@ export function DropdownMenu({ columns, isOpen, onMouseEnter, onMouseLeave }: Dr
                 >
                   <a
                     href={item.href}
-                    onClick={item.serviceId ? (e) => {
-                      e.preventDefault()
-                      if (window.location.pathname !== '/') {
-                        sessionStorage.setItem('pendingService', item.serviceId!)
-                        window.location.href = '/'
-                      } else {
-                        window.dispatchEvent(new CustomEvent('bivry:service', { detail: { serviceId: item.serviceId } }))
+                    className="eg-hd-dd"
+                    onClick={(e) => {
+                      if (item.companyId) {
+                        e.preventDefault()
+                        openSection('company', item.companyId)
+                      } else if (item.businessId) {
+                        e.preventDefault()
+                        openSection('business', item.businessId)
                       }
-                    } : undefined}
+                    }}
                     style={{
                       fontSize: '15px',
                       fontWeight: 400,

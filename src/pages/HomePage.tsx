@@ -1,29 +1,29 @@
-// import { SplashScreen } from '../components/SplashScreen'
-import { Header } from '../components/Header/Header'
-import { GlobalPresence } from '../components/GlobalPresence'
-import { Hero3Section } from '../components/Hero3Section'
-// import { Hero4Section } from '../components/Hero4Section'
-import { OurBusinesses } from '../components/OurBusinesses'
-import { OurCompanies } from '../components/OurCompanies'
-// import { Testimonials } from '../components/Testimonials'
-import { FooterCTA } from '../components/FooterCTA'
-import { Footer } from '../components/Footer'
+import { Header }        from '../components/Header/Header'
+import { FlyFooter }     from '../components/FlyFooter'
+import { ConstructionNotice } from '../components/ConstructionNotice'
+import { EgHero }         from '../components/home/EgHero'
+import { EgConnected }    from '../components/home/EgConnected'
+import { EgBusinesses }   from '../components/home/EgBusinesses'
+import { EgCompanies }    from '../components/home/EgCompanies'
+import { EgAbout }        from '../components/home/EgAbout'
+import { EgWhyExist }     from '../components/home/EgWhyExist'
+import { EgCapabilities } from '../components/home/EgCapabilities'
 
 export function HomePage() {
   return (
-    <>
-      {/* <SplashScreen /> */}
+    <div style={{ overflowX: 'hidden' }}>
+      <ConstructionNotice />
       <Header />
       <main>
-        <Hero3Section />
-        {/* <Hero4Section /> */}
-        <OurBusinesses />
-        <OurCompanies />
-        {/* <Testimonials /> */}
-        <GlobalPresence />
+        <EgHero />
+        <EgConnected />
+        <EgBusinesses />
+        <EgCompanies />
+        <EgAbout />
+        <EgWhyExist />
+        <EgCapabilities />
       </main>
-      <FooterCTA />
-      <Footer />
-    </>
+      <FlyFooter />
+    </div>
   )
 }

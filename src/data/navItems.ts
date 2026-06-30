@@ -1,7 +1,8 @@
 export interface NavItem {
   label: string
   href: string
-  serviceId?: string
+  companyId?: string
+  businessId?: string
 }
 
 export interface NavColumn {
@@ -36,21 +37,21 @@ export const navItems: NavGroup[] = [
       {
         heading: 'Business',
         items: [
-          { label: 'Call Centre',       href: '/businesses/call-centre'       },
-          { label: 'Imports',           href: '/businesses/imports'           },
-          { label: 'IT Infrastructure', href: '/businesses/it-infrastructure' },
-          { label: 'Supply Chain',      href: '/businesses/supply-chain'      },
-          { label: 'Travel',            href: '/businesses/travel'            },
+          { label: 'Call Centre',       href: '/#our-businesses', businessId: 'call-centre'       },
+          { label: 'Imports',           href: '/#our-businesses', businessId: 'imports'           },
+          { label: 'IT Infrastructure', href: '/#our-businesses', businessId: 'it-infrastructure' },
+          { label: 'Supply Chain',      href: '/#our-businesses', businessId: 'supply-chain'      },
+          { label: 'Travel',            href: '/#our-businesses', businessId: 'travel'            },
         ],
       },
       {
         heading: 'Companies',
         items: [
-          { label: 'EG Digital Australia', href: '/companies/eg-digital'     },
-          { label: 'EG Foundations',       href: '/companies/eg-foundations' },
-          { label: 'EG Imports',           href: '/companies/eg-imports'     },
-          { label: 'EG Transport',         href: '/companies/eg-transport'   },
-          { label: 'EG Travels',           href: '/companies/eg-travels'     },
+          { label: 'EG Digital Australia', href: '/#our-companies', companyId: 'digital'     },
+          { label: 'EG Foundations',       href: '/#our-companies', companyId: 'foundations' },
+          { label: 'EG Imports',           href: '/#our-companies', companyId: 'imports'     },
+          { label: 'EG Transport',         href: '/#our-companies', companyId: 'transport'   },
+          { label: 'EG Travels',           href: '/#our-companies', companyId: 'travels'     },
         ],
       },
     ],
@@ -61,9 +62,9 @@ export const navItems: NavGroup[] = [
       {
         heading: 'Sustainability',
         items: [
-          { label: 'Environmental Responsibility', href: '/sustainability/environment' },
-          { label: 'Sustainability Initiatives',   href: '/sustainability/initiatives' },
-          { label: 'Reports & Updates',            href: '/sustainability/reports'     },
+          { label: 'Environmental Responsibility', href: '/sustainability' },
+          { label: 'Sustainability Initiatives',   href: '/sustainability' },
+          { label: 'Reports & Updates',            href: '/sustainability' },
         ],
       },
     ],

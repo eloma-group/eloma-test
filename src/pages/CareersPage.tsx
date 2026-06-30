@@ -1,435 +1,134 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
-import {
-  MapPin, Clock, Briefcase,
-  TrendingUp, Shield, Heart, Zap, Users, Award,
-  Coffee, Truck, ChevronRight,
-} from 'lucide-react'
+import { ArrowUpRight, Rocket, Users, GraduationCap, Globe2, Scale, Heart } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import { Header } from '../components/Header/Header'
-import { Footer } from '../components/Footer'
-import { InnerHero, NAVY, GREEN, CREAM, ease } from '../components/InnerHero'
+import { FlyFooter } from '../components/FlyFooter'
+import { PageHero, PageCTA, Eyebrow, NAVY, GREEN, MUTED, EASE } from '../components/PageKit'
 
-/* ── Job listings ─────────────────────────────────────── */
-type Job = {
-  title: string
-  dept: string
-  type: 'Full-Time' | 'Part-Time' | 'Contract'
-  location: string
-  tags: string[]
-}
-
-const JOBS: Job[] = [
-  { title: 'Head of Freight Operations',        dept: 'Operations',           type: 'Full-Time', location: 'Melbourne, VIC',    tags: ['Leadership', 'Strategy', 'Fleet Management']     },
-  { title: 'Senior B-Double Truck Driver',      dept: 'Transport',            type: 'Full-Time', location: 'Multiple Depots',   tags: ['HC Licence', 'Interstate', 'Night Runs']         },
-  { title: 'Fleet & Logistics Coordinator',     dept: 'Fleet',                type: 'Full-Time', location: 'Dandenong, VIC',    tags: ['Routing', 'TMS', 'Scheduling']                   },
-  { title: 'Warehouse Supervisor',              dept: 'Warehousing',          type: 'Full-Time', location: 'Laverton North, VIC', tags: ['HACCP', 'Forklift Licence', 'Pick & Pack']     },
-  { title: 'Customer Service & Dispatch',       dept: 'Customer Experience',  type: 'Full-Time', location: 'Melbourne, VIC',    tags: ['CRM', 'Booking Systems', 'Communication']        },
-  { title: 'Business Development Manager',      dept: 'Sales',                type: 'Full-Time', location: 'Melbourne, VIC',    tags: ['B2B', 'Freight Industry', 'Hunter Role']         },
-  { title: 'WHS & Compliance Officer',          dept: 'Safety',               type: 'Full-Time', location: 'Melbourne, VIC',    tags: ['Chain of Responsibility', 'Auditing', 'CoR']     },
-  { title: 'Route Planner / Load Optimiser',    dept: 'Operations',           type: 'Full-Time', location: 'Dandenong, VIC',    tags: ['Load Planning', 'GPS', 'Data Analysis']          },
-  { title: 'Refrigerated Transport Driver',     dept: 'Transport',            type: 'Full-Time', location: 'Multiple Depots',   tags: ['Cold Chain', 'MC/HC Licence', 'Food Grade']      },
-  { title: 'Freight Account Manager',           dept: 'Sales',                type: 'Full-Time', location: 'Melbourne, VIC',    tags: ['Account Growth', 'Retention', 'Reporting']       },
-  { title: 'Depot Operations Coordinator',      dept: 'Operations',           type: 'Contract',  location: 'Truganina, VIC',    tags: ['Inbound/Outbound', 'Stocktake', 'Manifesting']   },
-  { title: 'Customs & Documentation Specialist',dept: 'International',        type: 'Full-Time', location: 'Melbourne, VIC',    tags: ['Import/Export', 'Customs Clearance', 'SAP']      },
+const PERKS = [
+  { Icon: Rocket,        title: 'Real ownership', text: 'Work on things that ship and matter — across a group that moves fast and trusts its people.' },
+  { Icon: Globe2,        title: 'Global exposure', text: 'Collaborate across eight markets and five companies, from technology to logistics to travel.' },
+  { Icon: GraduationCap, title: 'Grow with us', text: 'Mentorship, learning budgets and clear paths — we invest in people for the long term.' },
+  { Icon: Scale,         title: 'Fair & flexible', text: 'Balanced ways of working, fair pay and a culture that respects your time and your craft.' },
+  { Icon: Users,         title: 'One team', text: 'Independent companies, one shared standard — supportive, ambitious and down to earth.' },
+  { Icon: Heart,         title: 'Purpose-driven', text: 'Build a business ecosystem designed to create lasting, responsible impact.' },
 ]
 
-const DEPTS = ['All', 'Operations', 'Transport', 'Fleet', 'Warehousing', 'Customer Experience', 'Sales', 'Safety', 'International']
-
-const DEPT_COLOR: Record<string, string> = {
-  Operations: NAVY, Transport: '#0284C7', Fleet: '#F5A623',
-  Warehousing: '#9B59B6', 'Customer Experience': GREEN,
-  Sales: '#E67E22', Safety: '#E74C3C', International: '#2C7A7B',
-}
-
-/* ── Benefits ─────────────────────────────────────────── */
-const BENEFITS = [
-  { Icon: TrendingUp, title: 'Career Growth',        desc: 'Clear pathways from driver to supervisor to manager - we promote from within first.',   span: 'wide' },
-  { Icon: Shield,     title: 'Safety First Culture',  desc: 'Industry-leading WHS practices. Every team member goes home safe, every shift.',          span: 'normal' },
-  { Icon: Heart,      title: 'Health & Wellbeing',    desc: 'EAP access, mental health support, and a workplace that genuinely looks after its people.', span: 'normal' },
-  { Icon: Zap,        title: 'Competitive Pay',        desc: 'Above-award rates, penalty loadings, and annual reviews tied to performance.',             span: 'normal' },
-  { Icon: Users,      title: 'Diverse & Inclusive',   desc: 'WEPs signatory. We actively support gender equity and cultural diversity across all roles.', span: 'normal' },
-  { Icon: Award,      title: 'Recognised Excellence', desc: 'Annual awards, peer recognition programs, and merit bonuses for standout performers.',      span: 'wide' },
-  { Icon: Coffee,     title: 'Great Team Culture',    desc: 'BBQs, team days, and a tight-knit crew that looks after each other on and off the road.',  span: 'normal' },
-  { Icon: Truck,      title: 'Modern Fleet',          desc: 'Late-model vehicles, full GPS, and maintained equipment - you never work with old gear.',   span: 'normal' },
+const ROLES = [
+  { title: 'Software Engineer', co: 'EG Digital', loc: 'Melbourne · Hybrid', type: 'Full-time' },
+  { title: 'Customer Experience Lead', co: 'Call Center', loc: 'Remote · APAC', type: 'Full-time' },
+  { title: 'Supply Chain Analyst', co: 'EG Imports', loc: 'Sydney', type: 'Full-time' },
+  { title: 'IT Infrastructure Engineer', co: 'EG Foundations', loc: 'Melbourne', type: 'Full-time' },
+  { title: 'Travel Operations Specialist', co: 'EG Travels', loc: 'Brisbane', type: 'Full-time' },
+  { title: 'Brand & Growth Marketer', co: 'EG Digital', loc: 'Remote · Australia', type: 'Contract' },
 ]
 
-/* ── Benefit Card ────────────────────────────────────── */
-function BenefitCard({ b, i }: { b: typeof BENEFITS[0]; i: number }) {
-  const [hov, setHov] = useState(false)
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }} transition={{ duration: 0.55, delay: i * 0.06, ease }}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      className={b.span === 'wide' ? 'benefit-wide' : ''}
-      style={{
-        background: hov
-          ? `linear-gradient(140deg, #fff 55%, ${GREEN}0C 100%)`
-          : '#fff',
-        borderRadius: 20,
-        padding: 'clamp(24px,2.5vw,32px)',
-        border: `1.5px solid ${hov ? GREEN + '55' : 'rgba(8,33,60,0.07)'}`,
-        gridColumn: b.span === 'wide' ? 'span 2' : 'span 1',
-        display: 'flex', flexDirection: 'column', gap: 0,
-        cursor: 'default', position: 'relative', overflow: 'hidden',
-        transform: hov ? 'translateY(-8px) scale(1.018)' : 'translateY(0) scale(1)',
-        boxShadow: hov
-          ? `0 28px 56px rgba(60,185,140,0.20), 0 8px 22px rgba(0,0,0,0.07)`
-          : '0 2px 8px rgba(8,33,60,0.04)',
-        transition: 'all 0.38s cubic-bezier(0.34,1.56,0.64,1)',
-      }}
-    >
-      {/* Left edge accent bar */}
-      <div style={{
-        position: 'absolute', left: 0, top: 0,
-        width: hov ? 4 : 0,
-        height: '100%',
-        background: `linear-gradient(to bottom, ${GREEN}, ${GREEN}30)`,
-        borderRadius: '20px 0 0 20px',
-        transition: 'width 0.32s ease',
-      }} />
-
-      {/* Icon */}
-      <div style={{
-        width: 50, height: 50, borderRadius: 14, marginBottom: 18,
-        background: hov ? `${GREEN}28` : `${GREEN}14`,
-        display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-        transform: hov ? 'scale(1.2) rotate(8deg)' : 'scale(1) rotate(0deg)',
-        boxShadow: hov ? `0 8px 22px ${GREEN}45` : 'none',
-        transition: 'all 0.38s cubic-bezier(0.34,1.56,0.64,1)',
-      }}>
-        <b.Icon size={22} strokeWidth={1.8} color={GREEN} />
-      </div>
-
-      {/* Title */}
-      <div style={{
-        fontSize: 'clamp(15px,1.3vw,18px)', fontWeight: 800,
-        color: hov ? GREEN : NAVY,
-        letterSpacing: '-0.02em', marginBottom: 8,
-        transition: 'color 0.25s ease',
-      }}>{b.title}</div>
-
-      {/* Growing divider */}
-      <div style={{
-        height: 2, borderRadius: 2, marginBottom: 12,
-        width: hov ? 40 : 0,
-        background: `linear-gradient(90deg, ${GREEN}, ${GREEN}30)`,
-        transition: 'width 0.38s cubic-bezier(0.34,1.56,0.64,1)',
-      }} />
-
-      <p style={{ fontSize: 'clamp(12px,0.9vw,13.5px)', color: 'rgba(8,33,60,0.45)', lineHeight: 1.7, margin: 0 }}>{b.desc}</p>
-    </motion.div>
-  )
-}
-
-/* ── Job Card ─────────────────────────────────────────── */
-function JobCard({ job, i }: { job: Job; i: number }) {
-  const [hov, setHov] = useState(false)
-  const color = DEPT_COLOR[job.dept] || NAVY
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }} transition={{ duration: 0.55, delay: i * 0.05, ease }}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      style={{
-        background: hov
-          ? `linear-gradient(160deg, #fff 60%, ${color}0A 100%)`
-          : '#fff',
-        borderRadius: 20,
-        border: `1.5px solid ${hov ? color + '55' : 'rgba(8,33,60,0.07)'}`,
-        overflow: 'hidden', display: 'flex', flexDirection: 'column',
-        transform: hov ? 'translateY(-8px) scale(1.018)' : 'translateY(0) scale(1)',
-        boxShadow: hov
-          ? `0 28px 56px ${color}30, 0 8px 22px rgba(0,0,0,0.08)`
-          : '0 2px 8px rgba(8,33,60,0.04)',
-        transition: 'all 0.38s cubic-bezier(0.34,1.56,0.64,1)',
-        cursor: 'pointer',
-      }}
-    >
-      {/* Top accent bar — grows + glows */}
-      <div style={{
-        height: hov ? 5 : 3, background: color, flexShrink: 0,
-        boxShadow: hov ? `0 3px 14px ${color}80` : 'none',
-        transition: 'height 0.3s ease, box-shadow 0.3s ease',
-      }} />
-
-      <div style={{ padding: 'clamp(20px,2vw,28px)', flex: 1, display: 'flex', flexDirection: 'column' }}>
-
-        {/* Dept pill — fills solid on hover */}
-        <div style={{ marginBottom: 14 }}>
-          <span style={{
-            fontSize: 9, fontWeight: 800, letterSpacing: '1.5px', textTransform: 'uppercase',
-            color: hov ? '#fff' : color,
-            background: hov ? color : `${color}12`,
-            borderRadius: 100, padding: '4px 12px',
-            border: `1px solid ${hov ? color : color + '28'}`,
-            boxShadow: hov ? `0 4px 12px ${color}45` : 'none',
-            transition: 'all 0.28s ease',
-            display: 'inline-block',
-          }}>{job.dept}</span>
-        </div>
-
-        {/* Title */}
-        <h3 style={{
-          fontSize: 'clamp(15px,1.3vw,18px)', fontWeight: 800,
-          color: hov ? color : NAVY,
-          letterSpacing: '-0.025em', lineHeight: 1.25, margin: '0 0 10px', flex: 1,
-          transition: 'color 0.25s ease',
-        }}>{job.title}</h3>
-
-        {/* Growing divider */}
-        <div style={{
-          height: 2, borderRadius: 2, marginBottom: 14,
-          width: hov ? 40 : 20,
-          background: color, opacity: hov ? 0.7 : 0.25,
-          transition: 'width 0.35s ease, opacity 0.3s ease',
-        }} />
-
-        {/* Meta */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 16 }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11, color: 'rgba(8,33,60,0.45)', fontWeight: 600 }}>
-            <MapPin size={11} strokeWidth={2} style={{ color: GREEN }} />{job.location}
-          </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11, color: 'rgba(8,33,60,0.45)', fontWeight: 600 }}>
-            <Clock size={11} strokeWidth={2} style={{ color: GREEN }} />{job.type}
-          </span>
-        </div>
-
-        {/* Tags — tint to dept color on hover */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 22 }}>
-          {job.tags.map(tag => (
-            <span key={tag} style={{
-              fontSize: 10, fontWeight: 600,
-              color: hov ? color : 'rgba(8,33,60,0.5)',
-              background: hov ? `${color}10` : 'rgba(8,33,60,0.05)',
-              borderRadius: 6, padding: '3px 9px',
-              border: `1px solid ${hov ? color + '30' : 'rgba(8,33,60,0.08)'}`,
-              transition: 'all 0.22s ease',
-            }}>{tag}</span>
-          ))}
-        </div>
-
-        {/* Apply — becomes a pill button on hover */}
-        <a href="mailto:connect@bivry.com.au" style={{
-          display: 'inline-flex', alignItems: 'center', gap: 6,
-          fontSize: 12, fontWeight: 800, color: '#fff',
-          textDecoration: 'none', letterSpacing: '0.3px',
-          background: hov ? color : `${color}22`,
-          padding: '9px 18px', borderRadius: 100,
-          boxShadow: hov ? `0 6px 18px ${color}45` : 'none',
-          alignSelf: 'flex-start',
-          transition: 'all 0.28s ease',
-        }}>
-          <span style={{ color: hov ? '#fff' : color, transition: 'color 0.28s ease' }}>Apply Now</span>
-          <ChevronRight size={13} strokeWidth={2.5} color={hov ? '#fff' : color} style={{ transition: 'color 0.28s ease' }} />
-        </a>
-      </div>
-    </motion.div>
-  )
-}
-
-/* ── Page ─────────────────────────────────────────────── */
 export function CareersPage() {
-  const [activeDept, setActiveDept] = useState('All')
-
-  const filtered = activeDept === 'All' ? JOBS : JOBS.filter(j => j.dept === activeDept)
-
+  const navigate = useNavigate()
   return (
-    <div style={{ background: CREAM, overflowX: 'hidden' }}>
+    <div style={{ overflowX: 'hidden', background: '#fff' }}>
       <Header />
-      <main>
 
-        {/* ── HERO ── */}
-        <InnerHero
-          badge="Careers"
-          line1="JOIN"
-          line2="OUR TEAM."
-          greenLine={2}
-          description="Drive Australia's freight forward. We're hiring passionate people across operations, transport, warehousing, and everything in between."
-          meta={[
-            { label: 'Open Roles',  value: `${JOBS.length} Positions`     },
-            { label: 'Locations',   value: 'Melbourne · Multi-Depot'       },
-            { label: 'Employment',  value: 'Full-Time, Contract'           },
-            { label: 'Apply via',   value: 'connect@bivry.com.au'         },
-          ]}
-        />
+      <PageHero
+        badge="Careers at Eloma"
+        line1="Build your"
+        line2="future here."
+        description="Join a multi-industry group where ambitious people build real businesses across technology, customer experience, logistics, travel and security — united by one vision."
+        stats={[
+          { n: '5', label: 'Companies hiring' },
+          { n: '8', label: 'Global markets' },
+          { n: '4', label: 'Industry verticals' },
+          { n: '∞', label: 'Room to grow' },
+        ]}
+      />
 
-        {/* ── OPEN ROLES ── */}
-        <section style={{ background: '#fff', padding: 'clamp(64px,8vw,100px) clamp(24px,5vw,80px)' }}>
-          <div style={{ maxWidth: 1760, margin: '0 auto' }} className="roles-inner">
-
-            {/* Header */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.65, ease }}
-              style={{ marginBottom: 'clamp(40px,5vw,56px)' }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 14 }}>
-                <div style={{ width: 3, height: 14, background: GREEN, borderRadius: 2 }} />
-                <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '2px', textTransform: 'uppercase', color: 'rgba(8,33,60,0.38)' }}>Open Positions</span>
-              </div>
-              <h2 style={{ fontSize: 'clamp(36px,5vw,72px)', fontWeight: 900, color: NAVY, letterSpacing: '-0.04em', lineHeight: 0.95, margin: '0 0 20px', textTransform: 'uppercase' }}>
-                FIND YOUR <span style={{ color: GREEN }}>ROLE.</span>
-              </h2>
-              <p style={{ fontSize: 'clamp(14px,1.1vw,16px)', color: 'rgba(8,33,60,0.5)', lineHeight: 1.75, maxWidth: 520, margin: 0 }}>
-                {JOBS.length} positions across operations, transport, warehousing, sales, and safety. All roles are based in Victoria with some interstate travel.
-              </p>
-            </motion.div>
-
-            {/* Dept filter */}
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 40 }}>
-              {DEPTS.map(d => {
-                const isActive = d === activeDept
-                const col = DEPT_COLOR[d] || NAVY
-                return (
-                  <button key={d} onClick={() => setActiveDept(d)}
-                    onMouseEnter={e => {
-                      if (!isActive) {
-                        const el = e.currentTarget as HTMLElement
-                        const c = d === 'All' ? NAVY : col
-                        el.style.borderColor = c
-                        el.style.color = c
-                        el.style.background = `${c}10`
-                        el.style.transform = 'translateY(-2px) scale(1.04)'
-                        el.style.boxShadow = `0 6px 18px ${c}30`
-                      }
-                    }}
-                    onMouseLeave={e => {
-                      if (!isActive) {
-                        const el = e.currentTarget as HTMLElement
-                        el.style.borderColor = 'rgba(8,33,60,0.12)'
-                        el.style.color = 'rgba(8,33,60,0.55)'
-                        el.style.background = 'transparent'
-                        el.style.transform = 'translateY(0) scale(1)'
-                        el.style.boxShadow = 'none'
-                      }
-                    }}
-                    style={{
-                      padding: '10px 18px', borderRadius: 100, fontSize: 12, fontWeight: 700,
-                      color: isActive ? '#fff' : 'rgba(8,33,60,0.55)',
-                      background: isActive ? (d === 'All' ? NAVY : col) : 'transparent',
-                      border: `1.5px solid ${isActive ? (d === 'All' ? NAVY : col) : 'rgba(8,33,60,0.12)'}`,
-                      boxShadow: isActive ? `0 6px 18px ${d === 'All' ? NAVY : col}35` : 'none',
-                      cursor: 'pointer', transition: 'all 0.22s cubic-bezier(0.34,1.56,0.64,1)',
-                      minHeight: 40, letterSpacing: '0.3px',
-                    }}>
-                    {d}{d === 'All' ? '' : ` (${JOBS.filter(j => j.dept === d).length})`}
-                  </button>
-                )
-              })}
-            </div>
-
-            {/* Jobs grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }} className="jobs-grid">
-              {filtered.map((job, i) => <JobCard key={job.title} job={job} i={i} />)}
-            </div>
-
-            {/* No results */}
-            {filtered.length === 0 && (
-              <div style={{ textAlign: 'center', padding: '64px 0', color: 'rgba(8,33,60,0.35)', fontSize: 15 }}>
-                No openings in this department right now - check back soon.
-              </div>
-            )}
+      {/* ── Why join (perks) ── */}
+      <section style={{ background: 'linear-gradient(180deg,#ffffff,#f3faf7)', padding: 'clamp(64px,8vw,120px) clamp(24px,5vw,80px)' }}>
+        <div style={{ maxWidth: 1760, margin: '0 auto' }}>
+          <div style={{ marginBottom: 'clamp(36px,5vw,56px)' }}>
+            <Eyebrow label="Why Eloma" />
+            <h2 style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(28px,4vw,52px)', fontWeight: 700, color: NAVY, letterSpacing: '-0.03em', lineHeight: 1.05, margin: '16px 0 0' }}>
+              More than a job — a <span style={{ color: GREEN }}>place to grow.</span>
+            </h2>
           </div>
-        </section>
-
-        {/* ── LIFE AT BIVRY ── */}
-        <section style={{ background: CREAM, padding: 'clamp(64px,8vw,100px) clamp(24px,5vw,80px)' }}>
-          <div style={{ maxWidth: 1760, margin: '0 auto' }} className="life-inner">
-
-            {/* Header row */}
-            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 32, marginBottom: 'clamp(40px,5vw,60px)', flexWrap: 'wrap' }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 14 }}>
-                  <div style={{ width: 3, height: 14, background: GREEN, borderRadius: 2 }} />
-                  <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '2px', textTransform: 'uppercase', color: 'rgba(8,33,60,0.38)' }}>Life at BIVRY</span>
-                </div>
-                <h2 style={{ fontSize: 'clamp(36px,5vw,72px)', fontWeight: 900, color: NAVY, letterSpacing: '-0.04em', lineHeight: 0.95, margin: 0, textTransform: 'uppercase' }}>
-                  WHY WORK <span style={{ color: GREEN }}>WITH US.</span>
-                </h2>
-              </div>
-              <p style={{ fontSize: 'clamp(14px,1.1vw,16px)', color: 'rgba(8,33,60,0.5)', lineHeight: 1.75, maxWidth: 420, margin: 0 }}>
-                We're not just a freight company. We're a team of people who take pride in moving Australia's goods safely, on time, every time.
-              </p>
-            </div>
-
-            {/* Benefits bento */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 16 }} className="benefits-grid">
-              {BENEFITS.map((b, i) => <BenefitCard key={b.title} b={b} i={i} />)}
-            </div>
-          </div>
-        </section>
-
-        {/* ── OPEN APPLICATION BANNER ── */}
-        <section style={{ background: NAVY, padding: 'clamp(64px,8vw,100px) clamp(24px,5vw,80px)', position: 'relative', overflow: 'hidden' }}>
-          {/* dot grid */}
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', top: -120, right: -120, width: 500, height: 500, borderRadius: '50%', background: `radial-gradient(circle, ${GREEN}0D 0%, transparent 65%)`, pointerEvents: 'none' }} />
-
-          <div style={{ maxWidth: 1760, margin: '0 auto', position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40, flexWrap: 'wrap' }} className="banner-inner">
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 16 }}>
-                <div style={{ width: 3, height: 14, background: GREEN, borderRadius: 2 }} />
-                <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '2px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>Open Application</span>
-              </div>
-              <h2 style={{ fontSize: 'clamp(28px,4vw,56px)', fontWeight: 900, color: '#fff', letterSpacing: '-0.04em', lineHeight: 1.05, margin: '0 0 14px', textTransform: 'uppercase' }}>
-                DON'T SEE<br />
-                <span style={{ color: GREEN }}>YOUR ROLE?</span>
-              </h2>
-              <p style={{ fontSize: 'clamp(14px,1.1vw,16px)', color: 'rgba(255,255,255,0.45)', lineHeight: 1.75, maxWidth: 480, margin: 0 }}>
-                We're always growing. Send us your CV and a short note about what you bring to the table - we review every application personally.
-              </p>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 14, flexShrink: 0 }}>
-              <a href="mailto:connect@bivry.com.au" style={{
-                display: 'inline-flex', alignItems: 'center', gap: 10,
-                background: GREEN, color: '#fff',
-                borderRadius: 100, padding: 'clamp(14px,1.5vw,18px) clamp(28px,3vw,40px)',
-                fontSize: 'clamp(13px,1vw,15px)', fontWeight: 700, textDecoration: 'none',
-                transition: 'all 0.22s ease', minHeight: 52, whiteSpace: 'nowrap',
-              }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#2da87d'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = GREEN; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)' }}
+          <div className="cr-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+            {PERKS.map((p, i) => (
+              <motion.div key={p.title} className="cr-card"
+                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.6, delay: (i % 3) * 0.08, ease: EASE }}
               >
-                <Briefcase size={15} strokeWidth={2} /> Send Your CV
-              </a>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center' }}>
-                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)' }}>or call</span>
-                <a href="tel:1800054555" style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.55)', textDecoration: 'none', transition: 'color 0.15s ease' }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = GREEN }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.55)' }}
-                >
-                  1800 054 555
-                </a>
-              </div>
-            </div>
+                <span className="cr-ic"><p.Icon size={22} /></span>
+                <h3 className="cr-title">{p.title}</h3>
+                <p className="cr-text">{p.text}</p>
+                <div className="cr-bar" />
+              </motion.div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-      </main>
-      <Footer />
+      {/* ── Open roles ── */}
+      <section style={{ background: '#fff', padding: 'clamp(64px,8vw,120px) clamp(24px,5vw,80px)' }}>
+        <div style={{ maxWidth: 1760, margin: '0 auto' }}>
+          <div style={{ marginBottom: 'clamp(28px,4vw,44px)' }}>
+            <Eyebrow label="Open positions" />
+            <h2 style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(28px,4vw,52px)', fontWeight: 700, color: NAVY, letterSpacing: '-0.03em', lineHeight: 1.05, margin: '16px 0 0' }}>
+              Find your <span style={{ color: GREEN }}>role.</span>
+            </h2>
+          </div>
+          <div style={{ borderTop: '1px solid rgba(26,43,60,0.1)' }}>
+            {ROLES.map((r, i) => (
+              <motion.button key={r.title} className="cr-role" onClick={() => navigate('/contact')}
+                initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.05, ease: EASE }}
+              >
+                <div className="cr-role-l">
+                  <span className="cr-role-title">{r.title}</span>
+                  <span className="cr-role-co">{r.co}</span>
+                </div>
+                <div className="cr-role-r">
+                  <span className="cr-role-meta">{r.loc}</span>
+                  <span className="cr-role-tag">{r.type}</span>
+                  <span className="cr-role-arrow"><ArrowUpRight size={18} strokeWidth={2.4} /></span>
+                </div>
+              </motion.button>
+            ))}
+          </div>
+          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, color: MUTED, marginTop: 28 }}>
+            Don't see your role? We're always meeting great people — <a href="/contact" style={{ color: GREEN, fontWeight: 600, textDecoration: 'none' }}>introduce yourself →</a>
+          </p>
+        </div>
+      </section>
+
+      <PageCTA line1="Ready to" line2="join us?" sub="Tell us where you'd make an impact and we'll be in touch." buttonLabel="Apply Now" />
+      <FlyFooter />
 
       <style>{`
-        @media (max-width: 1024px) {
-          .jobs-grid { grid-template-columns: repeat(2,1fr) !important; }
-          .benefits-grid { grid-template-columns: repeat(2,1fr) !important; }
-          .benefit-wide { grid-column: span 2 !important; }
-        }
-        @media (max-width: 640px) {
-          .jobs-grid { grid-template-columns: 1fr !important; }
-          .benefits-grid { grid-template-columns: 1fr !important; }
-          .benefit-wide { grid-column: span 1 !important; }
-        }
-        @media (min-width: 1920px) {
-          .roles-inner, .life-inner, .banner-inner { max-width: 1900px !important; }
-          .jobs-grid { grid-template-columns: repeat(4,1fr) !important; }
-        }
-        @media (min-width: 2560px) {
-          .roles-inner, .life-inner, .banner-inner { max-width: 2400px !important; }
-        }
+        .cr-card { position: relative; overflow: hidden; background: linear-gradient(158deg,#ffffff,#f6fbf9); border: 1px solid rgba(26,43,60,0.08); border-radius: 22px; padding: clamp(28px,2.8vw,40px); transition: transform 0.45s ${'cubic-bezier(0.16,1,0.3,1)'}, box-shadow 0.45s ease, border-color 0.45s ease; }
+        .cr-card:hover { transform: translateY(-8px); border-color: ${GREEN}; box-shadow: 0 34px 64px -34px rgba(60,185,140,0.5); }
+        .cr-ic { display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:15px; background:rgba(60,185,140,0.12); color:${GREEN}; margin-bottom:22px; transition: transform 0.45s ${'cubic-bezier(0.16,1,0.3,1)'}, background 0.4s ease, color 0.4s ease; }
+        .cr-card:hover .cr-ic { transform: translateY(-3px) scale(1.08) rotate(-5deg); background:${GREEN}; color:#fff; }
+        .cr-title { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(18px,1.6vw,23px); color:${NAVY}; margin:0 0 12px; letter-spacing:-0.01em; }
+        .cr-text { font-family:'Inter',sans-serif; font-size:14.5px; color:${MUTED}; line-height:1.7; margin:0; }
+        .cr-bar { margin-top:22px; height:3px; width:30px; border-radius:3px; background:${GREEN}; transition:width 0.5s ${'cubic-bezier(0.16,1,0.3,1)'}; }
+        .cr-card:hover .cr-bar { width:60px; }
+
+        .cr-role { width:100%; text-align:left; cursor:pointer; background:transparent; border:none; border-bottom:1px solid rgba(26,43,60,0.1);
+          display:flex; align-items:center; justify-content:space-between; gap:20px; padding:clamp(20px,2.4vw,30px) clamp(10px,1.4vw,20px);
+          transition: background 0.35s ease, padding-left 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}; }
+        .cr-role:hover { background: rgba(60,185,140,0.05); padding-left: clamp(18px,2.2vw,30px); }
+        .cr-role-l { display:flex; flex-direction:column; gap:5px; }
+        .cr-role-title { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(17px,1.6vw,24px); color:${NAVY}; letter-spacing:-0.01em; }
+        .cr-role-co { font-family:'Inter',sans-serif; font-size:13px; color:${GREEN}; font-weight:700; letter-spacing:0.5px; }
+        .cr-role-r { display:flex; align-items:center; gap:clamp(12px,1.6vw,24px); flex-shrink:0; }
+        .cr-role-meta { font-family:'Inter',sans-serif; font-size:13.5px; color:${MUTED}; }
+        .cr-role-tag { font-family:'Inter',sans-serif; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:${NAVY}; background:rgba(26,43,60,0.06); padding:6px 12px; border-radius:99px; }
+        .cr-role-arrow { display:inline-flex; color:${NAVY}; opacity:0.4; transition: transform 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}, color 0.3s ease, opacity 0.3s ease; }
+        .cr-role:hover .cr-role-arrow { color:${GREEN}; opacity:1; transform: translate(3px,-3px); }
+
+        @media (max-width: 860px) { .cr-grid { grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 600px) { .cr-grid { grid-template-columns: 1fr !important; } .cr-role-meta { display:none; } }
+        @media (min-width: 1920px) { .cr-grid { max-width: 1900px; } }
       `}</style>
     </div>
   )
