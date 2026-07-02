@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import type { ReactNode } from 'react'
 
 /* ─────────────────────────────────────────────
-   Eloma Group page kit — shared hero / CTA / eyebrow
+   Eloma Group page kit - shared hero / CTA / eyebrow
    styled in the home page's own language:
    Poppins + Inter, navy #13293D + green #3CB98C,
-   white → mint backgrounds — the Eloma design language.
+   white → mint backgrounds - the Eloma design language.
    ───────────────────────────────────────────── */
 
 export const NAVY  = '#13293D'
@@ -116,7 +116,7 @@ interface CTAProps {
   buttonLabel?: string
 }
 
-export function PageCTA({ line1, line2, sub, href = '/contact', buttonLabel = 'Get in Touch' }: CTAProps) {
+export function PageCTA({ line1, line2, sub, href = '/contact#contact-form', buttonLabel = 'Get in Touch' }: CTAProps) {
   const navigate = useNavigate()
   return (
     <section style={{

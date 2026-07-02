@@ -5,12 +5,12 @@ import { FlyFooter } from '../components/FlyFooter'
 import { PageHero, PageCTA, Eyebrow, NAVY, GREEN, MUTED, EASE } from '../components/PageKit'
 
 const FOCUS = [
-  { Icon: Leaf,           title: 'Lower footprint', text: 'Reducing energy, waste and emissions across every business vertical — measured, reported and improved year on year.' },
+  { Icon: Leaf,           title: 'Lower footprint', text: 'Reducing energy, waste and emissions across every business vertical - measured, reported and improved year on year.' },
   { Icon: Recycle,        title: 'Circular operations', text: 'Designing supply, logistics and procurement to reuse, recover and minimise what we send to landfill.' },
   { Icon: Sun,            title: 'Cleaner energy', text: 'Shifting our infrastructure and offices toward renewable power and efficient, modern systems.' },
-  { Icon: HeartHandshake, title: 'People & community', text: 'Investing in our people and the communities we operate in — fair work, opportunity and local impact.' },
+  { Icon: HeartHandshake, title: 'People & community', text: 'Investing in our people and the communities we operate in - fair work, opportunity and local impact.' },
   { Icon: ShieldCheck,    title: 'Strong governance', text: 'Ethical, transparent practices and accountability built into how every company in the group runs.' },
-  { Icon: Sprout,         title: 'Built to last', text: 'We build for the decade — ventures, partnerships and value designed to outlast short-term cycles.' },
+  { Icon: Sprout,         title: 'Built to last', text: 'We build for the decade - ventures, partnerships and value designed to outlast short-term cycles.' },
 ]
 
 const COMMITMENTS = [
@@ -28,7 +28,7 @@ export function SustainabilityPage() {
         badge="Sustainability"
         line1="Responsible"
         line2="by design."
-        description="At Eloma Group, sustainability isn't a department — it's how we operate and grow. Across every vertical we work to minimise impact, act ethically and build a more resilient future."
+        description="At Eloma Group, sustainability isn't a department - it's how we operate and grow. Across every vertical we work to minimise impact, act ethically and build a more resilient future."
       />
 
       {/* ── Commitment statement ── */}
@@ -40,7 +40,7 @@ export function SustainabilityPage() {
             viewport={{ once: true }} transition={{ duration: 0.85, ease: EASE }}
             style={{ fontFamily: "'Poppins',sans-serif", fontWeight: 600, fontSize: 'clamp(24px,3.4vw,46px)', color: '#fff', letterSpacing: '-0.02em', lineHeight: 1.3, margin: '20px 0 0' }}
           >
-            We strive to build organisations that are resilient, adaptable and prepared for tomorrow — creating value not only for our stakeholders but for the <span style={{ color: GREEN }}>communities we serve.</span>
+            We strive to build organisations that are resilient, adaptable and prepared for tomorrow - creating value not only for our stakeholders but for the <span style={{ color: GREEN }}>communities we serve.</span>
           </motion.p>
         </div>
       </section>

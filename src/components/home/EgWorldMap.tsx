@@ -1,5 +1,5 @@
 /* ───────────────────────────────────────────────
-   EgWorldMap — Stripe-style dotted world map with subtle
+   EgWorldMap - Stripe-style dotted world map with subtle
    connection arcs from the Australian HQ + glowing markers.
    Built on `dotted-map`; markers are placed with the map's
    own getPin() so they sit exactly on the dots, and the

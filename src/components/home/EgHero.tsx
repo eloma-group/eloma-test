@@ -91,7 +91,7 @@ export function EgHero() {
           width: 100%; height: auto; display: block;
           object-fit: contain;
           /* soft-fade the edges so motion streaming off-frame dissolves
-             instead of a hard "cut" line — strong on left/right, light top/bottom */
+             instead of a hard "cut" line - strong on left/right, light top/bottom */
           -webkit-mask-image:
             linear-gradient(to right, transparent 0%, #000 9%, #000 91%, transparent 100%),
             linear-gradient(to bottom, transparent 0%, #000 4%, #000 96%, transparent 100%);
@@ -161,7 +161,7 @@ export function EgHero() {
             disablePictureInPicture
             aria-label="Eloma Group hero animation"
           >
-            {/* Transparent VP8 alpha — background + watermark removed */}
+            {/* Transparent VP8 alpha - background + watermark removed */}
             <source src="/images/hero video.webm" type="video/webm" />
             {/* Watermark-free fallback (white bg) for browsers without webm-alpha */}
             <source src="/images/hero-clean.mp4" type="video/mp4" />

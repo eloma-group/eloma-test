@@ -54,7 +54,7 @@ export function EgAbout() {
           transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
         }
         .eg-ab-illus:hover .eg-ab-illus-img { transform: scale(1.035); }
-        /* G-motif squares — visible in the empty top-left, clear of the figures */
+        /* G-motif squares - visible in the empty top-left, clear of the figures */
         .eg-gsq { position:absolute; border-radius:8px; pointer-events:none; transition: transform 0.7s cubic-bezier(0.16,1,0.3,1), border-color 0.6s ease, background 0.6s ease; }
         .eg-ab-illus .eg-gsq.a { z-index:0; left:3%;  top:1%;  width:30%; height:36%; background: rgba(19,41,61,0.07); animation: eg-ab-drift 9s ease-in-out infinite; }
         .eg-ab-illus .eg-gsq.b { z-index:0; left:11%; top:-5%; width:30%; height:38%; border:2px solid rgba(19,41,61,0.16); animation: eg-ab-drift 11s ease-in-out infinite reverse; }
@@ -116,12 +116,12 @@ export function EgAbout() {
         /* faint mint square behind the photo */
         .eg-fo-mintsq { position:absolute; z-index:0; left:2%; top:13%; width:36%; height:44%; background: rgba(60,185,140,0.13); border-radius:4px; pointer-events:none; transition: transform 0.7s cubic-bezier(0.16,1,0.3,1), background 0.6s ease; }
         .eg-fo-photo:hover .eg-fo-mintsq { transform: translate(-8px,-8px); background: rgba(60,185,140,0.2); }
-        /* EG "G" outline used as a picture frame — light, sharp (edgy) corners */
+        /* EG "G" outline used as a picture frame - light, sharp (edgy) corners */
         .eg-fo-gframe { position:absolute; inset:0; z-index:1; color: rgba(19,41,61,0.16); pointer-events:none; transition: color 0.6s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1); }
         .eg-fo-gframe svg { width:100%; height:100%; }
-        /* only highlight the frame on hover — no vertical move, or the base line would drift off the waist */
+        /* only highlight the frame on hover - no vertical move, or the base line would drift off the waist */
         .eg-fo-photo:hover .eg-fo-gframe { color: rgba(60,185,140,0.34); }
-        /* transparent founder cut-out — waist rests just ON TOP of the G's base stroke
+        /* transparent founder cut-out - waist rests just ON TOP of the G's base stroke
            (bottom:8% = the line's top edge) so the base line stays fully visible with no gap.
            Box ratio kept > image ratio (0.724) so contain fits to height and the bottom stays
            anchored. Head is allowed to rise above the top of the G. */
@@ -150,7 +150,7 @@ export function EgAbout() {
       `}</style>
 
       <div className="eg-ab-inner">
-        <motion.p className="eg-ab-eyebrow" {...rise()}>About Us — Driven By</motion.p>
+        <motion.p className="eg-ab-eyebrow" {...rise()}>About Us - Driven By</motion.p>
         <motion.p className="eg-ab-tag" {...rise(0.05)}>Building businesses that create lasting impact</motion.p>
         <motion.h2 className="eg-ab-script" {...rise(0.1)}>Visionary Leadership</motion.h2>
 
@@ -181,10 +181,10 @@ export function EgAbout() {
         </div>
       </div>
 
-      {/* full-bleed mint diagonal — above the founder, parallel to the one below it */}
+      {/* full-bleed mint diagonal - above the founder, parallel to the one below it */}
       <div className="eg-diag" aria-hidden />
 
-      {/* Founder — centered container; the two diagonals frame it edge-to-edge */}
+      {/* Founder - centered container; the two diagonals frame it edge-to-edge */}
       <div className="eg-ab-inner eg-fo-wrap">
         <span className="eg-sq tl1" aria-hidden />
         <span className="eg-sq tl2" aria-hidden />
@@ -203,14 +203,14 @@ export function EgAbout() {
                 </svg>
               </div>
               <div className="eg-fo-frame">
-                {/* no parallax here — keeps the waist locked on the G base line (no gap) */}
+                {/* no parallax here - keeps the waist locked on the G base line (no gap) */}
                 <img src={FOUNDER} alt="Founder, Eloma Group" decoding="async" />
               </div>
             </div>
           </motion.div>
           <motion.div {...rise(0.1)}>
             <p className="eg-fo-quote">
-              Eloma Group was built with a vision to go beyond a single business — to create an
+              Eloma Group was built with a vision to go beyond a single business - to create an
               ecosystem where innovation, efficiency, and sustainability come together to drive
               real impact across industries.
             </p>
@@ -220,7 +220,7 @@ export function EgAbout() {
         </div>
       </div>
 
-      {/* full-bleed mint diagonal — seam into Why-We-Exist (parallel to the top one) */}
+      {/* full-bleed mint diagonal - seam into Why-We-Exist (parallel to the top one) */}
       <div className="eg-diag seam" aria-hidden />
     </section>
   )

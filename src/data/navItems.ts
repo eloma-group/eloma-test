@@ -47,11 +47,11 @@ export const navItems: NavGroup[] = [
       {
         heading: 'Companies',
         items: [
-          { label: 'EG Digital Australia', href: '/#our-companies', companyId: 'digital'     },
-          { label: 'EG Foundations',       href: '/#our-companies', companyId: 'foundations' },
-          { label: 'EG Imports',           href: '/#our-companies', companyId: 'imports'     },
-          { label: 'EG Transport',         href: '/#our-companies', companyId: 'transport'   },
-          { label: 'EG Travels',           href: '/#our-companies', companyId: 'travels'     },
+          { label: 'Eloma Group',          href: '/companies/eloma-group' },
+          { label: 'EG Digital Australia', href: '/companies/eg-digital'  },
+          { label: 'EG Imports',           href: '/companies/eg-imports' },
+          { label: 'EG Transport - BIVRY', href: '/companies/bivry'      },
+          { label: 'EG Travels',           href: '/companies/eg-travels' },
         ],
       },
     ],

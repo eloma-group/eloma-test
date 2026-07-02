@@ -1,94 +1,165 @@
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowUpRight, Newspaper, Download } from 'lucide-react'
+import { ArrowUpRight, FileText, Download, Users, Mail } from 'lucide-react'
 import { Header } from '../components/Header/Header'
 import { FlyFooter } from '../components/FlyFooter'
-import { PageHero, PageCTA, Eyebrow, NAVY, GREEN, MUTED, EASE } from '../components/PageKit'
+import { PageCTA, NAVY, GREEN, MUTED, EASE } from '../components/PageKit'
 
-const NEWS = [
-  { tag: 'Announcement', date: 'Jun 2026', title: 'Eloma Group expands operations across eight global markets', body: 'The group deepens its presence in Australia, India, the USA, Canada, China, the UK, the UAE and Singapore.' },
-  { tag: 'Company', date: 'May 2026', title: 'EG Digital launches new technology and growth division', body: 'A dedicated practice for web, software and digital marketing across the group and its partners.' },
-  { tag: 'Partnership', date: 'May 2026', title: 'New strategic partnerships strengthen the supply network', body: 'Collaborations that bring businesses closer together across logistics and trade.' },
-  { tag: 'Sustainability', date: 'Apr 2026', title: 'Eloma publishes its first responsible-growth commitments', body: 'A clear framework for environmental, social and governance accountability across all five companies.' },
-  { tag: 'Company', date: 'Mar 2026', title: 'EG Transport scales regional logistics capacity', body: 'Investment in fleet and routes to keep every shipment moving on time, across the region.' },
+type Item = { tag: string; date: string; read: string; title: string; body: string }
+
+const NEWS: Item[] = [
+  { tag: 'Announcement', date: 'Jun 2026', read: '4 min', title: 'Eloma Group expands operations across eight global markets', body: 'The group deepens its presence in Australia, India, the USA, Canada, China, the UK, the UAE and Singapore.' },
+  { tag: 'Company', date: 'May 2026', read: '3 min', title: 'EG Digital launches a new technology and growth division', body: 'A dedicated practice for web, software and digital marketing across the group and its partners.' },
+  { tag: 'Partnership', date: 'May 2026', read: '2 min', title: 'New strategic partnerships strengthen the supply network', body: 'Collaborations that bring businesses closer together across logistics and trade.' },
+  { tag: 'Sustainability', date: 'Apr 2026', read: '5 min', title: 'Eloma publishes its first responsible-growth commitments', body: 'A clear framework for environmental, social and governance accountability across all five companies.' },
+  { tag: 'Company', date: 'Mar 2026', read: '3 min', title: 'Bivry scales regional logistics capacity', body: 'Investment in fleet and routes to keep every shipment moving on time, across the region.' },
+  { tag: 'Announcement', date: 'Feb 2026', read: '2 min', title: 'Eloma Travel opens a new corporate booking platform', body: 'A single dashboard for managed business travel across the group and its partner network.' },
+  { tag: 'Partnership', date: 'Jan 2026', read: '3 min', title: 'Group BPO division signs a multi-year service agreement', body: 'A long-term mandate to run customer support and back-office operations for a global client.' },
 ]
 
-const PRESS = [
-  { t: 'Brand & Logo Pack', s: 'Logos, wordmarks and usage guidelines' },
-  { t: 'Company Fact Sheet', s: 'Group overview, figures and structure' },
-  { t: 'Media Enquiries', s: 'Contact our communications team' },
+const CATS = ['All', 'Announcement', 'Company', 'Partnership', 'Sustainability']
+
+const KIT = [
+  { Icon: Download, t: 'Brand & Logo Pack', s: 'Logos, wordmarks and usage guidelines' },
+  { Icon: FileText, t: 'Company Fact Sheet', s: 'Group overview, figures and structure' },
+  { Icon: Users, t: 'Leadership Bios & Photos', s: 'Executive profiles and headshots' },
+  { Icon: Mail, t: 'Media Enquiries', s: 'Reach our communications team directly' },
 ]
 
 export function NewsroomPage() {
+  const [cat, setCat] = useState('All')
+
   const feat = NEWS[0]
+  // keep the original index so numbering stays stable while filtering
+  const rest = useMemo(() => NEWS.slice(1).map((n, i) => ({ ...n, no: i + 2 })), [])
+  const list = useMemo(() => (cat === 'All' ? rest : rest.filter(n => n.tag === cat)), [cat, rest])
+
+  const rise = (d = 0) => ({
+    initial: { opacity: 0, y: 26 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: '-60px' },
+    transition: { duration: 0.7, delay: d, ease: EASE },
+  })
+
   return (
     <div style={{ overflowX: 'hidden', background: '#fff' }}>
       <Header />
 
-      <PageHero
-        badge="Newsroom"
-        line1="What's new"
-        line2="at Eloma."
-        description="Announcements, company updates and press from across the group — one place for the Eloma story as it unfolds."
-      />
+      {/* ── 1 · Editorial masthead ── */}
+      <header className="nw-hero">
+        <span className="nw-hero-dots" aria-hidden />
+        <span className="nw-hero-glow" aria-hidden />
+        <div className="nw-wrap nw-hero-in">
+          <div className="nw-mast">
+            <span className="nw-mast-brand">The Eloma Dispatch</span>
+            <span className="nw-mast-rule" />
+            <span className="nw-mono nw-mast-meta">News · Press · Announcements</span>
+          </div>
 
-      {/* ── Featured news ── */}
-      <section style={{ background: 'linear-gradient(180deg,#ffffff,#f3faf7)', padding: 'clamp(48px,6vw,90px) clamp(24px,5vw,80px)' }}>
-        <div style={{ maxWidth: 1760, margin: '0 auto' }}>
-          <motion.a href="/contact" className="nw-feat"
-            initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease: EASE }}>
-            <div className="nw-feat-top">
-              <span className="nw-tag">{feat.tag}</span>
-              <span className="bl-meta">{feat.date}</span>
+          <div className="nw-hero-grid">
+            <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, ease: EASE }}>
+              <p className="nw-eyebrow"><span className="nw-eyebrow-dot" />Newsroom - press &amp; updates</p>
+              <h1 className="nw-hero-h1">Stories from<br />the <span className="g">Eloma group.</span></h1>
+            </motion.div>
+            <motion.div className="nw-hero-side" initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.15 }}>
+              <p className="nw-hero-lead">Announcements, company updates and press from across the group - one place for the Eloma story as it unfolds, market by market.</p>
+              <div className="nw-hero-stats">
+                {[['08', 'Markets'], ['05', 'Companies'], ['07', 'Updates']].map(([n, l]) => (
+                  <div className="nw-hero-stat" key={l}>
+                    <span className="nw-hero-stat-n">{n}</span>
+                    <span className="nw-hero-stat-l">{l}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </header>
+
+      {/* ── 2 · Lead story ── */}
+      <section className="nw-lead-sec">
+        <div className="nw-wrap">
+          <motion.div className="nw-sec-head" {...rise()}>
+            <p className="nw-eyebrow dk"><span className="nw-eyebrow-dot" />Lead story</p>
+            <span className="nw-mono nw-count">01 / {String(NEWS.length).padStart(2, '0')}</span>
+          </motion.div>
+
+          <motion.div className="nw-lead" {...rise(0.05)}>
+            <span className="nw-lead-no" aria-hidden>01</span>
+            <div className="nw-lead-l">
+              <div className="nw-lead-meta">
+                <span className="nw-chip">{feat.tag}</span>
+                <span className="nw-mono">{feat.date}</span>
+                <span className="nw-dotsep" />
+                <span className="nw-mono">{feat.read} read</span>
+              </div>
+              <h2 className="nw-lead-title">{feat.title}</h2>
             </div>
-            <h2 className="nw-feat-title">{feat.title}</h2>
-            <p className="nw-feat-body">{feat.body}</p>
-            <span className="nw-feat-link">Read the announcement <ArrowUpRight size={16} strokeWidth={2.4} /></span>
-            <Newspaper className="nw-feat-ghost" size={220} strokeWidth={1} />
-          </motion.a>
+            <div className="nw-lead-r">
+              <p className="nw-lead-body">{feat.body}</p>
+              <span className="nw-lead-link">Read the announcement <ArrowUpRight size={17} strokeWidth={2.4} /></span>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* ── News list ── */}
-      <section style={{ background: '#fff', padding: 'clamp(48px,6vw,90px) clamp(24px,5vw,80px) clamp(64px,8vw,120px)' }}>
-        <div style={{ maxWidth: 1760, margin: '0 auto' }}>
-          <div style={{ marginBottom: 'clamp(24px,3vw,40px)' }}><Eyebrow label="Latest updates" /></div>
-          <div style={{ borderTop: '1px solid rgba(26,43,60,0.1)' }}>
-            {NEWS.slice(1).map((n, i) => (
-              <motion.a key={n.title} href="/contact" className="nw-row"
-                initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.06, ease: EASE }}>
-                <div className="nw-row-meta"><span className="nw-tag sm">{n.tag}</span><span className="bl-meta">{n.date}</span></div>
-                <div className="nw-row-main">
-                  <h3 className="nw-row-title">{n.title}</h3>
-                  <p className="nw-row-body">{n.body}</p>
+      {/* ── 3 · Index + filter ── */}
+      <section className="nw-list-sec">
+        <div className="nw-wrap">
+          <div className="nw-list-head">
+            <motion.h2 className="nw-list-h" {...rise()}>The index.</motion.h2>
+            <motion.div className="nw-filter" {...rise(0.05)} role="tablist" aria-label="Filter updates by category">
+              {CATS.map(c => (
+                <button key={c} role="tab" aria-selected={cat === c} className={`nw-pill${cat === c ? ' on' : ''}`} onClick={() => setCat(c)}>{c}</button>
+              ))}
+            </motion.div>
+          </div>
+
+          <div className="nw-grid">
+            {list.map((n, i) => (
+              <motion.div key={n.title} className="nw-card"
+                initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.5, delay: (i % 2) * 0.06, ease: EASE }}>
+                <span className="nw-card-accent" aria-hidden />
+                <div className="nw-card-top">
+                  <span className="nw-mono nw-card-no">{String(n.no).padStart(2, '0')}</span>
+                  <span className="nw-chip sm">{n.tag}</span>
                 </div>
-                <span className="nw-row-arrow"><ArrowUpRight size={18} strokeWidth={2.4} /></span>
-              </motion.a>
+                <h3 className="nw-card-title">{n.title}</h3>
+                <p className="nw-card-body">{n.body}</p>
+                <div className="nw-card-foot">
+                  <span className="nw-mono">{n.date} · {n.read} read</span>
+                  <span className="nw-card-arrow"><ArrowUpRight size={17} strokeWidth={2.4} /></span>
+                </div>
+              </motion.div>
             ))}
           </div>
+          {list.length === 0 && <p className="nw-empty">No updates in this category yet - check back soon.</p>}
         </div>
       </section>
 
-      {/* ── Press kit ── */}
-      <section style={{ background: 'linear-gradient(180deg,#ffffff,#f3faf7)', padding: 'clamp(56px,7vw,100px) clamp(24px,5vw,80px)' }}>
-        <div style={{ maxWidth: 1760, margin: '0 auto' }}>
-          <div style={{ marginBottom: 'clamp(28px,4vw,44px)' }}>
-            <Eyebrow label="Press & media" />
-            <h2 style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(28px,4vw,52px)', fontWeight: 700, color: NAVY, letterSpacing: '-0.03em', lineHeight: 1.05, margin: '16px 0 0' }}>
-              Media <span style={{ color: GREEN }}>resources.</span>
-            </h2>
-          </div>
-          <div className="nw-press" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
-            {PRESS.map((p, i) => (
-              <motion.a key={p.t} href="/contact" className="nw-press-card"
-                initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.55, delay: i * 0.1, ease: EASE }}>
-                <span className="nw-press-ic"><Download size={20} /></span>
-                <div>
-                  <div className="nw-press-t">{p.t}</div>
-                  <div className="nw-press-s">{p.s}</div>
-                </div>
-              </motion.a>
+      {/* ── 4 · Press kit ── */}
+      <section className="nw-press-sec">
+        <span className="nw-press-glow" aria-hidden />
+        <div className="nw-wrap nw-press-grid">
+          <motion.div className="nw-press-l" {...rise()}>
+            <p className="nw-eyebrow"><span className="nw-eyebrow-dot" />Press &amp; media</p>
+            <h2 className="nw-press-h">Media <span className="g">resources.</span></h2>
+            <p className="nw-press-p">Everything you need to tell the Eloma story accurately. For interviews, figures or anything not listed here, reach our communications team directly.</p>
+          </motion.div>
+
+          <motion.div className="nw-kit" {...rise(0.08)}>
+            {KIT.map((k, i) => (
+              <div key={k.t} className="nw-kit-row">
+                <span className="nw-mono nw-kit-no">{String(i + 1).padStart(2, '0')}</span>
+                <span className="nw-kit-ic"><k.Icon size={19} /></span>
+                <span className="nw-kit-tx">
+                  <span className="nw-kit-t">{k.t}</span>
+                  <span className="nw-kit-s">{k.s}</span>
+                </span>
+                <ArrowUpRight className="nw-kit-go" size={17} strokeWidth={2.4} />
+              </div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -96,36 +167,131 @@ export function NewsroomPage() {
       <FlyFooter />
 
       <style>{`
-        .nw-feat { position:relative; overflow:hidden; display:block; text-decoration:none; background:${NAVY}; border-radius:26px; padding: clamp(32px,4vw,64px); transition: transform 0.5s ${'cubic-bezier(0.16,1,0.3,1)'}, box-shadow 0.5s ease; }
-        .nw-feat:hover { transform: translateY(-6px); box-shadow: 0 44px 90px -44px rgba(19,41,61,0.6); }
-        .nw-feat-top { display:flex; align-items:center; gap:14px; margin-bottom:22px; position:relative; z-index:1; }
-        .nw-feat-title { position:relative; z-index:1; font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(26px,3.4vw,52px); color:#fff; letter-spacing:-0.025em; line-height:1.1; margin:0 0 18px; max-width:18ch; }
-        .nw-feat-body { position:relative; z-index:1; font-family:'Inter',sans-serif; font-size:clamp(14px,1.15vw,17px); color:rgba(255,255,255,0.6); line-height:1.8; margin:0 0 24px; max-width:60ch; }
-        .nw-feat-link { position:relative; z-index:1; display:inline-flex; align-items:center; gap:8px; font-family:'Inter',sans-serif; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:${GREEN}; transition: gap 0.3s ease; }
-        .nw-feat:hover .nw-feat-link { gap:14px; }
-        .nw-feat-ghost { position:absolute; right:-30px; bottom:-40px; color:rgba(60,185,140,0.12); pointer-events:none; }
-        .nw-tag { font-family:'Inter',sans-serif; font-size:10.5px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:${GREEN}; background:rgba(60,185,140,0.14); padding:6px 13px; border-radius:99px; }
-        .nw-tag.sm { background:rgba(60,185,140,0.1); }
-        .bl-meta { font-family:'Inter',sans-serif; font-size:12.5px; color:rgba(255,255,255,0.45); font-weight:600; }
+        .nw-wrap { max-width:1760px; margin:0 auto; }
+        .g { color:${GREEN}; }
+        .nw-mono { font-family:'Inter',sans-serif; font-weight:600; font-size:clamp(11px,0.82vw,13px); letter-spacing:1.5px; text-transform:uppercase; color:${MUTED}; }
+        .nw-eyebrow { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(10px,0.8vw,12px); letter-spacing:2.5px; text-transform:uppercase; color:${GREEN}; }
+        .nw-eyebrow-dot { width:7px; height:7px; border-radius:50%; background:${GREEN}; box-shadow:0 0 0 4px rgba(60,185,140,0.16); flex-shrink:0; }
+        .nw-chip { font-family:'Inter',sans-serif; font-size:10.5px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:${GREEN}; background:rgba(60,185,140,0.12); padding:6px 13px; border-radius:99px; white-space:nowrap; }
+        .nw-chip.sm { padding:5px 11px; font-size:10px; }
+        .nw-dotsep { width:4px; height:4px; border-radius:50%; background:rgba(26,43,60,0.25); }
 
-        .nw-row { display:grid; grid-template-columns: 200px 1fr 40px; gap:24px; align-items:center; text-decoration:none; border-bottom:1px solid rgba(26,43,60,0.1); padding: clamp(22px,2.6vw,32px) clamp(8px,1.2vw,16px); transition: background 0.35s ease, padding-left 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}; }
-        .nw-row:hover { background: rgba(60,185,140,0.05); padding-left: clamp(16px,2vw,28px); }
-        .nw-row-meta { display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
-        .nw-row-meta .bl-meta { color:rgba(26,43,60,0.4); }
-        .nw-row-title { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(17px,1.5vw,22px); color:${NAVY}; letter-spacing:-0.01em; line-height:1.25; margin:0 0 6px; }
-        .nw-row-body { font-family:'Inter',sans-serif; font-size:13.5px; color:${MUTED}; line-height:1.6; margin:0; }
-        .nw-row-arrow { display:inline-flex; color:${NAVY}; opacity:0.35; transition: transform 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}, color 0.3s ease, opacity 0.3s ease; }
-        .nw-row:hover .nw-row-arrow { color:${GREEN}; opacity:1; transform: translate(3px,-3px); }
+        /* 1 · Masthead */
+        .nw-hero { position:relative; overflow:hidden;
+          background: radial-gradient(60% 50% at 88% 4%, rgba(60,185,140,0.12), transparent 60%), linear-gradient(180deg,#ffffff 0%,#f3faf7 100%);
+          padding: clamp(112px,13vw,180px) clamp(24px,5vw,80px) clamp(20px,3vw,40px); }
+        .nw-hero-dots { position:absolute; inset:0; pointer-events:none; opacity:0.5;
+          background-image:radial-gradient(rgba(19,41,61,0.05) 1px, transparent 1px); background-size:26px 26px; -webkit-mask-image:linear-gradient(180deg,#000,transparent 80%); mask-image:linear-gradient(180deg,#000,transparent 80%); }
+        .nw-hero-glow { position:absolute; top:-120px; right:-80px; width:480px; height:480px; border-radius:50%; background:radial-gradient(circle, rgba(60,185,140,0.16), transparent 64%); pointer-events:none; }
+        .nw-hero-in { position:relative; z-index:1; }
+        .nw-mast { display:flex; align-items:center; gap:clamp(14px,2vw,26px); padding-bottom:clamp(28px,3.4vw,46px); border-bottom:2px solid ${NAVY}; }
+        .nw-mast-brand { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(15px,1.5vw,22px); letter-spacing:-0.01em; color:${NAVY}; white-space:nowrap; }
+        .nw-mast-rule { flex:1; height:1px; background:rgba(26,43,60,0.18); }
+        .nw-mast-meta { white-space:nowrap; }
+        .nw-hero-grid { display:grid; grid-template-columns:1.45fr 0.55fr; gap:clamp(28px,5vw,80px); align-items:end; padding:clamp(34px,4.4vw,68px) 0 clamp(40px,5vw,76px); }
+        .nw-hero-h1 { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(46px,8vw,128px); line-height:0.98; letter-spacing:-0.04em; color:${NAVY}; margin:clamp(16px,2vw,26px) 0 0; }
+        .nw-hero-side { border-top:1px solid rgba(26,43,60,0.16); padding-top:clamp(18px,2vw,24px); }
+        .nw-hero-lead { font-family:'Inter',sans-serif; font-size:clamp(14px,1.05vw,16px); line-height:1.8; color:${MUTED}; margin:0 0 clamp(22px,2.6vw,30px); }
+        .nw-hero-stats { display:flex; gap:clamp(20px,2.4vw,34px); }
+        .nw-hero-stat { display:flex; flex-direction:column; }
+        .nw-hero-stat-n { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(26px,2.8vw,42px); letter-spacing:-0.03em; color:${NAVY}; line-height:1; }
+        .nw-hero-stat-l { font-family:'Inter',sans-serif; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:${MUTED}; margin-top:6px; }
 
-        .nw-press-card { display:flex; align-items:center; gap:16px; text-decoration:none; background:linear-gradient(158deg,#ffffff,#f6fbf9); border:1px solid rgba(26,43,60,0.08); border-radius:20px; padding:clamp(22px,2.2vw,30px); transition: transform 0.45s ${'cubic-bezier(0.16,1,0.3,1)'}, box-shadow 0.45s ease, border-color 0.45s ease; }
-        .nw-press-card:hover { transform:translateY(-6px); border-color:${GREEN}; box-shadow:0 30px 60px -36px rgba(60,185,140,0.5); }
-        .nw-press-ic { display:inline-flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:13px; background:rgba(60,185,140,0.12); color:${GREEN}; flex-shrink:0; transition: background 0.4s ease, color 0.4s ease, transform 0.4s ease; }
-        .nw-press-card:hover .nw-press-ic { background:${GREEN}; color:#fff; transform: translateY(-2px); }
-        .nw-press-t { font-family:'Poppins',sans-serif; font-weight:600; font-size:16px; color:${NAVY}; }
-        .nw-press-s { font-family:'Inter',sans-serif; font-size:13px; color:${MUTED}; margin-top:3px; }
+        .nw-sec-head { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+        .nw-eyebrow.dk { color:${GREEN}; }
+        .nw-count { color:rgba(26,43,60,0.4); }
 
-        @media (max-width: 760px) { .nw-row { grid-template-columns: 1fr 36px !important; } .nw-row-meta { flex-direction:row; align-items:center; gap:12px; } .nw-press { grid-template-columns: 1fr !important; } }
-        @media (min-width: 1920px) { .nw-press { max-width: 1900px; } }
+        /* 2 · Lead */
+        .nw-lead-sec { background:#fff; padding:clamp(48px,6vw,96px) clamp(24px,5vw,80px) clamp(40px,5vw,72px); }
+        .nw-lead { position:relative; overflow:hidden; display:grid; grid-template-columns:1.15fr 0.85fr; gap:clamp(28px,4vw,64px); margin-top:clamp(24px,3vw,40px); padding:clamp(30px,3.6vw,56px) 0 clamp(34px,4vw,60px); text-decoration:none; border-top:2px solid ${NAVY}; border-bottom:1px solid rgba(26,43,60,0.12); }
+        .nw-lead-no { position:absolute; right:-6px; bottom:-48px; font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(150px,22vw,320px); line-height:0.7; color:rgba(60,185,140,0.07); pointer-events:none; user-select:none; z-index:0; }
+        .nw-lead-l, .nw-lead-r { position:relative; z-index:1; }
+        .nw-lead-meta { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:clamp(18px,2vw,26px); }
+        .nw-lead-title { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,4.4vw,72px); line-height:1.02; letter-spacing:-0.035em; color:${NAVY}; margin:0; }
+        .nw-lead-r { display:flex; flex-direction:column; justify-content:flex-end; }
+        .nw-lead-body { font-family:'Inter',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; margin:0 0 clamp(22px,2.6vw,32px); }
+        .nw-lead-link { display:inline-flex; align-items:center; gap:9px; font-family:'Inter',sans-serif; font-size:13px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:${GREEN}; transition:gap 0.3s ease; }
+        .nw-lead:hover .nw-lead-link { gap:15px; }
+        .nw-lead:hover .nw-lead-title { color:#0f2030; }
+
+        /* 3 · Index */
+        .nw-list-sec { background:linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(48px,6vw,90px) clamp(24px,5vw,80px) clamp(64px,8vw,120px); }
+        .nw-list-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:clamp(28px,3.4vw,46px); }
+        .nw-list-h { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(34px,5vw,76px); letter-spacing:-0.035em; color:${NAVY}; margin:0; line-height:1; }
+        .nw-filter { display:flex; flex-wrap:wrap; gap:9px; }
+        .nw-pill { font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:${NAVY}; background:#fff; border:1px solid rgba(26,43,60,0.14); border-radius:99px; padding:11px 20px; min-height:44px; cursor:pointer; transition:transform 0.25s ${'cubic-bezier(0.16,1,0.3,1)'}, background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+        .nw-pill:hover { transform:translateY(-2px); border-color:${GREEN}; color:${GREEN}; }
+        .nw-pill.on { background:${NAVY}; border-color:${NAVY}; color:#fff; }
+        .nw-pill.on:hover { color:#fff; }
+
+        .nw-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(16px,1.6vw,22px); }
+        .nw-card { position:relative; overflow:hidden; display:flex; flex-direction:column; text-decoration:none; background:#fff; border:1px solid rgba(26,43,60,0.1); border-radius:20px; padding:clamp(26px,2.8vw,40px); transition:transform 0.45s ${'cubic-bezier(0.16,1,0.3,1)'}, box-shadow 0.45s ease, border-color 0.45s ease; }
+        .nw-card-accent { position:absolute; top:0; left:0; right:0; height:3px; background:${GREEN}; transform:scaleX(0); transform-origin:left; transition:transform 0.45s ${'cubic-bezier(0.16,1,0.3,1)'}; }
+        .nw-card:hover { transform:translateY(-6px); border-color:rgba(60,185,140,0.5); box-shadow:0 36px 70px -40px rgba(19,41,61,0.32); }
+        .nw-card:hover .nw-card-accent { transform:scaleX(1); }
+        .nw-card-top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:clamp(16px,1.8vw,22px); }
+        .nw-card-no { color:rgba(26,43,60,0.32); font-size:13px; }
+        .nw-card-title { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(19px,1.8vw,28px); line-height:1.18; letter-spacing:-0.02em; color:${NAVY}; margin:0 0 12px; }
+        .nw-card-body { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15px); line-height:1.7; color:${MUTED}; margin:0 0 clamp(22px,2.4vw,30px); flex:1; }
+        .nw-card-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:clamp(16px,1.8vw,20px); border-top:1px solid rgba(26,43,60,0.1); }
+        .nw-card-arrow { display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:11px; background:rgba(60,185,140,0.1); color:${GREEN}; transition:transform 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}, background 0.3s ease, color 0.3s ease; }
+        .nw-card:hover .nw-card-arrow { background:${GREEN}; color:#fff; transform:translate(2px,-2px); }
+        .nw-empty { font-family:'Inter',sans-serif; font-size:15px; color:${MUTED}; text-align:center; padding:48px 0; }
+
+        /* 4 · Press kit - light theme */
+        .nw-press-sec { position:relative; overflow:hidden; background:linear-gradient(180deg,#ffffff 0%,#f3faf7 100%); padding:clamp(56px,7vw,110px) clamp(24px,5vw,80px); }
+        .nw-press-sec::before { content:''; position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(rgba(19,41,61,0.04) 1px, transparent 1px); background-size:24px 24px; -webkit-mask-image:linear-gradient(180deg,transparent,#000 60%); mask-image:linear-gradient(180deg,transparent,#000 60%); }
+        .nw-press-glow { position:absolute; bottom:-120px; left:-90px; width:420px; height:420px; border-radius:50%; background:radial-gradient(circle, rgba(60,185,140,0.14), transparent 64%); pointer-events:none; }
+        .nw-press-grid { position:relative; z-index:1; display:grid; grid-template-columns:0.9fr 1.1fr; gap:clamp(36px,5vw,90px); align-items:center; }
+        .nw-press-h { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(32px,4.4vw,64px); letter-spacing:-0.035em; line-height:1.02; color:${NAVY}; margin:16px 0 18px; }
+        .nw-press-p { font-family:'Inter',sans-serif; font-size:clamp(14px,1.1vw,16px); line-height:1.8; color:${MUTED}; margin:0; max-width:46ch; }
+
+        .nw-kit { display:flex; flex-direction:column; border-top:1px solid rgba(26,43,60,0.12); }
+        .nw-kit-row { display:flex; align-items:center; gap:clamp(14px,1.6vw,20px); text-decoration:none; padding:clamp(18px,2vw,26px) clamp(4px,1vw,14px); border-bottom:1px solid rgba(26,43,60,0.12); transition:padding-left 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}, background 0.35s ease; }
+        .nw-kit-row:hover { padding-left:clamp(14px,1.8vw,26px); background:rgba(60,185,140,0.05); }
+        .nw-kit-no { color:rgba(26,43,60,0.3); flex-shrink:0; }
+        .nw-kit-ic { display:inline-flex; align-items:center; justify-content:center; width:46px; height:46px; border-radius:13px; background:rgba(60,185,140,0.12); color:${GREEN}; flex-shrink:0; transition:background 0.35s ease, color 0.35s ease; }
+        .nw-kit-row:hover .nw-kit-ic { background:${GREEN}; color:#fff; }
+        .nw-kit-tx { display:flex; flex-direction:column; gap:3px; flex:1; min-width:0; }
+        .nw-kit-t { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(15px,1.3vw,19px); color:${NAVY}; letter-spacing:-0.01em; }
+        .nw-kit-s { font-family:'Inter',sans-serif; font-size:13px; color:${MUTED}; }
+        .nw-kit-go { color:rgba(26,43,60,0.3); flex-shrink:0; transition:transform 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}, color 0.3s ease; }
+        .nw-kit-row:hover .nw-kit-go { color:${GREEN}; transform:translate(3px,-3px); }
+
+        /* ── responsive ── */
+        @media (max-width:900px){
+          .nw-hero-grid { grid-template-columns:1fr; align-items:start; gap:clamp(24px,5vw,36px); }
+          .nw-hero-side { border-top:none; padding-top:0; }
+          .nw-lead { grid-template-columns:1fr; gap:clamp(20px,4vw,32px); }
+          .nw-lead-r { justify-content:flex-start; }
+          .nw-press-grid { grid-template-columns:1fr; gap:clamp(34px,6vw,48px); }
+        }
+        @media (max-width:680px){
+          .nw-grid { grid-template-columns:1fr; }
+          .nw-mast-brand { font-size:14px; }
+          .nw-mast-meta { display:none; }
+          .nw-mast-rule { flex:1; }
+        }
+        @media (min-width:1920px){
+          .nw-wrap { max-width:1900px; }
+          .nw-hero-h1 { font-size:140px; }
+          .nw-lead-title { font-size:80px; }
+          .nw-list-h { font-size:88px; }
+          .nw-press-h { font-size:72px; }
+          .nw-hero-lead, .nw-press-p { font-size:18px; }
+        }
+        @media (min-width:2560px){
+          .nw-wrap { max-width:2400px; }
+          .nw-hero { padding-top:clamp(150px,8vw,210px); }
+          .nw-hero-h1 { font-size:190px; }
+          .nw-lead-title { font-size:104px; }
+          .nw-lead-no { font-size:440px; }
+          .nw-list-h { font-size:112px; }
+          .nw-press-h { font-size:92px; }
+          .nw-hero-lead, .nw-press-p, .nw-lead-body { font-size:22px; }
+          .nw-card-title { font-size:34px; }
+          .nw-kit-t { font-size:24px; }
+        }
       `}</style>
     </div>
   )

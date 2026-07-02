@@ -11,13 +11,13 @@ const EASE  = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
 const CARDS = [
   { icon: <Sprout size={22} />,    title: 'The Root',     tag: 'A simple vision',
-    body: 'Eloma began with a conviction that businesses grow stronger when they share roots — common values, shared infrastructure, and a long-term horizon.' },
+    body: 'Eloma began with a conviction that businesses grow stronger when they share roots - common values, shared infrastructure, and a long-term horizon.' },
   { icon: <GitBranch size={22} />, title: 'The Branches', tag: 'Bold, agile, growing',
-    body: 'Travel, technology, customer experience and logistics grow as branches of one organism — independent in craft, united in standard.' },
+    body: 'Travel, technology, customer experience and logistics grow as branches of one organism - independent in craft, united in standard.' },
   { icon: <TreePine size={22} />,  title: 'The Canopy',   tag: 'A global ecosystem',
     body: 'Today the group spans markets and continents, an interconnected canopy where each company makes the others stronger.' },
   { icon: <Mountain size={22} />,  title: 'The Horizon',  tag: 'Built for generations',
-    body: "We don't build for the quarter. We build for the decade — investing in people, sustainability and ventures that outlast us." },
+    body: "We don't build for the quarter. We build for the decade - investing in people, sustainability and ventures that outlast us." },
 ]
 
 export function EgWhyExist() {
@@ -37,7 +37,7 @@ export function EgWhyExist() {
         .eg-wy-bg img { position:absolute; left:0; top:-12%; width:100%; height:124%; object-fit:cover; will-change: transform; }
         /* light, airy mist: white at top (seamless with the founder section above) fading to reveal
            the foggy forest; the very bottom deepens into a dark forest vignette before the next
-           (white) section — matching the brochure's gradient hand-off. */
+           (white) section - matching the brochure's gradient hand-off. */
         .eg-wy-bg::after { content:''; position:absolute; inset:0; background:
           linear-gradient(180deg,
             #ffffff 0%, rgba(255,255,255,0.90) 9%, rgba(255,255,255,0.50) 26%,
@@ -70,7 +70,7 @@ export function EgWhyExist() {
           -webkit-backdrop-filter: blur(18px) saturate(165%);
           transition: box-shadow 0.5s ease, border-color 0.5s ease, background 0.5s ease;
         }
-        /* bottom two cards (The Canopy / The Horizon) — a touch more transparent and a
+        /* bottom two cards (The Canopy / The Horizon) - a touch more transparent and a
            whisper darker, so the deeper forest behind reads through (brochure look) */
         .egw-card.is-dark {
           background:
@@ -107,7 +107,7 @@ export function EgWhyExist() {
         .egw-card-tag { position:relative; font-family:'Inter',sans-serif; font-size:clamp(12.5px,1vw,15px); color:${GREEN}; font-weight:700; margin:5px 0 13px; letter-spacing:0.3px; }
         .egw-card-b { position:relative; font-family:'Inter',sans-serif; font-size:clamp(14px,1.12vw,16.5px); line-height:1.62; color:rgba(19,41,61,0.82); margin:0; }
 
-        /* right panel — a tall frosted card matching the four cards, like the brochure */
+        /* right panel - a tall frosted card matching the four cards, like the brochure */
         .eg-wy-panel {
           position: relative; overflow: hidden;
           background:

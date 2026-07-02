@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Menu, X, ChevronDown, ChevronRight, Phone } from 'lucide-react'
+import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
 import { navItems } from '../../data/navItems'
 import { DropdownMenu } from './DropdownMenu'
 import { useScrollY } from '../../hooks/useScrollY'
@@ -24,9 +24,20 @@ export function Header() {
   // Transparent when any of the other hero sections covers the header area
   const [overHeroSection, setOverHeroSection] = useState(false)
 
+  // Transparent (over a dark full-screen section) even on the light-hero homepage
+  const [overDark, setOverDark] = useState(false)
+
   useEffect(() => {
     const HERO_IDS = ['hero2-section', 'hero3-section', 'hero4-section']
+    const DARK_IDS = ['our-companies']   // full-screen dark sections that own the header
     const HEADER_H = 64
+
+    const straddles = (id: string) => {
+      const el = document.getElementById(id)
+      if (!el) return false
+      const r = el.getBoundingClientRect()
+      return r.top <= HEADER_H && r.bottom > HEADER_H
+    }
 
     const check = () => {
       // services check
@@ -36,14 +47,9 @@ export function Header() {
         setOverServices(r.top < 80 && r.bottom > 0)
       }
 
-      // other hero sections check — any section whose rect straddles the header
-      const over = HERO_IDS.some(id => {
-        const el = document.getElementById(id)
-        if (!el) return false
-        const r = el.getBoundingClientRect()
-        return r.top <= HEADER_H && r.bottom > HEADER_H
-      })
-      setOverHeroSection(over)
+      // other hero sections check - any section whose rect straddles the header
+      setOverHeroSection(HERO_IDS.some(straddles))
+      setOverDark(DARK_IDS.some(straddles))
     }
 
     window.addEventListener('scroll', check, { passive: true })
@@ -51,12 +57,18 @@ export function Header() {
     return () => window.removeEventListener('scroll', check)
   }, [])
 
-  // The homepage hero is light, so the header must stay solid (dark text) over it.
-  const lightHero =
-    typeof window !== 'undefined' && window.location.pathname === '/'
+  // The homepage hero is light, so the header must stay solid (dark text) over it -
+  // except over dark full-screen sections (e.g. Our Companies), which own the header.
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : ''
+  const lightHero = pathname === '/'
   const transparent =
-    !lightHero && (overHero || overServices || overHeroSection) && !anyOpen && !mobileOpen
+    ((!lightHero && (overHero || overServices || overHeroSection)) || overDark) && !anyOpen && !mobileOpen
   const textColor = transparent ? '#ffffff' : '#08213C'
+
+  // Whenever the header floats transparent over a dark surface, use the white wordmark.
+  const logoSrc = transparent
+    ? '/images/eg-logo-white.png'
+    : '/images/Eloma Group Email Sign Logo -01.png'
 
   const cancelClose = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current)
@@ -111,13 +123,13 @@ export function Header() {
             justifyContent: 'space-between',
           }}
         >
-          {/* Logo — single Eloma Group email-sign logo */}
+          {/* Logo - single Eloma Group email-sign logo */}
           <a href="/" style={{ flexShrink: 0, lineHeight: 0, display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
             <img
               className="eg-hd-logo"
-              src="/images/Eloma Group Email Sign Logo -01.png"
+              src={logoSrc}
               alt="Eloma Group"
-              style={{ height: '40px', width: 'auto' }}
+              style={{ height: '36px', width: 'auto' }}
             />
           </a>
 
@@ -172,30 +184,6 @@ export function Header() {
                 </a>
               </div>
             ))}
-
-            {/* Toll-free number — after Contact */}
-            <a
-              href="tel:1800054555"
-              onMouseEnter={closeAll}
-              className="eg-hd-tel"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '0 14px',
-                height: '64px',
-                fontSize: '14px',
-                fontWeight: 700,
-                color: transparent ? 'rgba(255,255,255,0.9)' : '#3CB98C',
-                letterSpacing: '0.2px',
-                whiteSpace: 'nowrap',
-                transition: 'color 0.25s ease',
-                textDecoration: 'none',
-              }}
-            >
-              <Phone size={13} strokeWidth={2} />
-              1800 054 555
-            </a>
           </nav>
 
           {/* Right side - Hamburger (mobile) */}
@@ -370,19 +358,17 @@ export function Header() {
         @media (min-width: 1920px) {
           .eg-hd { height: 78px !important; }
           .eg-hd-inner { max-width: 1600px !important; }
-          .eg-hd-logo { height: 58px !important; }
+          .eg-hd-logo { height: 52px !important; }
           .eg-hd-word { font-size: 24px !important; }
           .eg-hd-link { height: 78px !important; font-size: 16.5px !important; padding: 0 18px !important; }
-          .eg-hd-tel  { height: 78px !important; font-size: 16px !important; }
           .eg-hd-dd   { font-size: 16.5px !important; }
         }
         @media (min-width: 2560px) {
           .eg-hd { height: 92px !important; }
           .eg-hd-inner { max-width: 2000px !important; }
-          .eg-hd-logo { height: 70px !important; }
+          .eg-hd-logo { height: 62px !important; }
           .eg-hd-word { font-size: 30px !important; }
           .eg-hd-link { height: 92px !important; font-size: 20px !important; padding: 0 24px !important; }
-          .eg-hd-tel  { height: 92px !important; font-size: 19px !important; }
           .eg-hd-dd   { font-size: 20px !important; }
         }
       `}</style>

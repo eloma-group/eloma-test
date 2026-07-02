@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { ArrowRight, ArrowUpRight, CheckCircle, ChevronDown, Phone, Mail, MapPin, Clock } from 'lucide-react'
 import { Header } from '../components/Header/Header'
@@ -10,6 +11,8 @@ const SERVICES = [
   'Travel Solutions', 'Call Center / BPO', 'IT Infrastructure',
   'Supply Chain', 'Partnerships', 'General Enquiry',
 ]
+
+const WEB3FORMS_KEY = 'c294a0b8-fd39-4e5c-99ef-7096b8f0be34'
 
 const MAPS = (q: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`
 
@@ -94,20 +97,62 @@ function Field({ id, label, placeholder, value, onChange, type = 'text', tag = '
 
 export function ContactPage() {
   const reduce = useReducedMotion()
+  const location = useLocation()
+
+  /* Deep-link from page CTAs (Apply Now / Get in Touch …) → smooth-scroll to form */
+  useEffect(() => {
+    if (location.hash !== '#contact-form') return
+    const el = document.getElementById('contact-form')
+    if (!el) return
+    const t = setTimeout(() => {
+      const lenis = (window as unknown as { __lenis?: { scrollTo: (t: Element, o?: object) => void } }).__lenis
+      if (lenis?.scrollTo) lenis.scrollTo(el, { offset: -72, duration: 1.2 })
+      else el.scrollIntoView({ behavior: 'smooth' })
+    }, 240)
+    return () => clearTimeout(t)
+  }, [location])
+
   const [form, setForm] = useState({ name: '', email: '', company: '', service: '', message: '' })
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
 
   const set = (key: keyof typeof form) => ({
     value: form[key],
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm(f => ({ ...f, [key]: e.target.value })),
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!form.name.trim() || !form.email.trim()) return
     setSubmitting(true)
-    setTimeout(() => { setSubmitting(false); setSubmitted(true) }, 700)
+    setError('')
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `New enquiry - ${form.service || 'General Enquiry'} · ${form.name}`,
+          from_name: 'Eloma Group Website',
+          name: form.name,
+          email: form.email,
+          company: form.company || '-',
+          'Area of interest': form.service || '-',
+          message: form.message || '-',
+        }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setSubmitted(true)
+      } else {
+        setError(data.message || 'Something went wrong. Please try again.')
+      }
+    } catch {
+      setError('Network error. Please check your connection and try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const rise = (d = 0) => ({
@@ -135,7 +180,7 @@ export function ContactPage() {
           </div>
           <motion.aside className="ctx-hero-side" initial={reduce ? false : { opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}>
             <p className="ctx-hero-lead">
-              Whether you're a partner, client or future teammate — tell us what you need and our team responds within one business day.
+              Whether you're a partner, client or future teammate - tell us what you need and our team responds within one business day.
             </p>
             <div className="ctx-hero-lines">
               {LINES.map((l) => (
@@ -154,7 +199,7 @@ export function ContactPage() {
       </section>
 
       {/* ── 2 · Form + info panel ── */}
-      <section className="ctx-form-sec">
+      <section id="contact-form" className="ctx-form-sec" style={{ scrollMarginTop: 72 }}>
         <motion.div className="ctx-panel" {...rise()}>
           {/* info rail */}
           <aside className="ctx-aside">
@@ -187,8 +232,8 @@ export function ContactPage() {
                 <motion.div key="ok" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.4, ease: EASE }} className="ctx-ok">
                   <CheckCircle size={52} color={GREEN} strokeWidth={1.5} />
                   <h3 className="ctx-ok-h">Message ready!</h3>
-                  <p className="ctx-ok-p">Thanks, {form.name || 'there'} — your details are captured. Our team will be in touch shortly.</p>
-                  <button className="pk-cta-btn" onClick={() => { setSubmitted(false); setForm({ name: '', email: '', company: '', service: '', message: '' }) }}><span>Send another</span></button>
+                  <p className="ctx-ok-p">Thanks, {form.name || 'there'} - your details are captured. Our team will be in touch shortly.</p>
+                  <button className="pk-cta-btn" onClick={() => { setSubmitted(false); setError(''); setForm({ name: '', email: '', company: '', service: '', message: '' }) }}><span>Send another</span></button>
                 </motion.div>
               ) : (
                 <motion.form key="form" onSubmit={handleSubmit} initial={{ opacity: 1 }} exit={{ opacity: 0 }} className="ctx-fields">
@@ -197,6 +242,7 @@ export function ContactPage() {
                   <Field id="ctx-company" label="Company (optional)" placeholder="Company name" {...set('company')} />
                   <ServiceField value={form.service} onChange={v => setForm(f => ({ ...f, service: v }))} />
                   <Field id="ctx-message" label="Message" placeholder="Tell us a little more…" tag="textarea" {...set('message')} />
+                  {error && <p className="ctx-err" role="alert">{error}</p>}
                   <div style={{ marginTop: 'clamp(28px,3vw,40px)' }}>
                     <button type="submit" disabled={submitting} className="pk-cta-btn" style={{ opacity: submitting ? 0.7 : 1, cursor: submitting ? 'not-allowed' : 'pointer' }}>
                       <span>{submitting ? 'Sending…' : 'Send message'}</span>
@@ -309,6 +355,7 @@ export function ContactPage() {
         .ct-opt:hover { background:rgba(60,185,140,0.07) !important; }
         input::placeholder, textarea::placeholder { color:rgba(26,43,60,0.32); font-weight:500; }
 
+        .ctx-err { font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; color:#c0392b; background:rgba(192,57,43,0.07); border:1px solid rgba(192,57,43,0.2); border-radius:10px; padding:12px 14px; margin:18px 0 0; line-height:1.5; }
         .ctx-ok { display:flex; flex-direction:column; gap:16px; align-items:flex-start; padding:24px 0; }
         .ctx-ok-h { font-family:'Poppins',sans-serif; font-size:26px; font-weight:700; color:${NAVY}; margin:0; letter-spacing:-0.02em; }
         .ctx-ok-p { font-family:'Inter',sans-serif; font-size:15px; color:${MUTED}; line-height:1.7; margin:0; max-width:380px; }

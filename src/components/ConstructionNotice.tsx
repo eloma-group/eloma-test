@@ -43,7 +43,7 @@ export function ConstructionNotice() {
             <p className="cn-eyebrow">Heads up</p>
             <h2 id="cn-title" className="cn-title">This website is still <span className="cn-g">under construction.</span></h2>
             <p id="cn-desc" className="cn-desc">
-              We're actively building things out — some pages may not be fully responsive or complete just yet. Thanks for your patience.
+              We're actively building things out - some pages may not be fully responsive or complete just yet. Thanks for your patience.
             </p>
             <button className="cn-btn" onClick={() => setOpen(false)} autoFocus><span>Got it</span></button>
           </motion.div>

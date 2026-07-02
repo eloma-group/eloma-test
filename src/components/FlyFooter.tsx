@@ -24,11 +24,11 @@ const COLS: { heading: string; accent?: boolean; links: FooterLinkItem[] }[] = [
     heading: 'Our Companies',
     accent: true,
     links: [
-      { label: 'EG Digital Australia', href: '/#our-companies', companyId: 'digital'     },
-      { label: 'EG Foundations',       href: '/#our-companies', companyId: 'foundations' },
-      { label: 'EG Imports',           href: '/#our-companies', companyId: 'imports'     },
-      { label: 'EG Transport',         href: '/#our-companies', companyId: 'transport'   },
-      { label: 'EG Travels',           href: '/#our-companies', companyId: 'travels'     },
+      { label: 'Eloma Group',          href: '/companies/eloma-group' },
+      { label: 'EG Digital Australia', href: '/companies/eg-digital'  },
+      { label: 'EG Imports',           href: '/companies/eg-imports' },
+      { label: 'EG Transport - BIVRY', href: '/companies/bivry'      },
+      { label: 'EG Travels',           href: '/companies/eg-travels' },
     ],
   },
   {
@@ -91,6 +91,13 @@ function IconTikTok() {
     </svg>
   )
 }
+function IconYouTube() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.51A3.02 3.02 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14C4.5 20.45 12 20.45 12 20.45s7.5 0 9.38-.51a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/>
+    </svg>
+  )
+}
 function IconThreads() {
   return (
     <svg width="15" height="15" viewBox="0 0 192 192" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -100,12 +107,13 @@ function IconThreads() {
 }
 
 const socials = [
-  { Icon: IconLinkedIn,  href: 'https://www.linkedin.com/company/eloma-group/', label: 'LinkedIn',  bg: '#0A66C2', color: '#fff' },
-  { Icon: IconTwitterX,  href: 'https://x.com/elomagroup',                       label: 'Twitter/X', bg: '#000000', color: '#fff' },
-  { Icon: IconFacebook,  href: 'https://www.facebook.com/elomagroup/',           label: 'Facebook',  bg: '#1877F2', color: '#fff' },
-  { Icon: IconInstagram, href: 'https://www.instagram.com/elomagroup/',          label: 'Instagram', bg: 'linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)', color: '#fff' },
-  { Icon: IconTikTok,    href: 'https://www.tiktok.com/@elomagroup',             label: 'TikTok',    bg: '#000000', color: '#fff' },
-  { Icon: IconThreads,   href: 'https://www.threads.com/@elomagroup',            label: 'Threads',   bg: '#000000', color: '#fff' },
+  { Icon: IconLinkedIn,  href: 'https://www.linkedin.com/company/elomagroup/',  label: 'LinkedIn',  bg: '#0A66C2', color: '#fff' },
+  { Icon: IconTwitterX,  href: 'https://x.com/elomagroup2026',                  label: 'Twitter/X', bg: '#000000', color: '#fff' },
+  { Icon: IconFacebook,  href: 'https://www.facebook.com/61572138328088/',      label: 'Facebook',  bg: '#1877F2', color: '#fff' },
+  { Icon: IconInstagram, href: 'https://www.instagram.com/eloma_group/',        label: 'Instagram', bg: 'linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)', color: '#fff' },
+  { Icon: IconYouTube,   href: 'https://www.youtube.com/@elomagroup',           label: 'YouTube',   bg: '#FF0000', color: '#fff' },
+  { Icon: IconTikTok,    href: 'https://www.tiktok.com/@eloma_group_6',         label: 'TikTok',    bg: '#000000', color: '#fff' },
+  { Icon: IconThreads,   href: 'https://www.threads.com/@eloma_group',          label: 'Threads',   bg: '#000000', color: '#fff' },
 ]
 
 function SectionHeading({ label, accent }: { label: string; accent?: boolean }) {
@@ -281,6 +289,20 @@ export function FlyFooter() {
             ))}
           </div>
 
+          {/* Protected by - EG Digital shield (just above divider) */}
+          <div className="ff-protected" style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', gap: 0, paddingBottom: 18 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', paddingBottom: 16, marginRight: -14 }}>
+              Protected by
+            </span>
+            <a href="https://egdigital.com.au/" target="_blank" rel="noopener noreferrer" aria-label="EG Digital"
+              style={{ display: 'inline-block', lineHeight: 0, opacity: 0.9, transition: 'opacity 0.18s ease, transform 0.24s ease' }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.opacity = '1'; el.style.transform = 'scale(1.05)' }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.opacity = '0.9'; el.style.transform = 'scale(1)' }}
+            >
+              <img src="/Shield Animation.gif" alt="EG Digital" style={{ height: 92, width: 'auto', display: 'block' }} />
+            </a>
+          </div>
+
           {/* ── Divider ── */}
           <div style={{ height: 1, background: 'rgba(255,255,255,0.08)', position: 'relative' }}>
             <div style={{
@@ -331,6 +353,10 @@ export function FlyFooter() {
         @media (max-width: 1100px) { .ff-grid { grid-template-columns: 1.5fr 1fr 1fr !important; } }
         @media (max-width: 640px)  { .ff-grid { grid-template-columns: 1fr 1fr !important; } }
         @media (max-width: 420px)  { .ff-grid { grid-template-columns: 1fr !important; } }
+
+        /* protected-by centres on mobile (matches Bivry) */
+        @media (max-width: 640px) { .ff-protected { justify-content: center !important; gap: 24px !important; } }
+
 
         .ff-info-box {
           transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1), border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;

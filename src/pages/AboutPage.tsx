@@ -11,10 +11,10 @@ const META = [
 ]
 
 const CHAPTERS = [
-  { no: '01', title: 'Vision-led', text: 'Every company we hold is built on a clear, long-term horizon — measured in decades, not quarters. Direction comes first; everything else follows from it.' },
+  { no: '01', title: 'Vision-led', text: 'Every company we hold is built on a clear, long-term horizon - measured in decades, not quarters. Direction comes first; everything else follows from it.' },
   { no: '02', title: 'Shared strength', text: 'Common infrastructure, governance and people let each business move faster on a stronger foundation. Independent in craft, united in capability.' },
-  { no: '03', title: 'Global reach', text: 'From Australia to Asia, Europe, the Middle East and North America — an interconnected ecosystem operating as one across eight markets.' },
-  { no: '04', title: 'Responsible growth', text: 'We grow with intent — sustainable, ethical and built to create lasting value for the stakeholders and communities we serve.' },
+  { no: '03', title: 'Global reach', text: 'From Australia to Asia, Europe, the Middle East and North America - an interconnected ecosystem operating as one across eight markets.' },
+  { no: '04', title: 'Responsible growth', text: 'We grow with intent - sustainable, ethical and built to create lasting value for the stakeholders and communities we serve.' },
 ]
 
 const FIGS = [
@@ -27,7 +27,7 @@ const FIGS = [
 const VALUES = [
   { no: '01', t: 'Strategy',   d: 'A clear direction set across every vertical, and held to.' },
   { no: '02', t: 'Technology', d: 'Modern systems that scale with the group as it grows.' },
-  { no: '03', t: 'Execution',  d: 'Real-world delivery — on the ground, on time, at scale.' },
+  { no: '03', t: 'Execution',  d: 'Real-world delivery - on the ground, on time, at scale.' },
   { no: '04', t: 'Trust',      d: 'Relationships that compound in value over the long term.' },
 ]
 
@@ -62,7 +62,7 @@ export function AboutPage() {
           <motion.aside className="abx-hero-side"
             initial={reduce ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}>
             <p className="abx-hero-lead">
-              Eloma Group is an Australian multi-industry holding company — building, supporting and scaling modern businesses across technology, logistics, customer experience, travel and security.
+              Eloma Group is an Australian multi-industry holding company - building, supporting and scaling modern businesses across technology, logistics, customer experience, travel and security.
             </p>
             <ul className="abx-meta">
               {META.map((m) => (
@@ -80,7 +80,7 @@ export function AboutPage() {
       <section className="abx-mani">
         <motion.p className="abx-mani-label" {...rise()}>Our belief</motion.p>
         <motion.p className="abx-mani-text" {...rise(0.08)}>
-          Businesses grow stronger when they <span className="g">share roots.</span> Common values, shared infrastructure and a long view — so each company makes the others <span className="g">stronger.</span>
+          Businesses grow stronger when they <span className="g">share roots.</span> Common values, shared infrastructure and a long view - so each company makes the others <span className="g">stronger.</span>
         </motion.p>
       </section>
 
@@ -159,7 +159,7 @@ export function AboutPage() {
           viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.9, ease: EASE }}>
           <span className="abx-quote-mark" aria-hidden>“</span>
           We don’t chase the next quarter. We build businesses <span className="g">designed to last decades.</span>
-          <footer className="abx-quote-by">Eloma Group — founding principle</footer>
+          <footer className="abx-quote-by">Eloma Group - founding principle</footer>
         </motion.blockquote>
       </section>
 

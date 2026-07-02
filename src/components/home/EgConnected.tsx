@@ -1,5 +1,5 @@
 /* ───────────────────────────────────────────────
-   EgConnected — "Connected Globally".
+   EgConnected - "Connected Globally".
    Premium animated world map (dotted map + connection arcs
    from the Australian HQ to every market) over a clean,
    restrained stat row. Built on the Aceternity world-map
