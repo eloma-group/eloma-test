@@ -20,18 +20,6 @@ export function EgAbout() {
 
   return (
     <section className="eg-ab" aria-label="About us">
-      {/* duotone filter: turns the pencil sketch into brand-green line art */}
-      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden>
-        <filter id="egTeal" colorInterpolationFilters="sRGB">
-          <feColorMatrix type="matrix" values="0.299 0.587 0.114 0 0  0.299 0.587 0.114 0 0  0.299 0.587 0.114 0 0  0 0 0 1 0" />
-          <feComponentTransfer>
-            <feFuncR type="table" tableValues="0.10 1" />
-            <feFuncG type="table" tableValues="0.45 1" />
-            <feFuncB type="table" tableValues="0.34 1" />
-          </feComponentTransfer>
-        </filter>
-      </svg>
-
       <style>{`
         .eg-ab { background: #ffffff; padding: clamp(56px, 8vw, 120px) clamp(24px, 5vw, 80px) 0; overflow: hidden; }
         .eg-ab-inner { width: 100%; max-width: none; margin: 0 auto; }
@@ -50,7 +38,7 @@ export function EgAbout() {
         .eg-ab-illus { position:relative; aspect-ratio: 4/3; }
         .eg-ab-illus-img {
           position:relative; z-index:2; width:100%; height:100%; object-fit:contain;
-          filter: url(#egTeal); will-change: transform;
+          will-change: transform;
           transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
         }
         .eg-ab-illus:hover .eg-ab-illus-img { transform: scale(1.035); }

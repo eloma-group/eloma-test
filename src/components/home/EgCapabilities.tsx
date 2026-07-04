@@ -4,6 +4,8 @@ import { Globe, Share2, Users, TrendingUp } from 'lucide-react'
 const LOGO  = '/images/eg-mark.png'
 const NAVY  = '#13293D'
 const GREEN = '#3CB98C'
+const BLUE  = '#2E6FE0'      // official blue
+const BLUE2 = '#4C86E6'      // lighter blue shade
 const MUTED = 'rgba(19,41,61,0.55)'
 const EASE  = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
@@ -14,13 +16,13 @@ type Card = {
 
 const CARDS: Card[] = [
   { area: 'a', no: '01', tag: 'Reach',       icon: <Globe size={22} />,      title: 'Global Footprint',
-    body: 'Presence across Australia, India, USA, Canada, China, UK, UAE, and Singapore.', accent: GREEN },
+    body: 'Presence across Australia, India, USA, Canada, China, UK, UAE, and Singapore.', accent: BLUE },
   { area: 'b', no: '02', tag: 'Ecosystem',   icon: <Share2 size={22} />,     title: 'Connected Industries',
     body: 'A unified ecosystem serving logistics, technology, security, travel and customer support.', accent: NAVY },
   { area: 'c', no: '03', tag: 'Partnership', icon: <Users size={22} />,      title: 'Collaborative Network',
     body: 'Partnership driven operations that bring businesses closer together.', accent: NAVY },
   { area: 'd', no: '04', tag: 'Future',      icon: <TrendingUp size={22} />, title: 'Responsible Growth',
-    body: 'Focused on sustainable, ethical, and future ready business practices.', accent: GREEN },
+    body: 'Focused on sustainable, ethical, and future ready business practices.', accent: BLUE2 },
 ]
 
 export function EgCapabilities() {
@@ -31,8 +33,8 @@ export function EgCapabilities() {
         .eg-gc {
           position: relative; overflow: hidden;
           background:
-            radial-gradient(60% 50% at 50% 38%, rgba(60,185,140,0.07), transparent 64%),
-            linear-gradient(180deg, #ffffff 0%, #f3faf7 100%);
+            radial-gradient(60% 50% at 50% 38%, rgba(46,111,224,0.06), transparent 64%),
+            linear-gradient(180deg, #ffffff 0%, #f5f8fc 100%);
           padding: clamp(56px,8vw,128px) clamp(24px,5vw,80px);
         }
         .eg-gc-inner { position: relative; z-index: 1; max-width: none; margin: 0 auto; }
@@ -65,7 +67,7 @@ export function EgCapabilities() {
         /* ── 3D Cards ───────────────────────────────────────── */
         .eg-gc-card {
           position: relative; overflow: hidden;
-          border-radius: 22px; padding: clamp(24px,2.6vw,38px);
+          border-radius: 22px; padding: clamp(20px,2.2vw,32px);
           background: linear-gradient(158deg, rgba(255,255,255,0.94) 0%, rgba(255,255,255,0.70) 100%);
           border: 1px solid rgba(255,255,255,0.9);
           box-shadow:
@@ -110,12 +112,12 @@ export function EgCapabilities() {
 
         .eg-gc-no {
           position:absolute; top: clamp(8px,1vw,14px); right: clamp(14px,1.8vw,24px);
-          font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(46px,5.4vw,84px);
+          font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(40px,4.6vw,72px);
           line-height:1; color: rgba(19,41,61,0.05); letter-spacing:-0.04em; pointer-events:none; user-select:none;
         }
-        .eg-gc-card-top { position:relative; display:flex; align-items:center; gap:14px; margin-bottom:16px; z-index:2; }
+        .eg-gc-card-top { position:relative; display:flex; align-items:center; gap:13px; margin-bottom:14px; z-index:2; }
         .eg-gc-ic {
-          width:52px; height:52px; border-radius:15px; flex-shrink:0;
+          width:46px; height:46px; border-radius:13px; flex-shrink:0;
           display:flex; align-items:center; justify-content:center;
           background: color-mix(in srgb, var(--accent) 12%, transparent);
           color: var(--accent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
@@ -128,7 +130,7 @@ export function EgCapabilities() {
         }
         .eg-gc-card-h {
           position:relative; z-index:2; font-family:'Poppins',sans-serif; font-weight:600;
-          font-size:clamp(18px,1.7vw,25px); color:${NAVY}; margin:0 0 8px; letter-spacing:-0.01em;
+          font-size:clamp(17px,1.55vw,22px); color:${NAVY}; margin:0 0 7px; letter-spacing:-0.01em;
         }
         .eg-gc-card-b {
           position:relative; z-index:2; font-family:'Inter',sans-serif; font-size:clamp(13px,0.98vw,15px);
@@ -195,19 +197,19 @@ export function EgCapabilities() {
         /* large screens: bigger, taller 3D stage */
         @media (min-width: 1920px) {
           .eg-gc-grid { grid-template-columns: 1fr clamp(380px,22vw,470px) 1fr; gap: 52px; min-height: 760px; }
-          .eg-gc-card { padding: 46px; border-radius: 26px; }
-          .eg-gc-card-h { font-size: 28px; }
+          .eg-gc-card { padding: 38px; border-radius: 26px; }
+          .eg-gc-card-h { font-size: 25px; }
           .eg-gc-card-b { font-size: 16px; }
-          .eg-gc-no { font-size: 100px; }
-          .eg-gc-ic { width:60px; height:60px; border-radius:18px; }
+          .eg-gc-no { font-size: 86px; }
+          .eg-gc-ic { width:54px; height:54px; border-radius:16px; }
         }
         @media (min-width: 2560px) {
           .eg-gc-grid { grid-template-columns: 1fr 580px 1fr; gap: 64px; min-height: 1020px; }
-          .eg-gc-card { padding: 62px; border-radius: 30px; }
-          .eg-gc-card-h { font-size: 38px; }
+          .eg-gc-card { padding: 52px; border-radius: 30px; }
+          .eg-gc-card-h { font-size: 33px; }
           .eg-gc-card-b { font-size: 21px; }
-          .eg-gc-no { font-size: 138px; }
-          .eg-gc-ic { width:76px; height:76px; border-radius:22px; }
+          .eg-gc-no { font-size: 120px; }
+          .eg-gc-ic { width:68px; height:68px; border-radius:20px; }
         }
         /* tablet: 2×2 cards, core as a band on top */
         @media (max-width: 1023px) {

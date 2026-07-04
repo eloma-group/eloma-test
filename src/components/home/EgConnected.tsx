@@ -23,9 +23,9 @@ const HUB: Place = { lat: -33.8688, lng: 151.2093, label: 'Australia', hub: true
 const MARKETS: Place[] = [
   HUB,
   { lat: 40.7128,  lng: -74.0060, label: 'US' },          // United States
-  { lat: 43.6532,  lng: -79.3832, label: 'Canada' },      // Toronto
+  { lat: 50.4500,  lng: -97.1500, label: 'Canada' },      // nudged NW of US for arc spacing
   { lat: 51.5074,  lng: -0.1278,  label: 'UK' },          // London
-  { lat: 52.5200,  lng: 13.4050,  label: 'Europe' },      // Berlin (EU)
+  { lat: 47.0000,  lng: 16.0000,  label: 'Europe' },      // nudged SE of UK for arc spacing
   { lat: 25.2048,  lng: 55.2708,  label: 'Dubai' },       // UAE
   { lat: 19.0760,  lng: 72.8777,  label: 'India' },       // Mumbai
   { lat: 31.2304,  lng: 121.4737, label: 'China' },       // Shanghai

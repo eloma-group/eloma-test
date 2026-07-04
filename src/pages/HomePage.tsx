@@ -1,6 +1,5 @@
 import { Header }        from '../components/Header/Header'
 import { FlyFooter }     from '../components/FlyFooter'
-import { AsdPartnershipStrip } from '../components/AsdPartnershipStrip'
 import { ConstructionNotice } from '../components/ConstructionNotice'
 import { EgHero }         from '../components/home/EgHero'
 import { EgConnected }    from '../components/home/EgConnected'
@@ -20,15 +19,14 @@ export function HomePage() {
       <main>
         <EgHero />
         <EgConnected />
+        <EgFoundation />
         <EgBusinesses />
         <EgCompanies />
         <EgLife />
         <EgAbout />
         <EgWhyExist />
         <EgCapabilities />
-        <EgFoundation />
       </main>
-      <AsdPartnershipStrip />
       <FlyFooter />
     </div>
   )

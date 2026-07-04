@@ -22,8 +22,7 @@ export function EgHero() {
           position: relative;
           background:
             radial-gradient(50% 80% at 0% 50%, rgba(74,134,210,0.14) 0%, transparent 48%),
-            radial-gradient(50% 80% at 100% 50%, rgba(60,185,140,0.16) 0%, transparent 48%),
-            linear-gradient(90deg, rgba(74,134,210,0.07) 0%, #ffffff 30%, #ffffff 70%, rgba(60,185,140,0.08) 100%),
+            linear-gradient(90deg, rgba(74,134,210,0.07) 0%, #ffffff 30%, #ffffff 100%),
             #ffffff;
           padding: clamp(96px, 12vw, 170px) clamp(24px, 5vw, 80px) clamp(56px, 8vw, 120px);
           overflow-x: hidden;
@@ -39,13 +38,13 @@ export function EgHero() {
         .eg-hero-h1 {
           font-family: 'Poppins', sans-serif;
           font-weight: 600;
-          font-size: clamp(40px, 5.6vw, 78px);
+          font-size: clamp(39px, 5.7vw, 84px);
           line-height: 1.04;
           letter-spacing: -0.02em;
           margin: 0;
         }
         .eg-hero-h1 .l1 { color: ${NAVY}; }
-        .eg-hero-h1 .l2 { color: ${GREEN}; }
+        .eg-hero-h1 .l2 { color: #6B7683; }
         .eg-hero-rule {
           width: clamp(180px, 26vw, 360px); height: 1px;
           background: linear-gradient(to right, rgba(26,43,60,0.30), transparent);
@@ -53,7 +52,7 @@ export function EgHero() {
         }
         .eg-hero-p {
           font-family: 'Inter', sans-serif;
-          font-size: clamp(14px, 1.15vw, 17px);
+          font-size: clamp(15px, 1.4vw, 18px);
           line-height: 1.8; color: ${MUTED};
           max-width: 440px; margin: 0 0 clamp(28px, 3.5vw, 40px);
         }
@@ -111,17 +110,15 @@ export function EgHero() {
         @media (min-width: 1920px) {
           .eg-hero { padding: 210px 80px 160px; min-height: 88vh; display: flex; align-items: center; }
           .eg-hero-inner { width: 100%; }
-          .eg-hero-h1 { font-size: 104px; }
           .eg-hero-rule { width: 420px; margin: 36px 0; }
-          .eg-hero-p { font-size: 21px; max-width: 560px; }
+          .eg-hero-p { max-width: 560px; }
           .eg-hero-btn { font-size: 20px; min-height: 58px; padding: 16px 58px; }
           .eg-hero-logo .ehl { width: 560px; }
         }
         @media (min-width: 2560px) {
           .eg-hero { padding: 300px 100px 220px; }
-          .eg-hero-h1 { font-size: 146px; }
           .eg-hero-rule { width: 560px; margin: 50px 0; }
-          .eg-hero-p { font-size: 28px; max-width: 740px; }
+          .eg-hero-p { max-width: 740px; }
           .eg-hero-btn { font-size: 26px; min-height: 72px; padding: 22px 76px; border-radius: 16px; }
           .eg-hero-logo .ehl { width: 780px; }
         }

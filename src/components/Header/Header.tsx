@@ -129,7 +129,7 @@ export function Header() {
               className="eg-hd-logo"
               src={logoSrc}
               alt="Eloma Group"
-              style={{ height: '36px', width: 'auto' }}
+              style={{ height: '31px', width: 'auto' }}
             />
           </a>
 
@@ -358,7 +358,7 @@ export function Header() {
         @media (min-width: 1920px) {
           .eg-hd { height: 78px !important; }
           .eg-hd-inner { max-width: 1600px !important; }
-          .eg-hd-logo { height: 52px !important; }
+          .eg-hd-logo { height: 45px !important; }
           .eg-hd-word { font-size: 24px !important; }
           .eg-hd-link { height: 78px !important; font-size: 16.5px !important; padding: 0 18px !important; }
           .eg-hd-dd   { font-size: 16.5px !important; }
@@ -366,7 +366,7 @@ export function Header() {
         @media (min-width: 2560px) {
           .eg-hd { height: 92px !important; }
           .eg-hd-inner { max-width: 2000px !important; }
-          .eg-hd-logo { height: 62px !important; }
+          .eg-hd-logo { height: 54px !important; }
           .eg-hd-word { font-size: 30px !important; }
           .eg-hd-link { height: 92px !important; font-size: 20px !important; padding: 0 24px !important; }
           .eg-hd-dd   { font-size: 20px !important; }

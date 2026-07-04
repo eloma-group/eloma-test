@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin } from 'lucide-react'
+import { Phone, Mail, MapPin, ArrowUp } from 'lucide-react'
 import { openSection } from '../utils/sectionLink'
 
 const NAVY  = '#08213C'
@@ -132,6 +132,18 @@ function FooterLink({ children, to, onClick }: { children: React.ReactNode; to: 
   const onEnter = (e: React.MouseEvent<HTMLElement>) => { const el = e.currentTarget; el.style.color = '#fff'; el.style.paddingLeft = '5px' }
   const onLeave = (e: React.MouseEvent<HTMLElement>) => { const el = e.currentTarget; el.style.color = 'rgba(255,255,255,0.5)'; el.style.paddingLeft = '0' }
   return <a href={to} onClick={onClick} style={style} onMouseEnter={onEnter} onMouseLeave={onLeave}>{children}</a>
+}
+
+function scrollToTop() {
+  const w = window as unknown as {
+    __lenis?: { scrollTo: (t: number, o?: object) => void }
+    __egStopLock?: number
+  }
+  // Tell the step-locked sections (Businesses / Companies) to stand down so they
+  // don't grab the scroll and snap us mid-way to the top.
+  w.__egStopLock = performance.now() + 2200
+  if (w.__lenis?.scrollTo) w.__lenis.scrollTo(0, { duration: 1.5, lock: true, force: true })
+  else window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 export function FlyFooter() {
@@ -285,6 +297,29 @@ export function FlyFooter() {
                     </li>
                   ))}
                 </ul>
+
+                {/* Back-to-top under the last (Sustainability) column */}
+                {col.heading === 'Sustainability' && (
+                  <button
+                    type="button"
+                    onClick={scrollToTop}
+                    aria-label="Back to top"
+                    className="ff-top-btn"
+                    style={{
+                      marginTop: 24,
+                      display: 'inline-flex', alignItems: 'center', gap: 9,
+                      background: 'rgba(60,185,140,0.10)',
+                      border: '1px solid rgba(60,185,140,0.30)',
+                      borderRadius: 10, padding: '10px 16px',
+                      color: GREEN, cursor: 'pointer',
+                      fontSize: 12, fontWeight: 700, letterSpacing: '1.2px', textTransform: 'uppercase',
+                      fontFamily: "'Poppins', sans-serif",
+                    }}
+                  >
+                    <ArrowUp className="ff-top-arrow" size={15} strokeWidth={2.4} />
+                    Back to Top
+                  </button>
+                )}
               </div>
             ))}
           </div>
@@ -369,6 +404,19 @@ export function FlyFooter() {
           background: rgba(60,185,140,0.18) !important;
           box-shadow: 0 10px 28px rgba(60,185,140,0.18);
         }
+
+        .ff-top-btn {
+          transition: transform 0.24s cubic-bezier(0.34,1.56,0.64,1), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+          will-change: transform;
+        }
+        .ff-top-btn:hover {
+          transform: translateY(-3px);
+          background: rgba(60,185,140,0.20) !important;
+          border-color: rgba(60,185,140,0.6) !important;
+          box-shadow: 0 12px 26px -12px rgba(60,185,140,0.5);
+        }
+        .ff-top-arrow { transition: transform 0.24s cubic-bezier(0.16,1,0.3,1); }
+        .ff-top-btn:hover .ff-top-arrow { transform: translateY(-3px); }
       `}</style>
     </footer>
   )

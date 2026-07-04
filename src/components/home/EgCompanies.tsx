@@ -202,7 +202,8 @@ export function EgCompanies() {
     const onScroll = ({ scroll }: { scroll: number }) => {
       const g = geo()
       const inside = scroll > g.topY - 1 && scroll < g.topY + g.travel + 1
-      if (!busy && inside && !prevInside && performance.now() >= suppressRef.current) {
+      const stopLock = (window as unknown as { __egStopLock?: number }).__egStopLock ?? 0
+      if (!busy && inside && !prevInside && performance.now() >= Math.max(suppressRef.current, stopLock)) {
         goStep(scroll <= g.topY + g.travel / 2 ? 0 : n - 1, g)
       }
       prevInside = inside
@@ -210,7 +211,8 @@ export function EgCompanies() {
     const offScroll = lenis.on('scroll', onScroll)
 
     const tryStep = (dir: number) => {
-      if (busy || dir === 0 || performance.now() < suppressRef.current) return false
+      const stopLock = (window as unknown as { __egStopLock?: number }).__egStopLock ?? 0
+      if (busy || dir === 0 || performance.now() < Math.max(suppressRef.current, stopLock)) return false
       const g = geo()
       const y = window.scrollY
       if (!(y > g.topY - 2 && y < g.topY + g.travel + 2)) return false

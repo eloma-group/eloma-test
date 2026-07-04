@@ -1,141 +1,283 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
-import {
-  motion, AnimatePresence, useReducedMotion,
-  useScroll, useMotionValueEvent, useInView,
-} from 'framer-motion'
-import {
-  Headset, Ship, Server, Truck, Plane,
-  PhoneCall, Cloud, Boxes, Globe, Package, Cpu, MapPin, Warehouse,
-} from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { motion, useReducedMotion } from 'framer-motion'
+import { Plane, Ship, Headset, ArrowLeftRight, ArrowRight } from 'lucide-react'
+import { CountUp } from './egScroll'
 import { takePending } from '../../utils/sectionLink'
 
 /* ═══════════════════════════════════════════════════
-   OUR BUSINESSES - "A growing group of" (Mobbin-style)
-   The wordmark holds centre-stage while colourful 3D tiles
-   burst out from behind it and settle around the edges. The
-   section then pins and the business name cycles one by one.
-   Scrolling back up only rewinds the name - the tiles stay put.
+   OUR CORE BUSINESSES - Clean marble bento grid.
+   Six marble cards, ghost number in the top-right corner,
+   blue line-art icons on the marble, uppercase titles,
+   count-up stats, a tan "Explore Solutions" button and a
+   crossing map-lines illustration with travelling dots on
+   Supply Chain. The featured card carries a faint node-graph
+   watermark; the cargo card grows a live mini bar chart.
+   Hover: smooth lift + growing accent line + marble sheen.
+   Header/footer deep-links (eg:business) scroll to and glow
+   the matching card.
    ═══════════════════════════════════════════════════ */
 
 const NAVY  = '#13293D'
-const GREEN = '#3CB98C'
-const MUTED = 'rgba(26,43,60,0.55)'
+const GRAY  = '#A2AEB8'                 // "businesses" word
+const BLUE  = '#2E6FE0'                 // icons + accent
+const MUTED = 'rgba(19,41,61,0.55)'
+const GOLD  = '#B79768'                 // supply-chain map accents
 const EASE  = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
-type Tile = {
-  key: string
-  Icon: typeof Ship
-  c: string                 // base hue (glyph colour); the tile is a light shade of it
-  pos: { left: string; top: string }
-  primary?: boolean         // one of the five businesses (labelled, drives the cycle)
-  title?: string
-  label?: ReactNode         // optional multi-line label
-  sm?: boolean              // smaller decorative accent tile
+/* ── custom line icons to match the reference ── */
+function NodeGraph() {
+  const cx = 24, cy = 24, R = 15
+  const pts = [-90, -30, 30, 90, 150, 210].map((a) => {
+    const r = (a * Math.PI) / 180
+    return [cx + R * Math.cos(r), cy + R * Math.sin(r)] as const
+  })
+  return (
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round">
+      {pts.map(([x, y], i) => <line key={i} x1={cx} y1={cy} x2={x} y2={y} />)}
+      {pts.map(([x, y], i) => <circle key={`n${i}`} cx={x} cy={y} r={2.6} fill="#fff" />)}
+      <circle cx={cx} cy={cy} r={3.7} fill="#fff" />
+    </svg>
+  )
 }
 
-const TILES: Tile[] = [
-  // ── the five businesses (labelled) ──
-  { key: 'call-centre',       primary: true, title: 'Call Centre',       Icon: Headset, c: '#2FB587', pos: { left: '12%', top: '27%' } },
-  { key: 'imports',           primary: true, title: 'Imports',           Icon: Ship,    c: '#3F8FD0', pos: { left: '88%', top: '24%' } },
-  { key: 'it-infrastructure', primary: true, title: 'IT Infrastructure', label: <>IT<br />Infrastructure</>, Icon: Server, c: '#7B6BE0', pos: { left: '6%', top: '60%' } },
-  { key: 'supply-chain',      primary: true, title: 'Supply Chain',      Icon: Truck,   c: '#E68A2E', pos: { left: '92%', top: '62%' } },
-  { key: 'travel',            primary: true, title: 'Travel',            Icon: Plane,   c: '#16A0B0', pos: { left: '20%', top: '85%' } },
-  // ── decorative accents (unlabelled, smaller, related services) ──
-  { key: 'd-map',     Icon: MapPin,    c: '#EA8A5B', pos: { left: '50%', top: '19%' }, sm: true },
-  { key: 'd-phone',   Icon: PhoneCall, c: '#E86A9A', pos: { left: '30%', top: '18%' }, sm: true },
-  { key: 'd-cloud',   Icon: Cloud,     c: '#57ACE6', pos: { left: '70%', top: '17%' }, sm: true },
-  { key: 'd-boxes',   Icon: Boxes,     c: '#E0A93A', pos: { left: '84%', top: '42%' }, sm: true },
-  { key: 'd-globe',   Icon: Globe,     c: '#2FB0A0', pos: { left: '14%', top: '42%' }, sm: true },
-  { key: 'd-package', Icon: Package,   c: '#6C8AE4', pos: { left: '62%', top: '87%' }, sm: true },
-  { key: 'd-cpu',     Icon: Cpu,       c: '#9B7BE0', pos: { left: '39%', top: '89%' }, sm: true },
-  { key: 'd-warehouse', Icon: Warehouse, c: '#E8776A', pos: { left: '80%', top: '84%' }, sm: true },
+/* faint background watermark version (no fills, just the graph) */
+function NodeGraphMark() {
+  const cx = 24, cy = 24, R = 15
+  const pts = [-90, -30, 30, 90, 150, 210].map((a) => {
+    const r = (a * Math.PI) / 180
+    return [cx + R * Math.cos(r), cy + R * Math.sin(r)] as const
+  })
+  return (
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round">
+      {pts.map(([x, y], i) => <line key={i} x1={cx} y1={cy} x2={x} y2={y} />)}
+      {pts.map(([x, y], i) => <circle key={`n${i}`} cx={x} cy={y} r={2.6} />)}
+      <circle cx={cx} cy={cy} r={3.7} />
+    </svg>
+  )
+}
+
+/* live mini bar chart that grows on scroll-in */
+function MiniBars() {
+  const bars = [0.4, 0.62, 0.48, 0.82, 1]
+  return (
+    <span className="egb-bars" aria-hidden>
+      {bars.map((h, i) => (
+        <motion.i
+          key={i}
+          style={{ height: `${h * 100}%` }}
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.7, delay: 0.15 + i * 0.09, ease: EASE }}
+        />
+      ))}
+    </span>
+  )
+}
+
+function MapLines() {
+  const bluePath = 'M6 64 L44 40 L74 52 L114 22'
+  const goldPath = 'M24 74 L58 44 L92 62'
+  return (
+    <svg className="egb-map" viewBox="0 0 120 84" fill="none" strokeLinecap="round" aria-hidden>
+      <g stroke={BLUE} strokeWidth={1.5} opacity={0.9}>
+        <path d={bluePath} />
+        <path d="M10 16 L40 46 L66 26 L110 60" />
+        <path d="M2 40 H116" opacity={0.35} />
+        <path d="M60 4 V80" opacity={0.35} />
+      </g>
+      <g stroke={GOLD} strokeWidth={1.6}>
+        <path d={goldPath} />
+      </g>
+      <g fill="#fff" stroke={BLUE} strokeWidth={1.5}>
+        <circle cx="44" cy="40" r="3.2" />
+        <circle cx="74" cy="52" r="3.2" />
+      </g>
+      <g fill="#fff" stroke={GOLD} strokeWidth={1.6}>
+        <circle cx="58" cy="44" r="3.4" />
+      </g>
+      {/* travelling dots */}
+      <circle className="egb-trav" r={2.6} fill={BLUE}>
+        <animateMotion dur="3.6s" repeatCount="indefinite" path={bluePath}
+          calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines="0.4 0 0.2 1" />
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="3.6s" repeatCount="indefinite" />
+      </circle>
+      <circle className="egb-trav" r={2.6} fill={GOLD}>
+        <animateMotion dur="3.2s" begin="0.8s" repeatCount="indefinite" path={goldPath}
+          calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines="0.4 0 0.2 1" />
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.85;1" dur="3.2s" begin="0.8s" repeatCount="indefinite" />
+      </circle>
+    </svg>
+  )
+}
+
+type Stat = { n: number; suffix?: string; l: string }
+type Biz = {
+  key: string
+  area: string
+  no: string
+  variant: 'featured' | 'header' | 'compact' | 'plain' | 'supply'
+  title: string
+  body: string
+  stats?: Stat[]
+  cta?: string
+}
+
+const BUSINESSES: Biz[] = [
+  {
+    key: 'it-infrastructure', area: 'it', no: '01', variant: 'featured',
+    title: 'IT Infrastructure & Network',
+    body: 'Network architecture and connected infrastructure - enterprise systems, cloud and continuity solutions.',
+    stats: [{ n: 360, suffix: '+', l: 'Endpoints' }, { n: 164, l: 'Systems' }, { n: 42, suffix: '+', l: 'Clients' }],
+    cta: 'Explore Solutions',
+  },
+  {
+    key: 'travel', area: 'travel', no: '02', variant: 'header',
+    title: 'Global Travel & Logistics',
+    body: 'Global travel and logistics - land, sea and air freight, corporate travel and international mobility.',
+  },
+  {
+    key: 'cargo', area: 'cargo', no: '03', variant: 'compact',
+    title: 'Cargo & Freight Analytics',
+    body: 'Live cargo volume and shipment analytics.',
+  },
+  {
+    key: 'imports', area: 'import', no: '04', variant: 'plain',
+    title: 'International Import / Export',
+    body: 'Cross-border trade, maritime shipping and international import and export operations.',
+  },
+  {
+    key: 'call-centre', area: 'call', no: '05', variant: 'header',
+    title: 'Integrated Call Center & Support',
+    body: 'Integrated call centre and customer support - staffed operations, on demand and around the clock.',
+    stats: [{ n: 500, suffix: '+', l: 'Agents' }, { n: 42, suffix: '+', l: 'Support' }, { n: 6, l: 'Clients' }],
+  },
+  {
+    key: 'supply-chain', area: 'supply', no: '06', variant: 'supply',
+    title: 'Supply Chain Optimization',
+    body: 'Dynamic routing and map-based optimization that keeps the whole network efficient.',
+  },
 ]
 
-const PRIMARY = TILES.filter(t => t.primary)
-const BIZ_INDEX: Record<string, number> = Object.fromEntries(PRIMARY.map((t, i) => [t.key, i]))
+/* ── card icon(s) per variant ── */
+function CardIcon({ k }: { k: string }) {
+  if (k === 'it-infrastructure') return <span className="egb-ic"><NodeGraph /></span>
+  if (k === 'travel') return (
+    <span className="egb-ic egb-ic-dual">
+      <Plane strokeWidth={1.6} /><Ship strokeWidth={1.6} />
+    </span>
+  )
+  if (k === 'cargo') return (
+    <span className="egb-ic egb-viz">
+      <Ship strokeWidth={1.6} /><MiniBars />
+    </span>
+  )
+  if (k === 'call-centre') return <span className="egb-ic"><Headset strokeWidth={1.6} /></span>
+  if (k === 'supply-chain') return <span className="egb-ic"><ArrowLeftRight strokeWidth={1.6} /></span>
+  return null
+}
 
-/* ── single 3D tile ── */
-function TileBadge({
-  t, idx, spread, dims, active, useStatic, onOpen,
+/* ── one marble bento card ── */
+function BizCard({
+  b, i, anim, highlight,
 }: {
-  t: Tile
-  idx: number
-  spread: boolean
-  dims: { w: number; h: number }
-  active: boolean
-  useStatic: boolean
-  onOpen: () => void
+  b: Biz
+  i: number
+  anim: boolean
+  highlight: boolean
 }) {
-  // offset from the tile's resting spot back to the exact stage centre
-  const cx = (0.5 - parseFloat(t.pos.left) / 100) * dims.w
-  const cy = (0.5 - parseFloat(t.pos.top) / 100) * dims.h
-
-  const flyAnim = useStatic
-    ? {}
-    : {
-        animate: spread
-          ? { x: 0, y: 0, opacity: 1, scale: 1 }
-          : { x: cx, y: cy, opacity: 0, scale: 0.32 },
-        transition: { type: 'spring' as const, stiffness: 120, damping: 17, mass: 0.9, delay: spread ? idx * 0.045 : 0 },
-      }
+  const navigate = useNavigate()
+  const Stats = b.stats ? (
+    <div className="egb-stats">
+      {b.stats.map((s) => (
+        <div className="egb-stat" key={s.l}>
+          <CountUp className="egb-stat-v" to={s.n} suffix={s.suffix ?? ''} duration={1.4} />
+          <span className="egb-stat-l">{s.l}</span>
+        </div>
+      ))}
+    </div>
+  ) : null
 
   return (
-    <div className="egb-pos" style={useStatic ? undefined : (t.pos as React.CSSProperties)}>
-      <motion.div className="egb-fly" {...flyAnim}>
-        <motion.button
-          type="button"
-          className={`egb-tile-btn${active ? ' active' : ''}${t.sm ? ' sm' : ''}`}
-          onClick={onOpen}
-          whileHover={useStatic ? undefined : { scale: 1.12, y: -6, rotate: [0, -7, 6, -3, 0], transition: { duration: 0.55, ease: 'easeInOut' } }}
-          whileTap={useStatic ? undefined : { scale: 0.95 }}
-          style={{ ['--c' as string]: t.c } as React.CSSProperties}
-          aria-label={t.title ? `Show ${t.title}` : undefined}
-        >
-          <span
-            className="egb-tile"
-            style={{ animationDuration: `${5.5 + (idx % 4) * 0.8}s`, animationDelay: `${idx * 0.35}s` }}
-          >
-            <t.Icon strokeWidth={2} />
-          </span>
-          {(t.label || t.title) && <span className="egb-tile-label">{t.label ?? t.title}</span>}
-        </motion.button>
-      </motion.div>
-    </div>
+    <motion.div
+      className="egb-cell"
+      style={{ gridArea: b.area }}
+      initial={anim ? { opacity: 0, y: 26 } : false}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-70px' }}
+      transition={{ duration: 0.75, ease: EASE, delay: i * 0.07 }}
+    >
+      <div id={`biz-${b.key}`} className={`egb-card v-${b.variant}${highlight ? ' lit' : ''}`}>
+        <span className="egb-accent" aria-hidden />
+        {b.variant === 'featured' && (
+          <span className="egb-watermark" aria-hidden><NodeGraphMark /></span>
+        )}
+        <span className="egb-no">{b.no}</span>
+
+        {b.variant === 'featured' && (
+          <>
+            <CardIcon k={b.key} />
+            <h3 className="egb-title">{b.title}</h3>
+            <p className="egb-text">{b.body}</p>
+            {Stats}
+            <button type="button" className="egb-cta" onClick={() => navigate('/contact#contact-form')}>
+              {b.cta}<ArrowRight strokeWidth={2.2} />
+            </button>
+          </>
+        )}
+
+        {b.variant === 'header' && (
+          <>
+            <div className="egb-hd">
+              <CardIcon k={b.key} />
+              <h3 className="egb-title">{b.title}</h3>
+            </div>
+            <p className="egb-text">{b.body}</p>
+            {Stats}
+          </>
+        )}
+
+        {b.variant === 'compact' && (
+          <>
+            <CardIcon k={b.key} />
+            <h3 className="egb-title egb-title-sm">{b.title}</h3>
+            <p className="egb-text">{b.body}</p>
+          </>
+        )}
+
+        {b.variant === 'plain' && (
+          <>
+            <h3 className="egb-title">{b.title}</h3>
+            <p className="egb-text">{b.body}</p>
+          </>
+        )}
+
+        {b.variant === 'supply' && (
+          <div className="egb-supply">
+            <div className="egb-supply-l">
+              <CardIcon k={b.key} />
+              <h3 className="egb-title">{b.title}</h3>
+              <p className="egb-text">{b.body}</p>
+            </div>
+            <MapLines />
+          </div>
+        )}
+
+        <span className="egb-sheen" aria-hidden />
+      </div>
+    </motion.div>
   )
 }
 
 export function EgBusinesses() {
   const reduce = useReducedMotion() ?? false
   const sectionRef = useRef<HTMLElement>(null)
-  const stageRef = useRef<HTMLDivElement>(null)
-  const suppressRef = useRef(0)          // pause the step-lock during deep-link scrolls
-  const [dims, setDims] = useState({ w: 0, h: 0 })
-  const [active, setActive] = useState(0)
   const [mobile, setMobile] = useState(false)
+  const [lit, setLit] = useState<string | null>(null)
 
-  const useStatic = mobile || reduce
-  const N = PRIMARY.length
+  const anim = !mobile && !reduce
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  })
-
-  // burst the tiles out once, as the section scrolls into view (stays true)
-  const spread = useInView(sectionRef, { once: true, amount: 0.12 })
-
-  // keep the live stage size so tiles can spread from its exact centre
-  useEffect(() => {
-    const el = stageRef.current
-    if (!el) return
-    const measure = () => setDims({ w: el.offsetWidth, h: el.offsetHeight })
-    measure()
-    const ro = new ResizeObserver(measure)
-    ro.observe(el)
-    return () => ro.disconnect()
-  }, [])
-
-  // track the mobile breakpoint (static, non-pinned layout below 768px)
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 767px)')
     const on = () => setMobile(mq.matches)
@@ -144,325 +286,270 @@ export function EgBusinesses() {
     return () => mq.removeEventListener('change', on)
   }, [])
 
-  // desktop: the centre name cycles with scroll (reverses on scroll-up; tiles stay put)
-  useMotionValueEvent(scrollYProgress, 'change', (p) => {
-    if (useStatic) return
-    setActive(Math.max(0, Math.min(N - 1, Math.floor(p * N))))
-  })
-
-  // ── step-lock ──
-  // The pinned scroll is broken into N discrete steps (one per business). Each
-  // scroll gesture moves exactly one step through the global Lenis instance with
-  // `lock: true`, so fast flings can't skip names (Lenis smoothing lets us catch
-  // and redirect an incoming fling), and every step holds for the scrollTo dwell.
-  // The active name still derives from scroll position, so this only *paces* the
-  // scroll - if it ever misses, behaviour degrades to the plain scrubbed version.
+  // Deep-link from header/footer → scroll to the matching card and glow it
   useEffect(() => {
-    if (useStatic) return
-    const section = sectionRef.current
-    const lenis = (window as unknown as { __lenis?: {
-      scrollTo: (t: number, o?: object) => void
-      on: (e: string, cb: (a: { scroll: number }) => void) => (() => void) | void
-      off?: (e: string, cb: (a: { scroll: number }) => void) => void
-    } }).__lenis
-    if (!section || !lenis) return
-
-    let busy = false
-    let prevInside = false
-    let safety: ReturnType<typeof setTimeout> | undefined
-
-    const geo = () => {
-      const vh = window.innerHeight
-      const topY = section.getBoundingClientRect().top + window.scrollY
-      const travel = Math.max(1, section.offsetHeight - vh)
-      return { topY, travel, gap: travel / (N - 1) }
-    }
-    const stepY = (i: number, g: ReturnType<typeof geo>) => g.topY + i * g.gap
-    const nearest = (y: number, g: ReturnType<typeof geo>) =>
-      Math.max(0, Math.min(N - 1, Math.round((y - g.topY) / g.gap)))
-
-    const goStep = (i: number, g: ReturnType<typeof geo>) => {
-      busy = true
-      if (safety) clearTimeout(safety)
-      safety = setTimeout(() => { busy = false }, 1100)   // never let `busy` stick and freeze input
-      lenis.scrollTo(stepY(i, g), {
-        lock: true,
-        duration: 0.6,
-        easing: (t: number) => 1 - Math.pow(1 - t, 3),
-        onComplete: () => { busy = false },
-      })
-    }
-
-    // catch a fling as it enters the zone and hold it at the near end
-    const onScroll = ({ scroll }: { scroll: number }) => {
-      const g = geo()
-      const inside = scroll > g.topY - 1 && scroll < g.topY + g.travel + 1
-      if (!busy && inside && !prevInside && performance.now() >= suppressRef.current) {
-        goStep(scroll <= g.topY + g.travel / 2 ? 0 : N - 1, g)
-      }
-      prevInside = inside
-    }
-    const offScroll = lenis.on('scroll', onScroll)
-
-    const tryStep = (dir: number) => {
-      if (busy || dir === 0 || performance.now() < suppressRef.current) return false
-      const g = geo()
-      const y = window.scrollY
-      if (!(y > g.topY - 2 && y < g.topY + g.travel + 2)) return false   // outside → let it scroll
-      const next = nearest(y, g) + dir
-      if (next < 0 || next >= N) return false                            // boundary → release
-      goStep(next, g)
-      return true
-    }
-
-    const onWheel = (e: WheelEvent) => {
-      if (busy) { e.preventDefault(); return }
-      if (tryStep(Math.sign(e.deltaY))) e.preventDefault()
-    }
-    let touchY = 0
-    const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0].clientY }
-    const onTouchMove = (e: TouchEvent) => {
-      const dy = touchY - e.touches[0].clientY
-      if (busy) { e.preventDefault(); return }
-      if (Math.abs(dy) < 26) return
-      if (tryStep(Math.sign(dy))) { e.preventDefault(); touchY = e.touches[0].clientY }
-    }
-    const onKey = (e: KeyboardEvent) => {
-      const down = e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' '
-      const up = e.key === 'ArrowUp' || e.key === 'PageUp'
-      if (!down && !up) return
-      if (busy) { e.preventDefault(); return }
-      if (tryStep(down ? 1 : -1)) e.preventDefault()
-    }
-
-    window.addEventListener('wheel', onWheel, { passive: false })
-    window.addEventListener('touchstart', onTouchStart, { passive: true })
-    window.addEventListener('touchmove', onTouchMove, { passive: false })
-    window.addEventListener('keydown', onKey)
-    return () => {
-      if (safety) clearTimeout(safety)
-      if (offScroll) offScroll(); else lenis.off?.('scroll', onScroll)
-      window.removeEventListener('wheel', onWheel)
-      window.removeEventListener('touchstart', onTouchStart)
-      window.removeEventListener('touchmove', onTouchMove)
-      window.removeEventListener('keydown', onKey)
-    }
-  }, [useStatic, N])
-
-  // mobile / reduced-motion: gently cycle the centre name on a timer
-  useEffect(() => {
-    if (!useStatic) return
-    const id = setInterval(() => setActive(a => (a + 1) % PRIMARY.length), 2600)
-    return () => clearInterval(id)
-  }, [useStatic])
-
-  // Deep-link from header/footer → activate + scroll so the name is showing
-  useEffect(() => {
+    let clear: ReturnType<typeof setTimeout>
     const focus = (id: string) => {
-      const idx = BIZ_INDEX[id]
-      if (idx == null) return
-      setActive(idx)
-      suppressRef.current = performance.now() + 1500   // let the deep-link land without the step-lock grabbing it
+      if (!BUSINESSES.some((x) => x.key === id)) return
+      setLit(id)
       requestAnimationFrame(() => {
-        const el = sectionRef.current
-        if (!el) return
-        const top = el.getBoundingClientRect().top + window.scrollY
-        if (useStatic) {
-          window.scrollTo({ top: top - 72, behavior: 'smooth' })
-        } else {
-          const scrollable = Math.max(1, el.offsetHeight - window.innerHeight)
-          const p = Math.min(0.999, idx / (N - 1))
-          window.scrollTo({ top: top + p * scrollable, behavior: 'smooth' })
-        }
+        const el = document.getElementById(`biz-${id}`) ?? sectionRef.current
+        el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       })
+      clearTimeout(clear)
+      clear = setTimeout(() => setLit(null), 2400)
     }
     const pending = takePending('business')
     if (pending) setTimeout(() => focus(pending), 350)
     const handler = (e: Event) => { const id = (e as CustomEvent).detail?.id; if (id) focus(id) }
     window.addEventListener('eg:business', handler)
-    return () => window.removeEventListener('eg:business', handler)
-  }, [useStatic])
-
-  // clicking any tile re-centres the whole businesses section
-  const openSectionTop = () => {
-    const el = sectionRef.current
-    if (!el) return
-    const top = el.getBoundingClientRect().top + window.scrollY
-    window.scrollTo({ top: useStatic ? top - 72 : top, behavior: 'smooth' })
-  }
+    return () => { window.removeEventListener('eg:business', handler); clearTimeout(clear) }
+  }, [])
 
   return (
-    <section className="egb" id="our-businesses" aria-label="Our businesses" ref={sectionRef}>
+    <section className="egb" id="our-businesses" aria-label="Our core businesses" ref={sectionRef}>
       <style>{`
-        .egb { position: relative; background: #ffffff; height: 240vh; }
-        .egb-sticky {
-          position: sticky; top: 0; height: 100vh; overflow: hidden;
-          display: flex; align-items: center; justify-content: center;
+        .egb {
+          position: relative; overflow-x: hidden;
+          padding: clamp(56px, 8vw, 130px) clamp(24px, 4vw, 64px);
+          background:
+            radial-gradient(60% 55% at 12% 30%, rgba(60,185,140,0.05), transparent 60%),
+            linear-gradient(180deg, #ffffff 0%, #fbfaf8 100%);
         }
-        .egb-stage {
-          position: relative; width: min(calc(100vw - 140px), 2400px); height: 100%;
-          margin: 0 auto;
-        }
+        .egb-in { position: relative; max-width: 1720px; margin: 0 auto; }
 
-        /* ── centre wordmark ──
-           the wrapper owns the centring transform so Framer Motion's animated
-           transform on the inner element can't override it. */
-        .egb-center {
-          position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-          z-index: 3; text-align: center; width: min(92%, 900px); pointer-events: none;
-        }
-        .egb-center-in { will-change: transform, opacity; }
-        .egb-eyebrow {
-          font-family: 'Inter', sans-serif; font-weight: 700; text-transform: uppercase;
-          font-size: clamp(11px, 0.9vw, 14px); letter-spacing: 3px; color: ${MUTED}; margin: 0;
-        }
-        .egb-heading {
+        /* ── header ── */
+        .egb-h {
           font-family: 'Poppins', sans-serif; font-weight: 800; text-transform: uppercase;
-          font-size: clamp(28px, 4.6vw, 66px); line-height: 1.0; letter-spacing: -0.02em;
-          color: ${NAVY}; margin: clamp(14px, 1.8vw, 22px) 0 0;
+          font-size: clamp(30px, 4.6vw, 68px); line-height: 0.96; letter-spacing: -0.035em;
+          color: ${NAVY}; margin: 0 0 clamp(24px, 3.4vw, 46px);
         }
-        .egb-cycler {
-          position: relative; height: clamp(52px, 8.5vw, 124px); margin-top: clamp(6px, 1vw, 14px);
-          display: flex; align-items: center; justify-content: center;
-        }
-        .egb-name {
-          position: absolute; will-change: transform, opacity;
-          font-family: 'Poppins', sans-serif; font-weight: 800; text-transform: uppercase;
-          font-size: clamp(38px, 7vw, 108px); line-height: 0.92; letter-spacing: -0.03em;
-          color: ${GREEN}; white-space: nowrap;
-        }
+        .egb-h em { color: ${GRAY}; font-style: normal; font-weight: 800; }
 
-        /* ── scattered 3D tiles ── */
-        .egb-scatter { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
-        .egb-pos { position: absolute; transform: translate(-50%, -50%); }
-        .egb-fly { will-change: transform, opacity; }
-        .egb-tile-btn {
-          pointer-events: auto; cursor: pointer; background: none; border: none; padding: 0;
-          display: flex; flex-direction: column; align-items: center; gap: 12px;
+        /* ── bento grid ── */
+        .egb-grid {
+          display: grid; gap: clamp(12px, 1.2vw, 20px);
+          grid-template-columns: repeat(4, 1fr);
+          grid-auto-rows: minmax(0, auto);
+          grid-template-areas:
+            "it it travel travel"
+            "it it cargo  import"
+            "call call supply supply";
         }
-        .egb-tile {
-          display: flex; align-items: center; justify-content: center;
-          width: clamp(76px, 7.4vw, 106px); height: clamp(76px, 7.4vw, 106px); border-radius: 26px;
-          color: var(--c);
-          background: linear-gradient(150deg,
-            color-mix(in srgb, var(--c) 9%, #ffffff),
-            color-mix(in srgb, var(--c) 24%, #ffffff));
-          border: 1px solid rgba(255,255,255,0.75);
-          box-shadow:
-            0 16px 32px -12px color-mix(in srgb, var(--c) 55%, transparent),
-            0 4px 10px -6px color-mix(in srgb, var(--c) 42%, transparent),
-            inset 0 2px 0 rgba(255,255,255,0.95),
-            inset 0 -7px 14px color-mix(in srgb, var(--c) 18%, transparent);
-          animation: egbFloat 6s cubic-bezier(0.45,0,0.55,1) infinite;
+        .egb-cell { min-width: 0; will-change: transform, opacity; }
+
+        /* ── marble card ── */
+        .egb-card {
+          position: relative; height: 100%; box-sizing: border-box; overflow: hidden;
+          display: flex; flex-direction: column;
+          padding: clamp(20px, 1.9vw, 34px);
+          border-radius: clamp(16px, 1.2vw, 22px);
           will-change: transform;
-          transition: box-shadow 0.3s ease;
-        }
-        .egb-tile svg { width: clamp(30px, 3vw, 42px); height: auto; }
-        .egb-tile-btn.sm .egb-tile { width: clamp(52px, 5vw, 74px); height: clamp(52px, 5vw, 74px); border-radius: 19px; }
-        .egb-tile-btn.sm .egb-tile svg { width: clamp(22px, 2.2vw, 30px); }
-        .egb-tile-btn.active .egb-tile {
+          background-color: #fdfcfb;
+          background-image:
+            radial-gradient(150% 100% at 12% 2%, rgba(255,255,255,0.98), transparent 46%),
+            radial-gradient(120% 120% at 98% 106%, rgba(214,206,192,0.42), transparent 52%),
+            linear-gradient(118deg, transparent 33%, rgba(19,41,61,0.045) 39%, transparent 42%),
+            linear-gradient(126deg, transparent 59%, rgba(150,130,95,0.09) 64%, transparent 67%),
+            linear-gradient(100deg, transparent 77%, rgba(19,41,61,0.03) 81%, transparent 85%),
+            linear-gradient(160deg, #ffffff, #f5f1ea);
+          border: 1px solid rgba(19,41,61,0.08);
           box-shadow:
-            0 22px 44px -12px color-mix(in srgb, var(--c) 72%, transparent),
-            0 6px 14px -6px color-mix(in srgb, var(--c) 52%, transparent),
-            inset 0 2px 0 rgba(255,255,255,1),
-            inset 0 -7px 14px color-mix(in srgb, var(--c) 24%, transparent);
+            inset 0 1px 0 rgba(255,255,255,0.95),
+            0 2px 4px rgba(19,41,61,0.04),
+            0 22px 42px -26px rgba(19,41,61,0.30),
+            0 8px 18px -12px rgba(19,41,61,0.14);
+          transition:
+            transform 0.5s cubic-bezier(0.16,1,0.3,1),
+            box-shadow 0.5s ease,
+            border-color 0.5s ease;
         }
-        .egb-tile-label {
-          font-family: 'Inter', sans-serif; font-weight: 600; color: ${MUTED};
-          font-size: clamp(12px, 1vw, 15px); line-height: 1.25; text-align: center; max-width: 14ch;
-          transition: color 0.25s ease;
+        .egb-card:hover {
+          transform: translateY(-8px);
+          border-color: rgba(46,111,224,0.28);
+          box-shadow:
+            inset 0 1px 0 rgba(255,255,255,1),
+            0 3px 6px rgba(19,41,61,0.05),
+            0 46px 76px -30px rgba(19,41,61,0.38),
+            0 16px 30px -16px rgba(19,41,61,0.20);
         }
-        .egb-tile-btn.active .egb-tile-label { color: var(--c); font-weight: 700; }
+        .egb-card.lit {
+          border-color: ${BLUE};
+          box-shadow: 0 40px 70px -28px rgba(46,111,224,0.5), 0 0 0 2px ${BLUE};
+        }
+        .egb-card.v-featured { padding: clamp(24px, 2.3vw, 42px); }
 
-        @keyframes egbFloat {
-          0%, 100% { transform: translateY(0); }
-          50%      { transform: translateY(-9px); }
+        /* faint node-graph watermark on the featured card */
+        .egb-watermark {
+          position: absolute; right: -4%; bottom: -8%; width: clamp(150px, 20vw, 300px); z-index: 0;
+          color: ${BLUE}; opacity: 0.06; pointer-events: none; transform: rotate(-8deg);
+        }
+        .egb-watermark svg { width: 100%; height: auto; }
+
+        /* accent line grows from centre on hover */
+        .egb-accent {
+          position: absolute; left: 0; right: 0; top: 0; height: 3px; pointer-events: none; z-index: 2;
+          background: linear-gradient(90deg, transparent, ${BLUE}, transparent);
+          transform: scaleX(0); transform-origin: center; opacity: 0;
+          transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease;
+        }
+        .egb-card:hover .egb-accent { transform: scaleX(1); opacity: 1; }
+        .egb-card.lit .egb-accent { transform: scaleX(1); opacity: 1; }
+
+        /* marble sheen sweep on hover */
+        .egb-sheen {
+          position: absolute; inset: -30% -60%; pointer-events: none; transform: translateX(-45%); z-index: 1;
+          background: linear-gradient(115deg, transparent 43%, rgba(255,255,255,0.55) 50%, transparent 57%);
+          opacity: 0; transition: opacity 0.5s ease, transform 0.9s ease;
+        }
+        .egb-card:hover .egb-sheen { opacity: 0.8; transform: translateX(45%); }
+
+        /* content sits above the decorative layers (watermark z0, sheen z1) */
+        .egb-ic, .egb-hd, .egb-title, .egb-text, .egb-stats, .egb-cta, .egb-supply {
+          position: relative; z-index: 2;
         }
 
-        /* ── mobile: no pin, stacked centre + wrapped tiles ── */
+        /* ghost number in corner */
+        .egb-no {
+          position: absolute; top: clamp(14px, 1.4vw, 24px); right: clamp(16px, 1.5vw, 26px);
+          font-family: 'Poppins', sans-serif; font-weight: 800; letter-spacing: -0.03em;
+          font-size: clamp(22px, 1.9vw, 34px); line-height: 1;
+          color: rgba(19,41,61,0.05);
+          -webkit-text-stroke: 1.3px rgba(19,41,61,0.32);
+          transition: -webkit-text-stroke-color 0.4s ease, color 0.4s ease;
+        }
+        .egb-card:hover .egb-no { -webkit-text-stroke-color: ${BLUE}; }
+        .egb-card.v-featured .egb-no { font-size: clamp(34px, 3.2vw, 58px); -webkit-text-stroke-width: 1.6px; }
+
+        /* blue line icons directly on the marble */
+        .egb-ic { display: inline-flex; align-items: center; gap: 10px; color: ${BLUE};
+          margin-bottom: clamp(16px, 1.8vw, 26px);
+          transition: transform 0.5s cubic-bezier(0.16,1,0.3,1); }
+        .egb-card:hover .egb-ic { transform: translateY(-3px); }
+        .egb-ic svg { width: clamp(30px, 2.6vw, 42px); height: auto; }
+        .egb-ic-dual svg { width: clamp(26px, 2.1vw, 34px); }
+        .egb-card.v-featured .egb-ic svg { width: clamp(40px, 3.4vw, 56px); }
+
+        /* mini bar chart (cargo card) */
+        .egb-viz { align-items: flex-end; gap: 14px; }
+        .egb-viz svg { width: clamp(30px, 2.6vw, 40px); }
+        .egb-bars { display: inline-flex; align-items: flex-end; gap: 5px;
+          width: clamp(46px, 4vw, 62px); height: clamp(30px, 2.6vw, 40px); }
+        .egb-bars i {
+          flex: 1; min-height: 4px; border-radius: 3px 3px 1px 1px; transform-origin: bottom;
+          background: linear-gradient(180deg, ${BLUE}, rgba(46,111,224,0.55));
+        }
+
+        .egb-hd { display: flex; align-items: flex-start; gap: clamp(12px, 1.2vw, 18px); margin-bottom: clamp(10px, 1vw, 14px); }
+        .egb-hd .egb-ic { margin-bottom: 0; flex: none; }
+        .egb-hd .egb-title { margin: clamp(2px, 0.4vw, 6px) 0 0; }
+
+        .egb-title {
+          font-family: 'Poppins', sans-serif; font-weight: 700; text-transform: uppercase;
+          letter-spacing: -0.01em; font-size: clamp(16px, 1.25vw, 23px); line-height: 1.14;
+          color: ${NAVY}; margin: 0 0 clamp(9px, 0.9vw, 13px); max-width: 20ch;
+        }
+        .egb-title-sm { font-size: clamp(14px, 1vw, 18px); }
+        .egb-card.v-featured .egb-title { font-size: clamp(21px, 1.9vw, 34px); }
+        .egb-text {
+          font-family: 'Inter', sans-serif; font-size: clamp(12.5px, 0.9vw, 15px);
+          line-height: 1.6; color: ${MUTED}; margin: 0; max-width: 44ch;
+        }
+
+        /* stats with dividers */
+        .egb-stats {
+          display: flex; flex-wrap: wrap; align-items: flex-end;
+          margin-top: auto; padding-top: clamp(16px, 1.7vw, 24px);
+          gap: clamp(14px, 1.6vw, 28px); border-top: 1px solid rgba(19,41,61,0.12);
+        }
+        .egb-stat { position: relative; display: flex; flex-direction: column; gap: 4px;
+          padding-left: clamp(14px, 1.6vw, 28px); }
+        .egb-stat:first-child { padding-left: 0; }
+        .egb-stat + .egb-stat::before {
+          content: ''; position: absolute; left: 0; top: 5px; bottom: 2px; width: 1px;
+          background: rgba(19,41,61,0.16);
+        }
+        .egb-stat-v {
+          font-family: 'Poppins', sans-serif; font-weight: 800; letter-spacing: -0.03em;
+          font-size: clamp(22px, 1.9vw, 34px); line-height: 1; color: ${NAVY};
+          font-variant-numeric: tabular-nums;
+        }
+        .egb-stat-l {
+          font-family: 'Inter', sans-serif; font-weight: 600; text-transform: uppercase;
+          letter-spacing: 1px; font-size: clamp(9.5px, 0.68vw, 11.5px); color: ${MUTED};
+        }
+
+        /* tan explore button */
+        .egb-cta {
+          align-self: flex-start; margin-top: clamp(18px, 1.9vw, 28px);
+          display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+          font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: 0.6px;
+          font-size: clamp(11px, 0.82vw, 13px); text-transform: uppercase; color: #3a2f1c;
+          padding: clamp(11px, 0.95vw, 15px) clamp(18px, 1.5vw, 26px);
+          min-height: 44px; border: 1px solid rgba(150,120,70,0.35); border-radius: 8px;
+          background: linear-gradient(150deg, #ddc79d, #c8ac78);
+          box-shadow: 0 10px 20px -12px rgba(120,95,50,0.6), inset 0 1px 0 rgba(255,255,255,0.5);
+          transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+        .egb-cta svg { width: 15px; height: 15px; transition: transform 0.25s ease; }
+        .egb-cta:hover { transform: translateY(-2px); background: linear-gradient(150deg, #e2cea6, #ceb480);
+          box-shadow: 0 16px 26px -12px rgba(120,95,50,0.65); }
+        .egb-cta:hover svg { transform: translateX(3px); }
+
+        /* supply chain split layout with map illustration */
+        .egb-supply { display: flex; align-items: center; gap: clamp(18px, 3vw, 48px); height: 100%; }
+        .egb-supply-l { flex: 1 1 auto; min-width: 0; }
+        .egb-map { flex: none; width: clamp(120px, 16vw, 210px); height: auto;
+          transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+        .egb-card:hover .egb-map { transform: scale(1.05); }
+
+        /* ── responsive ── */
+        @media (max-width: 1023px) {
+          .egb-grid {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-areas:
+              "it it"
+              "travel travel"
+              "cargo import"
+              "call call"
+              "supply supply";
+          }
+        }
         @media (max-width: 767px) {
-          .egb { height: auto; }
-          .egb-sticky { position: static; height: auto; padding: clamp(56px, 12vw, 90px) 24px; }
-          .egb-stage {
-            width: 100%; height: auto;
-            display: flex; flex-direction: column; align-items: center; gap: clamp(36px, 9vw, 52px);
+          .egb-grid {
+            grid-template-columns: 1fr;
+            grid-template-areas: "it" "travel" "cargo" "import" "call" "supply";
           }
-          .egb-center { position: static; transform: none; width: 100%; pointer-events: auto; }
-          .egb-cycler { height: auto; min-height: clamp(48px, 16vw, 72px); }
-          .egb-name { position: static; white-space: normal; }
-          .egb-scatter {
-            position: static; inset: auto;
-            display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;
-            gap: clamp(22px, 6vw, 34px);
-          }
-          .egb-pos { position: static; transform: none; }
+          .egb-supply { flex-direction: column; align-items: flex-start; gap: 20px; }
+          .egb-map { width: min(220px, 60%); }
         }
+        @media (max-width: 400px) { .egb-stats { gap: 12px; } }
 
         /* ── large screens ── */
-        @media (min-width: 1920px) {
-          .egb-heading { font-size: 78px; }
-          .egb-name { font-size: 130px; }
-          .egb-cycler { height: 150px; }
-          .egb-tile { width: 116px; height: 116px; border-radius: 30px; }
-          .egb-tile svg { width: 46px; }
-          .egb-tile-btn.sm .egb-tile { width: 82px; height: 82px; }
-          .egb-tile-label { font-size: 17px; }
-        }
-        @media (min-width: 2560px) {
-          .egb-heading { font-size: 104px; }
-          .egb-name { font-size: 176px; }
-          .egb-cycler { height: 210px; }
-          .egb-tile { width: 150px; height: 150px; border-radius: 38px; }
-          .egb-tile svg { width: 58px; }
-          .egb-tile-btn.sm .egb-tile { width: 104px; height: 104px; }
-          .egb-tile-label { font-size: 21px; }
+        @media (min-width: 1920px) { .egb-in { max-width: 1860px; } }
+        @media (min-width: 2560px) { .egb-in { max-width: 2360px; } }
+
+        @media (prefers-reduced-motion: reduce) {
+          .egb-card, .egb-cta, .egb-sheen, .egb-ic, .egb-map, .egb-accent { transition: none; }
+          .egb-trav { display: none; }
         }
       `}</style>
 
-      <div className="egb-sticky">
-        <div className="egb-stage" ref={stageRef}>
-          <div className="egb-center">
-            <motion.div
-              className="egb-center-in"
-              initial={reduce ? false : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.8, ease: EASE }}
-            >
-              <p className="egb-eyebrow">Our Businesses</p>
-              <h2 className="egb-heading">A growing group of</h2>
-              <div className="egb-cycler">
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={active}
-                    className="egb-name"
-                    style={{ color: PRIMARY[active].c }}
-                    initial={reduce ? false : { opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={reduce ? undefined : { opacity: 0, y: -18 }}
-                    transition={{ duration: 0.45, ease: EASE }}
-                  >
-                    {PRIMARY[active].title}
-                  </motion.span>
-                </AnimatePresence>
-              </div>
-            </motion.div>
-          </div>
+      <div className="egb-in">
+        <motion.h2
+          className="egb-h"
+          initial={reduce ? false : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.75, ease: EASE }}
+        >
+          Our core <em>businesses</em>
+        </motion.h2>
 
-          <div className="egb-scatter">
-            {TILES.map((t, i) => (
-              <TileBadge
-                key={t.key}
-                t={t}
-                idx={i}
-                spread={spread}
-                dims={dims}
-                active={t.primary ? PRIMARY[active].key === t.key : false}
-                useStatic={useStatic}
-                onOpen={openSectionTop}
-              />
-            ))}
-          </div>
+        <div className="egb-grid">
+          {BUSINESSES.map((b, i) => (
+            <BizCard key={b.key} b={b} i={i} anim={anim} highlight={lit === b.key} />
+          ))}
         </div>
       </div>
     </section>

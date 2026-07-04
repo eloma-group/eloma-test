@@ -34,16 +34,18 @@ export function EgWhyExist() {
       <style>{`
         .eg-wy { position: relative; overflow: hidden; }
         .eg-wy-bg { position:absolute; inset:0; z-index:0; overflow:hidden; }
-        .eg-wy-bg img { position:absolute; left:0; top:-12%; width:100%; height:124%; object-fit:cover; will-change: transform; }
-        /* light, airy mist: white at top (seamless with the founder section above) fading to reveal
-           the foggy forest; the very bottom deepens into a dark forest vignette before the next
-           (white) section - matching the brochure's gradient hand-off. */
+        /* gently desaturate the forest so its green cast is muted (no golden tint) */
+        .eg-wy-bg img { position:absolute; left:0; top:-12%; width:100%; height:124%; object-fit:cover; will-change: transform;
+          filter: saturate(0.55) brightness(1.05); }
+        /* neutral frosted-white overlay (glass look): opaque white at top (seamless with the section
+           above) that fades away lower down so the image stays transparent / visible towards the
+           bottom, with only a whisper of neutral settle at the very base. */
         .eg-wy-bg::after { content:''; position:absolute; inset:0; background:
           linear-gradient(180deg,
-            #ffffff 0%, rgba(255,255,255,0.90) 9%, rgba(255,255,255,0.50) 26%,
-            rgba(255,255,255,0.34) 55%, rgba(255,255,255,0.34) 80%, rgba(255,255,255,0.10) 92%, rgba(255,255,255,0) 100%),
-          linear-gradient(180deg, rgba(10,26,22,0) 78%, rgba(10,26,22,0.30) 90%, rgba(8,20,16,0.62) 96%, rgba(5,14,11,0.86) 100%),
-          linear-gradient(90deg, rgba(255,255,255,0) 55%, rgba(255,255,255,0.26) 100%);
+            #ffffff 0%, rgba(255,255,255,0.90) 9%, rgba(255,255,255,0.48) 26%,
+            rgba(255,255,255,0.30) 52%, rgba(255,255,255,0.18) 76%, rgba(255,255,255,0.06) 90%, rgba(255,255,255,0) 100%),
+          linear-gradient(180deg, rgba(24,30,28,0) 84%, rgba(24,30,28,0.10) 94%, rgba(20,26,24,0.24) 100%),
+          linear-gradient(90deg, rgba(255,255,255,0) 58%, rgba(255,255,255,0.18) 100%);
         }
         .eg-wy-inner { position:relative; z-index:2; max-width: none; margin:0 auto; padding: clamp(56px,8vw,120px) clamp(24px,5vw,80px); }
         .eg-wy-head { text-align:center; margin-bottom: clamp(36px,5vw,60px); }
@@ -60,7 +62,7 @@ export function EgWhyExist() {
           background:
             linear-gradient(135deg, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0) 46%),
             linear-gradient(135deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.10) 100%);
-          border: 1px solid rgba(255,255,255,0.50); border-radius: 20px;
+          border: 1px solid rgba(200,170,118,0.48); border-radius: 20px;
           padding: clamp(20px,2.2vw,30px);
           box-shadow:
             0 18px 44px -20px rgba(10,26,22,0.5),
@@ -76,7 +78,7 @@ export function EgWhyExist() {
           background:
             linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 52%),
             linear-gradient(135deg, rgba(16,34,28,0.10) 0%, rgba(10,24,19,0.18) 100%);
-          border-color: rgba(255,255,255,0.34);
+          border-color: rgba(200,170,118,0.42);
         }
         /* accent tab that grows from the top edge */
         .egw-card::before {
@@ -107,13 +109,18 @@ export function EgWhyExist() {
         .egw-card-tag { position:relative; font-family:'Inter',sans-serif; font-size:clamp(12.5px,1vw,15px); color:${GREEN}; font-weight:700; margin:5px 0 13px; letter-spacing:0.3px; }
         .egw-card-b { position:relative; font-family:'Inter',sans-serif; font-size:clamp(14px,1.12vw,16.5px); line-height:1.62; color:rgba(19,41,61,0.82); margin:0; }
 
+        /* bottom two cards (The Canopy / The Horizon): text + icon all white, heading stays dark */
+        .egw-card.is-dark .egw-card-ic { color:#fff; }
+        .egw-card.is-dark .egw-card-tag { color:#fff; }
+        .egw-card.is-dark .egw-card-b { color:rgba(255,255,255,0.90); }
+
         /* right panel - a tall frosted card matching the four cards, like the brochure */
         .eg-wy-panel {
           position: relative; overflow: hidden;
           background:
             linear-gradient(135deg, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0) 46%),
             linear-gradient(135deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.10) 100%);
-          border: 1px solid rgba(255,255,255,0.50); border-radius: 20px;
+          border: 1px solid rgba(200,170,118,0.48); border-radius: 20px;
           box-shadow:
             0 18px 44px -20px rgba(10,26,22,0.5),
             inset 0 1px 0 rgba(255,255,255,0.7),
@@ -193,7 +200,7 @@ export function EgWhyExist() {
               impact, promote ethical practices, and build solutions that contribute to a more
               responsible and resilient future.
             </p>
-            <button className="eg-wy-btn" onClick={() => navigate('/values')}>
+            <button className="eg-wy-btn" onClick={() => navigate('/contact#contact-form')}>
               Discover More <span className="circ"><ArrowRight size={15} /></span>
             </button>
           </motion.div>
