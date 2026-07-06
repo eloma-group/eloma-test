@@ -130,8 +130,7 @@ export function EgHero() {
           disablePictureInPicture
           aria-hidden
         >
-          <source src="/images/hero-bg.webm" type="video/webm" />
-          <source src="/images/hero-bg.mp4" type="video/mp4" />
+          <source src="/images/hero video.mp4" type="video/mp4" />
         </video>
       )}
       <span className="eg-hero-scrim" aria-hidden />
