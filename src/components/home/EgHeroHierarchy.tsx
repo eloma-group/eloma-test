@@ -22,7 +22,7 @@ export function EgHeroHierarchy() {
       <style>{`
         .eg-heroh {
           position: relative; overflow: hidden;
-          min-height: clamp(620px, 92vh, 1000px);
+          min-height: 100vh; min-height: 100svh;
           display: flex; align-items: center;
           padding: clamp(56px, 8vh, 110px) clamp(20px, 3.5vw, 56px);
         }
@@ -46,20 +46,20 @@ export function EgHeroHierarchy() {
         }
         .eg-heroh-inner {
           position: relative; z-index: 2;
-          width: 100%; max-width: 1760px; margin: 0 auto;
+          width: 100%; max-width: none; margin: 0;
         }
-        .eg-heroh-copy { position: relative; z-index: 2; max-width: 42%; }
+        .eg-heroh-copy { position: relative; z-index: 2; max-width: 54%; margin-top: clamp(40px, 9vh, 130px); }
         .eg-heroh-eyebrow {
           display: inline-flex; align-items: center; gap: 12px;
           font-family: 'Inter', sans-serif; font-weight: 800; text-transform: uppercase;
-          font-size: clamp(10px, 0.85vw, 13px); letter-spacing: 2.6px;
+          font-size: clamp(11px, 1vw, 15px); letter-spacing: 2.6px;
           color: rgba(255,255,255,0.82); margin: 0 0 clamp(18px, 2.4vw, 30px);
         }
         .eg-heroh-eyebrow::before { content: ''; width: clamp(26px, 4vw, 54px); height: 1px;
           background: linear-gradient(90deg, ${GREEN}, transparent); }
         .eg-heroh-h1 {
           font-family: 'Poppins', sans-serif; font-weight: 600;
-          font-size: clamp(38px, 5.4vw, 84px); line-height: 1.03; letter-spacing: -0.02em;
+          font-size: clamp(48px, 6.3vw, 108px); line-height: 1.02; letter-spacing: -0.02em;
           margin: 0; color: #fff; text-shadow: 0 2px 40px rgba(0,0,0,0.45);
         }
         .eg-heroh-h1 .l1 { color: #ffffff; }
@@ -71,14 +71,14 @@ export function EgHeroHierarchy() {
         }
         .eg-heroh-p {
           font-family: 'Inter', sans-serif;
-          font-size: clamp(15px, 1.4vw, 19px); line-height: 1.8;
-          color: rgba(255,255,255,0.82); max-width: 480px; margin: 0 0 clamp(30px, 3.6vw, 44px);
+          font-size: clamp(16px, 1.5vw, 23px); line-height: 1.72;
+          color: rgba(255,255,255,0.82); max-width: 620px; margin: 0 0 clamp(30px, 3.6vw, 44px);
           text-shadow: 0 2px 20px rgba(0,0,0,0.4);
         }
         .eg-heroh-btn {
           display: inline-flex; align-items: center; gap: 14px;
           cursor: pointer; font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: 1.5px;
-          text-transform: uppercase; font-size: clamp(12px, 0.9vw, 13px); color: #fff;
+          text-transform: uppercase; font-size: clamp(13px, 1vw, 15px); color: #fff;
           background: none; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 8px;
           padding: clamp(14px, 1.4vw, 18px) clamp(22px, 2vw, 30px);
           transition: background .4s ease, color .4s ease, border-color .4s ease, box-shadow .4s ease;
@@ -128,8 +128,6 @@ export function EgHeroHierarchy() {
 
       <div className="eg-heroh-inner">
         <div className="eg-heroh-copy">
-          <motion.p className="eg-heroh-eyebrow" {...fade(0.02)}>Eloma Group</motion.p>
-
           <motion.h1 className="eg-heroh-h1" {...fade(0.05)}>
             <span className="l1">Empowering</span><br />
             <span className="l2">Growth with</span><br />
