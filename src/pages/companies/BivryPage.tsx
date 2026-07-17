@@ -49,7 +49,7 @@ export function BivryPage() {
 
       {/* ── HERO (cinematic photo) ── */}
       <section className="bv-hero">
-        <img className="bv-hero-img" src={img('photo-1591768793355-74d04bb6608f', 1900)} alt="BIVRY freight truck on the highway at golden hour" decoding="async" />
+        <img className="bv-hero-img" src="/images/bivry-hero.jpg" alt="BIVRY freight road-train truck on an Australian highway" decoding="async" />
         <span className="bv-hero-scrim" aria-hidden />
         <div className="bv-wrap bv-hero-in">
           <motion.nav className="bv-crumb" initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
