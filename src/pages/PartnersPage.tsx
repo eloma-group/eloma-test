@@ -64,17 +64,6 @@ export function PartnersPage() {
                 We work with world-leading brands and the Australian Government to deliver secure, reliable solutions across every industry we serve.
               </motion.p>
             </div>
-
-            <motion.div className="pt-hero-asd" initial={{ opacity: 0, y: 24, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.85, ease: EASE, delay: 0.24 }}>
-              <span className="pt-hero-asd-accent" aria-hidden />
-              <span className="pt-hero-asd-glow" aria-hidden />
-              <span className="pt-hero-asd-eyebrow"><span className="pt-hero-asd-dot" />Official Government Partnership</span>
-              <img className="pt-hero-asd-logo" src="/partners/asd-lockup-navy.png" alt="Australian Government - Australian Signals Directorate & Australian Cyber Security Centre (ACSC)" loading="lazy" decoding="async" />
-              <span className="pt-hero-asd-rule" aria-hidden />
-              <p className="pt-hero-asd-cap">
-                Working with the <strong>Australian Signals Directorate (ASD)</strong> &amp; Australian Cyber Security Centre (ACSC) - aligned to national-grade security standards.
-              </p>
-            </motion.div>
           </div>
 
           <motion.div className="pt-trust" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.34 }}>
@@ -194,7 +183,7 @@ export function PartnersPage() {
         .pt-hero-dots { position:absolute; inset:0; pointer-events:none; opacity:0.5; background-image:radial-gradient(rgba(19,41,61,0.05) 1px, transparent 1px); background-size:26px 26px; -webkit-mask-image:linear-gradient(180deg,#000,transparent 82%); mask-image:linear-gradient(180deg,#000,transparent 82%); }
         .pt-hero-glow { position:absolute; top:-120px; right:-80px; width:480px; height:480px; border-radius:50%; background:radial-gradient(circle, rgba(60,185,140,0.16), transparent 64%); pointer-events:none; }
         .pt-hero-in { position:relative; z-index:1; }
-        .pt-hero-top { display:grid; grid-template-columns:1.25fr 0.9fr; gap:clamp(32px,4vw,72px); align-items:center; }
+        .pt-hero-top { display:block; max-width:900px; }
         .pt-hero-copy { max-width:900px; }
         .pt-hero-h1 { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(38px,5.2vw,84px); line-height:1.03; letter-spacing:-0.038em; color:${NAVY}; margin:clamp(18px,2.2vw,28px) 0 0; }
         .pt-hero-lead { font-family:'Inter',sans-serif; font-size:clamp(15px,1.25vw,19px); line-height:1.8; color:${MUTED}; max-width:52ch; margin:clamp(20px,2.4vw,28px) 0 0; }

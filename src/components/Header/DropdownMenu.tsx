@@ -18,7 +18,7 @@ export function DropdownMenu({ columns, isOpen, onMouseEnter, onMouseLeave }: Dr
       onMouseLeave={onMouseLeave}
       style={{
         position: 'fixed',
-        top: '64px',
+        top: '52px',
         left: 0,
         right: 0,
         background: '#ffffff',

@@ -1,19 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
 import { Menu, X, ChevronDown, ChevronRight } from 'lucide-react'
 import { navItems } from '../../data/navItems'
 import { DropdownMenu } from './DropdownMenu'
-import { useScrollY } from '../../hooks/useScrollY'
 import { openSection } from '../../utils/sectionLink'
 
 export function Header() {
-  const scrollY = useScrollY()
-  const { pathname } = useLocation()
-
-  // The floating white fade overlay only belongs on the homepage hero video.
-  // Every other route keeps a solid white sticky header.
-  const isHome = pathname === '/'
-
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null)
@@ -21,8 +12,9 @@ export function Header() {
 
   const anyOpen = openDropdown !== null
 
-  // Transparent while the first hero section (100vh) is still in view — homepage only
-  const overHero = isHome && scrollY < (typeof window !== 'undefined' ? window.innerHeight - 64 : 700)
+  // The header now sits ABOVE the homepage hero (solid white bar, hero stacked
+  // below it) instead of floating transparently over the hero video.
+  const overHero = false
 
   // Transparent when #services section occupies the header zone
   const [overServices, setOverServices] = useState(false)
@@ -32,7 +24,7 @@ export function Header() {
 
   useEffect(() => {
     const HERO_IDS = ['hero2-section', 'hero3-section', 'hero4-section']
-    const HEADER_H = 64
+    const HEADER_H = 52
 
     const straddles = (id: string) => {
       const el = document.getElementById(id)
@@ -97,7 +89,7 @@ export function Header() {
           left: 0,
           right: 0,
           zIndex: 50,
-          height: '64px',
+          height: '52px',
           display: 'flex',
           alignItems: 'center',
           background: transparent
@@ -128,7 +120,7 @@ export function Header() {
               alt="Eloma Group"
               decoding="async"
               style={{
-                height: '34px',
+                height: '30px',
                 width: 'auto',
                 display: 'block',
                 // render the fine wordmark strokes crisp on its own GPU layer; on the
@@ -167,7 +159,7 @@ export function Header() {
                     alignItems: 'center',
                     gap: '3px',
                     padding: '0 14px',
-                    height: '64px',
+                    height: '52px',
                     fontSize: '14.5px',
                     fontWeight: 600,
                     color: textColor,
@@ -236,7 +228,7 @@ export function Header() {
       <div
         style={{
           position: 'fixed',
-          top: '64px',
+          top: '52px',
           left: 0,
           right: 0,
           bottom: 0,
@@ -366,19 +358,19 @@ export function Header() {
 
         /* large screens: bigger logo + nav text + taller bar */
         @media (min-width: 1920px) {
-          .eg-hd { height: 78px !important; }
+          .eg-hd { height: 64px !important; }
           .eg-hd-inner { max-width: 1600px !important; }
-          .eg-hd-logo { height: 36px !important; }
+          .eg-hd-logo { height: 34px !important; }
           .eg-hd-word { font-size: 24px !important; }
-          .eg-hd-link { height: 78px !important; font-size: 16.5px !important; padding: 0 18px !important; }
+          .eg-hd-link { height: 64px !important; font-size: 16.5px !important; padding: 0 18px !important; }
           .eg-hd-dd   { font-size: 16.5px !important; }
         }
         @media (min-width: 2560px) {
-          .eg-hd { height: 92px !important; }
+          .eg-hd { height: 76px !important; }
           .eg-hd-inner { max-width: 2000px !important; }
-          .eg-hd-logo { height: 44px !important; }
+          .eg-hd-logo { height: 40px !important; }
           .eg-hd-word { font-size: 30px !important; }
-          .eg-hd-link { height: 92px !important; font-size: 20px !important; padding: 0 24px !important; }
+          .eg-hd-link { height: 76px !important; font-size: 20px !important; padding: 0 24px !important; }
           .eg-hd-dd   { font-size: 20px !important; }
         }
       `}</style>

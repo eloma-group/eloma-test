@@ -15,6 +15,14 @@ export function HomePage() {
     <div style={{ overflowX: 'clip' }}>
       <ConstructionNotice />
       <Header />
+      {/* reserves the fixed header's height so the hero (and its bg video)
+          starts below the header instead of overlapping it */}
+      <div className="eg-header-spacer" aria-hidden />
+      <style>{`
+        .eg-header-spacer { height: 52px; }
+        @media (min-width: 1920px) { .eg-header-spacer { height: 64px; } }
+        @media (min-width: 2560px) { .eg-header-spacer { height: 76px; } }
+      `}</style>
       <main>
         <EgHeroHierarchy />
         <EgConnected />

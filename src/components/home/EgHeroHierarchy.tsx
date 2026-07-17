@@ -22,9 +22,13 @@ export function EgHeroHierarchy() {
       <style>{`
         .eg-heroh {
           position: relative; overflow: hidden;
-          min-height: 100vh; min-height: 100svh;
+          /* the header spacer (in HomePage) reserves the 64px header height above
+             this section, so the bg video never sits under the header */
+          min-height: calc(100vh - 52px); min-height: calc(100svh - 52px);
           display: flex; align-items: center;
           padding: clamp(56px, 8vh, 110px) clamp(20px, 3.5vw, 56px);
+          /* fills any letterbox area around the fully-visible (uncropped) video */
+          background: #0a1522;
         }
         /* full-bleed background video - own compositor layer to avoid
            scroll repaints, matching the primary hero */
@@ -100,9 +104,13 @@ export function EgHeroHierarchy() {
           .eg-heroh-p { max-width: 100%; }
         }
         @media (min-width: 1920px) {
+          .eg-heroh { min-height: calc(100vh - 64px); min-height: calc(100svh - 64px); }
           .eg-heroh-rule { width: 440px; margin: 40px 0; }
           .eg-heroh-p { max-width: 620px; }
           .eg-heroh-btn { font-size: 14px; padding: 18px 34px; }
+        }
+        @media (min-width: 2560px) {
+          .eg-heroh { min-height: calc(100vh - 76px); min-height: calc(100svh - 76px); }
         }
       `}</style>
 
@@ -120,7 +128,7 @@ export function EgHeroHierarchy() {
           disablePictureInPicture
           aria-hidden
         >
-          <source src="/images/hero-page.mp4" type="video/mp4" />
+          <source src="/images/hero-eloma-logo.mp4" type="video/mp4" />
         </video>
       )}
       <span className="eg-heroh-scrim" aria-hidden />
