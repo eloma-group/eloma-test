@@ -38,7 +38,7 @@ export function EgFoundation() {
           background:
             radial-gradient(60% 55% at 12% 30%, rgba(60,185,140,0.05), transparent 60%),
             linear-gradient(180deg, #ffffff 0%, #fbfaf8 100%);
-          padding: clamp(56px,8vw,132px) clamp(24px,4vw,64px);
+          padding: clamp(56px,8vw,132px) 45px;
         }
         .eg-fd-inner { position: relative; z-index: 1; width: 100%; max-width: none; margin: 0 auto; }
 

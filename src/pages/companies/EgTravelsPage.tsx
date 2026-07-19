@@ -162,7 +162,14 @@ export function EgTravelsPage() {
       </section>
 
       {/* ── STATS BAND ── */}
-      <section className="tv-band">
+      <section
+        className="tv-band"
+        onMouseMove={(e) => {
+          const r = e.currentTarget.getBoundingClientRect()
+          e.currentTarget.style.setProperty('--tv-gx', `${e.clientX - r.left}px`)
+          e.currentTarget.style.setProperty('--tv-gy', `${e.clientY - r.top}px`)
+        }}
+      >
         <span className="tv-band-glow" aria-hidden />
         <div className="tv-wrap tv-band-grid">
           {[{ n: '50+', l: 'Destinations served' }, { n: '10k+', l: 'Trips arranged' }, { n: '24/7', l: 'Global traveller support' }, { n: '4.9/5', l: 'Traveller satisfaction' }].map((s, i) => (
@@ -177,7 +184,7 @@ export function EgTravelsPage() {
       <section className="tv-care">
         <div className="tv-wrap tv-care-grid">
           <motion.div className="tv-care-media" {...rise()}>
-            <img src={img('photo-1488646953014-85cb44e25828', 1100)} alt="Planning a journey" decoding="async" loading="lazy" />
+            <img src="/images/travels-care.webp" alt="Eloma Travels chauffeur welcoming a family by Sydney Harbour" decoding="async" loading="lazy" />
           </motion.div>
           <motion.div className="tv-care-copy" {...rise(0.1)}>
             <p className="tv-eyebrow"><span className="tv-eyebrow-dot" />Care that travels with you</p>
@@ -193,7 +200,14 @@ export function EgTravelsPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="tv-cta">
+      <section
+        className="tv-cta"
+        onMouseMove={(e) => {
+          const r = e.currentTarget.getBoundingClientRect()
+          e.currentTarget.style.setProperty('--tv-gx', `${e.clientX - r.left}px`)
+          e.currentTarget.style.setProperty('--tv-gy', `${e.clientY - r.top}px`)
+        }}
+      >
         <span className="tv-cta-glow" aria-hidden />
         <motion.div className="tv-cta-in" {...rise()}>
           <h2 className="tv-cta-h">Ready for the<br /><span className="tv-hl-l">next journey?</span></h2>
@@ -205,7 +219,7 @@ export function EgTravelsPage() {
       <FlyFooter />
 
       <style>{`
-        .tv-wrap { max-width: 1720px; margin: 0 auto; }
+        .tv-wrap { max-width: none; margin: 0 auto; }
         .tv-hl { color:${TEAL}; }
         .tv-hl-i { color:#6FD9E6; }
         .tv-hl-l { color:#6FD9E6; }
@@ -227,21 +241,21 @@ export function EgTravelsPage() {
         .tv-btn-o:hover { transform:translateY(-2px); background:#fff; color:${DEEP}; border-color:#fff; }
 
         /* HERO */
-        .tv-hero { position:relative; overflow:hidden; padding:clamp(150px,17vw,260px) clamp(24px,5vw,72px) clamp(64px,8vw,120px); }
+        .tv-hero { position:relative; overflow:hidden; min-height:100vh; min-height:100dvh; display:flex; align-items:flex-end; text-align:center; padding:clamp(150px,17vw,260px) 45px clamp(64px,8vw,120px); }
         .tv-hero-media { position:absolute; inset:0; z-index:0; }
         .tv-hero-media img { width:100%; height:100%; object-fit:cover; display:block; }
         .tv-hero-veil { position:absolute; inset:0; background:linear-gradient(100deg, rgba(9,40,47,0.86) 0%, rgba(9,40,47,0.6) 44%, rgba(9,40,47,0.2) 100%), linear-gradient(0deg, rgba(9,40,47,0.55), transparent 42%); }
-        .tv-hero-in { position:relative; z-index:1; }
-        .tv-crumb { display:flex; align-items:center; gap:9px; font-family:'Inter',sans-serif; font-size:clamp(11px,0.85vw,13px); color:rgba(255,255,255,0.6); margin-bottom:clamp(18px,2vw,26px); flex-wrap:wrap; }
+        .tv-hero-in { position:relative; z-index:1; width:100%; }
+        .tv-crumb { display:flex; align-items:center; justify-content:center; gap:9px; font-family:'Inter',sans-serif; font-size:clamp(11px,0.85vw,13px); color:rgba(255,255,255,0.6); margin-bottom:clamp(18px,2vw,26px); flex-wrap:wrap; }
         .tv-crumb a { color:rgba(255,255,255,0.6); text-decoration:none; transition:color .2s ease; }
         .tv-crumb a:hover { color:#fff; }
         .tv-crumb em { color:#fff; font-style:normal; font-weight:600; }
         .tv-h1 { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(40px,6.4vw,98px); line-height:1.06; letter-spacing:-0.04em; color:#fff; margin:clamp(16px,2vw,22px) 0 0; padding-bottom:0.04em; }
-        .tv-lead-i { font-family:'Inter',sans-serif; font-size:clamp(15px,1.25vw,19px); line-height:1.8; color:rgba(255,255,255,0.78); max-width:56ch; margin:clamp(18px,2vw,26px) 0 0; }
-        .tv-cta-row { display:flex; flex-wrap:wrap; gap:13px; margin-top:clamp(26px,3vw,36px); }
+        .tv-lead-i { font-family:'Inter',sans-serif; font-size:clamp(15px,1.25vw,19px); line-height:1.8; color:rgba(255,255,255,0.78); max-width:56ch; margin:clamp(18px,2vw,26px) auto 0; }
+        .tv-cta-row { display:flex; flex-wrap:wrap; justify-content:center; gap:13px; margin-top:clamp(26px,3vw,36px); }
 
         /* BOARDING PASS */
-        .tv-pass-sec { background:${SAND}; padding:clamp(60px,7vw,120px) clamp(24px,5vw,72px); }
+        .tv-pass-sec { background:${SAND}; padding:clamp(60px,7vw,120px) 45px; }
         .tv-pass-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(36px,5vw,80px); align-items:center; }
         .tv-pass-stats { display:flex; gap:clamp(24px,3vw,44px); margin-top:clamp(28px,3.4vw,40px); }
         .tv-pass-stat { display:flex; flex-direction:column; gap:4px; }
@@ -273,7 +287,7 @@ export function EgTravelsPage() {
         .tv-pass-barcode { width:70%; height:46px; background:repeating-linear-gradient(90deg,#fff 0 2px,transparent 2px 3px,#fff 3px 4px,transparent 4px 7px); opacity:0.9; border-radius:2px; }
 
         /* SERVICES */
-        .tv-serv { background:#fff; padding:clamp(60px,7vw,120px) clamp(24px,5vw,72px); }
+        .tv-serv { background:#fff; padding:clamp(60px,7vw,120px) 45px; }
         .tv-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.4vw,20px); }
         .tv-card { position:relative; overflow:hidden; background:linear-gradient(168deg,#ffffff,#f2faf9); border:1px solid rgba(18,49,58,0.1); border-radius:20px; padding:clamp(26px,2.6vw,38px); transition:transform .45s cubic-bezier(0.16,1,0.3,1), border-color .45s ease, box-shadow .45s ease; }
         .tv-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:${TEAL}; transform:scaleX(0); transform-origin:left; transition:transform .45s cubic-bezier(0.16,1,0.3,1); }
@@ -285,7 +299,7 @@ export function EgTravelsPage() {
         .tv-card-d { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.75; color:${MUTED}; margin:0; }
 
         /* GALLERY */
-        .tv-gal-sec { background:${SAND}; padding:clamp(60px,7vw,120px) clamp(24px,5vw,72px); }
+        .tv-gal-sec { background:${SAND}; padding:clamp(60px,7vw,120px) 45px; }
         .tv-gal-head { display:flex; align-items:flex-end; justify-content:space-between; gap:32px; max-width:none; }
         .tv-gal-p { margin:0; max-width:42ch; }
         .tv-gal { display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:clamp(150px,17vw,240px); gap:clamp(14px,1.4vw,20px); }
@@ -297,8 +311,8 @@ export function EgTravelsPage() {
         .tv-gal-name { position:absolute; left:20px; bottom:18px; z-index:1; font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(15px,1.4vw,20px); letter-spacing:-0.01em; color:#fff; text-shadow:0 2px 12px rgba(0,0,0,0.4); }
 
         /* STATS BAND */
-        .tv-band { position:relative; overflow:hidden; background:${DEEP}; padding:clamp(52px,6vw,92px) clamp(24px,5vw,72px); }
-        .tv-band-glow { position:absolute; bottom:-160px; right:8%; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle, rgba(21,150,166,0.4), transparent 62%); pointer-events:none; }
+        .tv-band { position:relative; overflow:hidden; background:${DEEP}; padding:clamp(52px,6vw,92px) 45px; }
+        .tv-band-glow { position:absolute; left:var(--tv-gx,92%); top:var(--tv-gy,calc(100% + 20px)); width:520px; height:520px; border-radius:50%; background:radial-gradient(circle, rgba(21,150,166,0.4), transparent 62%); pointer-events:none; transform:translate(-50%,-50%); transition:left .35s ease-out, top .35s ease-out; will-change:left,top; }
         .tv-band-grid { position:relative; z-index:1; display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(20px,2vw,32px); }
         .tv-band-item { text-align:center; display:flex; flex-direction:column; gap:10px; align-items:center; }
         .tv-band-item + .tv-band-item { border-left:1px solid rgba(255,255,255,0.12); }
@@ -306,7 +320,7 @@ export function EgTravelsPage() {
         .tv-band-l { font-family:'Inter',sans-serif; font-size:clamp(11px,0.9vw,14px); color:rgba(255,255,255,0.6); letter-spacing:0.3px; }
 
         /* CARE */
-        .tv-care { background:#fff; padding:clamp(60px,7vw,120px) clamp(24px,5vw,72px); }
+        .tv-care { background:#fff; padding:clamp(60px,7vw,120px) 45px; }
         .tv-care-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(32px,5vw,72px); align-items:center; }
         .tv-care-media { border-radius:24px; overflow:hidden; aspect-ratio:5/4; box-shadow:0 44px 84px -48px rgba(18,49,58,0.45); }
         .tv-care-media img { width:100%; height:100%; object-fit:cover; display:block; }
@@ -315,8 +329,8 @@ export function EgTravelsPage() {
         .tv-check-ic { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:rgba(21,150,166,0.14); color:${TEAL}; flex-shrink:0; }
 
         /* CTA */
-        .tv-cta { position:relative; overflow:hidden; background:${DEEP}; padding:clamp(72px,10vw,140px) clamp(24px,5vw,72px); text-align:center; }
-        .tv-cta-glow { position:absolute; bottom:-140px; right:8%; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle, rgba(21,150,166,0.35), transparent 62%); pointer-events:none; }
+        .tv-cta { position:relative; overflow:hidden; background:${DEEP}; padding:clamp(72px,10vw,140px) 45px; text-align:center; }
+        .tv-cta-glow { position:absolute; left:var(--tv-gx,92%); top:var(--tv-gy,calc(100% + 20px)); width:560px; height:560px; border-radius:50%; background:radial-gradient(circle, rgba(21,150,166,0.35), transparent 62%); pointer-events:none; transform:translate(-50%,-50%); transition:left .35s ease-out, top .35s ease-out; will-change:left,top; }
         .tv-cta-in { position:relative; z-index:1; max-width:820px; margin:0 auto; }
         .tv-cta-h { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(34px,5.6vw,84px); line-height:1.08; letter-spacing:-0.04em; color:#fff; margin:0; padding-bottom:0.04em; }
         .tv-cta-sub { font-family:'Inter',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.8; color:rgba(255,255,255,0.6); max-width:480px; margin:clamp(18px,2vw,26px) auto clamp(28px,3.5vw,40px); }
@@ -342,13 +356,13 @@ export function EgTravelsPage() {
           .tv-pass-stats { flex-wrap:wrap; gap:20px; }
         }
         @media (min-width:1920px){
-          .tv-wrap { max-width:1860px; }
+          .tv-wrap { max-width:none; }
           .tv-h1 { font-size:110px; }
           .tv-h2 { font-size:74px; }
           .tv-lead-i,.tv-sec-p { font-size:20px; }
         }
         @media (min-width:2560px){
-          .tv-wrap { max-width:2360px; }
+          .tv-wrap { max-width:none; }
           .tv-h1 { font-size:148px; }
           .tv-h2 { font-size:100px; }
           .tv-card-d { font-size:18px; }

@@ -21,7 +21,7 @@ export function EgAbout() {
   return (
     <section className="eg-ab" aria-label="About us">
       <style>{`
-        .eg-ab { background: #ffffff; padding: clamp(56px, 8vw, 120px) clamp(24px, 5vw, 80px) 0; overflow: hidden; }
+        .eg-ab { background: #ffffff; padding: clamp(56px, 8vw, 120px) 45px 0; overflow: hidden; }
         .eg-ab-inner { width: 100%; max-width: none; margin: 0 auto; }
         .eg-ab-eyebrow {
           text-align: center; font-family:'Poppins',sans-serif; font-weight:700; text-transform:uppercase;
@@ -65,8 +65,8 @@ export function EgAbout() {
           --tilt: -2.4deg;
           position: relative; height: clamp(76px, 9vw, 138px); pointer-events: none;
           margin-top: clamp(58px, 8vw, 116px); margin-bottom: clamp(58px, 8vw, 116px);
-          margin-left: calc(-1 * clamp(24px, 5vw, 80px));
-          margin-right: calc(-1 * clamp(24px, 5vw, 80px));
+          margin-left: -45px;
+          margin-right: -45px;
         }
         /* the trailing divider sits at the seam with Why-We-Exist, which supplies its own top spacing */
         .eg-diag.seam { margin-bottom: clamp(6px, 1.5vw, 18px); }

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion, useScroll } from 'framer-motion'
 import { ArrowUpRight, Timer, Layers3, Wrench, Handshake } from 'lucide-react'
 import { Header } from '../components/Header/Header'
 import { FlyFooter } from '../components/FlyFooter'
@@ -10,9 +10,6 @@ const img = (id: string, w: number) =>
 
 /* small meta chips under the hero headline */
 const TAGS = ['Australian owned', 'Multi-sector', 'Long-term capital', 'Operator-led']
-
-/* looping marquee words */
-const MARQUEE = ['Technology', 'Trade', 'Logistics', 'Travel', 'Customer Experience', 'Security']
 
 /* signature hover-reveal list — the disciplines the group operates */
 const DISCIPLINES = [
@@ -37,9 +34,23 @@ const PRINCIPLES = [
   { Icon: Handshake, t: 'Earned trust', d: 'Partnerships that compound. We keep our word, show up over years, and let the relationships do the talking.' },
 ]
 
+/* condensed milestones — the group's story as a timeline */
+const JOURNEY = [
+  { year: '2013', title: 'The idea took shape', desc: 'Working alongside global organisations exposed how logistics inefficiencies were choking business growth — sparking the idea for smarter, more dependable solutions.' },
+  { year: '2014', title: 'Global exposure & learning', desc: 'Fast-paced international operations showed how speed, coordination and reliability keep businesses moving — and where service gaps hurt the customer.' },
+  { year: '2016', title: 'Deep dive into supply chain', desc: 'Deeper expertise in how freight movement shapes the wider supply chain, and the need to pair efficiency with operational precision.' },
+  { year: '2018', title: 'Understanding ground realities', desc: 'Hands-on in the Australian market — delivery delays, poor visibility and inconsistent standards proved the need for a truly accountable freight partner.' },
+  { year: '2020', title: 'The entrepreneurial spark', desc: 'The vision crystallised: a logistics business built on trust, consistency and customer-first operations.' },
+  { year: '2025', title: 'Eloma Group was born', desc: 'Eloma Group launches — laying the foundation for an ecosystem driven by innovation, excellence and sustainable growth.' },
+  { year: '2025', title: 'EG Trans launched', desc: 'The group’s logistics arm goes live — reliable, responsive road-freight solutions built to deliver at scale.' },
+  { year: '2026', title: 'Growth with purpose', desc: 'Joining the UN Global Compact and signing the Women’s Empowerment Principles — growth defined by ethics, inclusion and lasting impact.' },
+]
+
 export function AboutPage() {
   const reduce = useReducedMotion() ?? false
   const listRef = useRef<HTMLDivElement>(null)
+  const journeyRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: journeyRef, offset: ['start 62%', 'end 58%'] })
   const floatRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState<number | null>(null)
 
@@ -90,18 +101,41 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* ── 2 · Marquee strip ── */}
-      <div className="ab2-marq" aria-hidden>
-        <div className={`ab2-marq-track${reduce ? ' still' : ''}`}>
-          {[0, 1].map((dup) => (
-            <div className="ab2-marq-set" key={dup}>
-              {MARQUEE.map((w) => (
-                <span className="ab2-marq-item" key={w + dup}>{w}<i /></span>
-              ))}
-            </div>
-          ))}
+      {/* ── 2 · Our Journey (animated timeline) ── */}
+      <section className="oj">
+        <div className="oj-in">
+          <div className="oj-head">
+            <motion.p className="oj-eyebrow" {...rise()}><span className="oj-dot" />Our Journey</motion.p>
+            <motion.h2 className="oj-h" {...rise(0.06)}>From an idea to an ecosystem.</motion.h2>
+            <motion.p className="oj-sub" {...rise(0.12)}>
+              A decade of learning, building and momentum — the milestones that shaped Eloma Group.
+            </motion.p>
+          </div>
+
+          <div className="oj-line" ref={journeyRef}>
+            <span className="oj-spine" aria-hidden />
+            <motion.span className="oj-spine-fill" aria-hidden style={{ scaleY: reduce ? 1 : scrollYProgress }} />
+            {JOURNEY.map((m, i) => (
+              <motion.div
+                key={m.year + m.title}
+                className="oj-item"
+                data-side={i % 2 === 0 ? 'l' : 'r'}
+                initial={reduce ? false : { opacity: 0, y: 34 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-70px' }}
+                transition={{ duration: 0.6, ease: EASE }}
+              >
+                <span className="oj-node" aria-hidden><i /></span>
+                <div className="oj-card">
+                  <span className="oj-year">{m.year}</span>
+                  <h3 className="oj-title">{m.title}</h3>
+                  <p className="oj-desc">{m.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* ── 3 · Thesis — sticky heading + scrolling copy ── */}
       <section className="ab2-thesis">
@@ -232,11 +266,11 @@ export function AboutPage() {
         /* ── 1 · Hero ── */
         .ab2-hero { position:relative; overflow:hidden;
           background: radial-gradient(70% 60% at 88% 4%, rgba(60,185,140,0.12), transparent 60%), linear-gradient(180deg,#ffffff,#f3faf7);
-          padding: clamp(120px,15vw,210px) clamp(24px,5vw,80px) clamp(50px,7vw,90px); }
+          padding: clamp(120px,15vw,210px) 45px clamp(50px,7vw,90px); }
         .ab2-hero-ghost { position:absolute; right:-2vw; bottom:-4vw; z-index:0; pointer-events:none;
           font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(140px,26vw,420px); line-height:0.8; letter-spacing:-0.05em;
           color:transparent; -webkit-text-stroke:1.5px rgba(19,41,61,0.06); user-select:none; }
-        .ab2-hero-in { position:relative; z-index:1; max-width:1500px; margin:0 auto; }
+        .ab2-hero-in { position:relative; z-index:1; max-width:none; margin:0 auto; }
         .ab2-hero-h1 { margin:clamp(20px,2.4vw,32px) 0 0; font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(52px,10vw,168px); line-height:0.92; letter-spacing:-0.045em; color:${NAVY}; }
         .ab2-line { display:block; }
         .ab2-hero-lead { font-family:'Inter',sans-serif; font-size:clamp(16px,1.35vw,21px); color:${MUTED}; line-height:1.8; margin:clamp(26px,3vw,40px) 0 clamp(24px,3vw,34px); max-width:58ch; }
@@ -244,20 +278,48 @@ export function AboutPage() {
         .ab2-tags li { font-family:'Inter',sans-serif; font-weight:600; font-size:clamp(12px,0.95vw,14px); color:${NAVY};
           padding:9px 18px; border:1px solid rgba(19,41,61,0.14); border-radius:99px; background:rgba(255,255,255,0.6); }
 
-        /* ── 2 · Marquee ── */
-        .ab2-marq { overflow:hidden; border-top:1px solid rgba(19,41,61,0.1); border-bottom:1px solid rgba(19,41,61,0.1); background:#fff; padding:clamp(18px,2vw,26px) 0; }
-        .ab2-marq-track { display:flex; width:max-content; animation:ab2-marq 26s linear infinite; }
-        .ab2-marq-track.still { animation:none; }
-        .ab2-marq-set { display:flex; }
-        .ab2-marq-item { display:inline-flex; align-items:center; gap:clamp(24px,3vw,52px); padding:0 clamp(24px,3vw,52px);
-          font-family:'Poppins',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:-0.02em;
-          font-size:clamp(20px,2.6vw,40px); color:${NAVY}; white-space:nowrap; }
-        .ab2-marq-item i { width:8px; height:8px; border-radius:50%; background:${GREEN}; }
-        @keyframes ab2-marq { to { transform:translateX(-50%); } }
+
+        /* ── 2 · Our Journey (timeline) ── */
+        .oj { position:relative; overflow:hidden; background:#ffffff; padding:clamp(64px,9vw,140px) 45px clamp(72px,10vw,150px); }
+        .oj-in { max-width:1160px; margin:0 auto; }
+        .oj-head { text-align:center; max-width:720px; margin:0 auto clamp(46px,6vw,80px); }
+        .oj-eyebrow { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(10px,0.8vw,12px); letter-spacing:2.6px; text-transform:uppercase; color:${GREEN}; }
+        .oj-eyebrow .oj-dot { width:7px; height:7px; border-radius:50%; background:${GREEN}; box-shadow:0 0 0 4px rgba(60,185,140,0.16); }
+        .oj-h { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,4.4vw,62px); line-height:1.06; letter-spacing:-0.03em; color:${NAVY}; margin:clamp(14px,1.8vw,22px) 0 0; }
+        .oj-sub { font-family:'Inter',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; margin:clamp(16px,2vw,22px) 0 0; }
+
+        .oj-line { position:relative; padding:clamp(6px,1vw,12px) 0; }
+        .oj-spine, .oj-spine-fill { position:absolute; top:0; bottom:0; left:calc(50% - 1px); width:2px; border-radius:2px; }
+        .oj-spine { background:rgba(19,41,61,0.12); }
+        .oj-spine-fill { background:linear-gradient(180deg, ${GREEN} 0%, rgba(60,185,140,0.55) 100%); transform-origin:top center; box-shadow:0 0 18px rgba(60,185,140,0.5); }
+
+        .oj-item { position:relative; width:50%; box-sizing:border-box; padding:0 clamp(26px,3.2vw,54px); margin-bottom:clamp(28px,3.6vw,52px); }
+        .oj-item:last-child { margin-bottom:0; }
+        .oj-item[data-side="l"] { left:0; text-align:right; }
+        .oj-item[data-side="r"] { left:50%; text-align:left; }
+
+        .oj-node { position:absolute; top:10px; width:22px; height:22px; border-radius:50%; background:#fff; border:2px solid ${GREEN}; z-index:2; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 6px rgba(60,185,140,0.12); }
+        .oj-node i { width:7px; height:7px; border-radius:50%; background:${GREEN}; transition:transform .4s ${'cubic-bezier(0.16,1,0.3,1)'}; }
+        .oj-item[data-side="l"] .oj-node { right:-11px; }
+        .oj-item[data-side="r"] .oj-node { left:-11px; }
+        .oj-item:hover .oj-node { border-color:${NAVY}; }
+        .oj-item:hover .oj-node i { transform:scale(1.5); }
+
+        .oj-card { position:relative; display:inline-block; text-align:left; max-width:100%; background:#fff; border:1px solid rgba(19,41,61,0.1); border-radius:18px; padding:clamp(20px,2.2vw,30px); box-shadow:0 30px 60px -46px rgba(19,41,61,0.45); transition:transform .5s ${'cubic-bezier(0.16,1,0.3,1)'}, box-shadow .5s ease, border-color .5s ease; }
+        .oj-card:hover { transform:translateY(-5px); border-color:rgba(60,185,140,0.45); box-shadow:0 46px 84px -46px rgba(19,41,61,0.42); }
+        .oj-year { display:inline-block; font-family:'Poppins',sans-serif; font-weight:700; font-size:13px; letter-spacing:0.4px; color:${GREEN}; background:rgba(60,185,140,0.1); padding:5px 13px; border-radius:99px; }
+        .oj-title { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(18px,1.7vw,25px); letter-spacing:-0.02em; line-height:1.18; color:${NAVY}; margin:14px 0 8px; text-wrap:balance; }
+        .oj-desc { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.7; color:${MUTED}; margin:0; }
+
+        @media (max-width:760px){
+          .oj-spine, .oj-spine-fill { left:10px; }
+          .oj-item, .oj-item[data-side="l"], .oj-item[data-side="r"] { width:100%; left:0; text-align:left; padding:0 0 0 clamp(38px,11vw,52px); margin-bottom:24px; }
+          .oj-item[data-side="l"] .oj-node, .oj-item[data-side="r"] .oj-node { left:0; right:auto; }
+        }
 
         /* ── 3 · Thesis ── */
-        .ab2-thesis { background:linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(64px,9vw,150px) clamp(24px,5vw,80px); }
-        .ab2-thesis-in { max-width:1500px; margin:0 auto; display:grid; grid-template-columns:1.05fr 0.95fr; gap:clamp(36px,6vw,110px); align-items:start; }
+        .ab2-thesis { background:linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(64px,9vw,150px) 45px; }
+        .ab2-thesis-in { max-width:none; margin:0 auto; display:grid; grid-template-columns:1.05fr 0.95fr; gap:clamp(36px,6vw,110px); align-items:start; }
         .ab2-thesis-stick { position:sticky; top:110px; }
         .ab2-thesis-h { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,3.9vw,58px); line-height:1.1; letter-spacing:-0.03em; color:${NAVY}; margin:clamp(18px,2vw,26px) 0 0; max-width:16ch; }
         .ab2-thesis-body { display:flex; flex-direction:column; gap:clamp(22px,2.6vw,34px); padding-top:clamp(6px,1vw,18px); }
@@ -265,8 +327,8 @@ export function AboutPage() {
         .ab2-thesis-body p:first-child { color:${NAVY}; font-weight:500; }
 
         /* ── 4 · Disciplines ── */
-        .ab2-disc-sec { background:#fff; padding:clamp(64px,8vw,130px) clamp(24px,5vw,80px); }
-        .ab2-disc-wrap { max-width:1500px; margin:0 auto; }
+        .ab2-disc-sec { background:#fff; padding:clamp(64px,8vw,130px) 45px; }
+        .ab2-disc-wrap { max-width:none; margin:0 auto; }
         .ab2-disc-head { margin-bottom:clamp(30px,4vw,54px); }
         .ab2-disc-title { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,4.2vw,58px); line-height:1.06; letter-spacing:-0.03em; color:${NAVY}; margin:16px 0 0; }
         .ab2-disc { position:relative; border-top:1px solid rgba(19,41,61,0.14); }
@@ -287,8 +349,8 @@ export function AboutPage() {
         .ab2-disc-row.on .ab2-disc-arr { opacity:1; color:${GREEN}; transform:translate(4px,-4px); }
 
         /* ── 5 · Numbers ── */
-        .ab2-nums-sec { background:linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(56px,7vw,120px) clamp(24px,5vw,80px); }
-        .ab2-nums-in { max-width:1500px; margin:0 auto; }
+        .ab2-nums-sec { background:linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(56px,7vw,120px) 45px; }
+        .ab2-nums-in { max-width:none; margin:0 auto; }
         .ab2-nums { display:grid; grid-template-columns:repeat(4,1fr); margin-top:clamp(28px,3.4vw,46px); border-top:1px solid rgba(19,41,61,0.14); }
         .ab2-num { padding:clamp(26px,3vw,50px) clamp(14px,1.6vw,28px) clamp(8px,1.4vw,16px) 0; }
         .ab2-num + .ab2-num { padding-left:clamp(18px,2vw,34px); border-left:1px solid rgba(19,41,61,0.1); }
@@ -297,10 +359,10 @@ export function AboutPage() {
         .ab2-num-l { display:block; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(11px,0.9vw,13.5px); letter-spacing:1.6px; text-transform:uppercase; color:${MUTED}; margin-top:clamp(16px,1.8vw,26px); }
 
         /* ── 6 · Principles (dark) ── */
-        .ab2-prin { position:relative; overflow:hidden; background:${NAVY}; padding:clamp(64px,8vw,130px) clamp(24px,5vw,80px); }
+        .ab2-prin { position:relative; overflow:hidden; background:${NAVY}; padding:clamp(64px,8vw,130px) 45px; }
         .ab2-prin::before { content:''; position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px); background-size:28px 28px; }
         .ab2-prin-glow { position:absolute; top:-140px; left:-80px; width:480px; height:480px; border-radius:50%; background:radial-gradient(circle, rgba(60,185,140,0.18), transparent 64%); pointer-events:none; }
-        .ab2-prin-in { position:relative; z-index:1; max-width:1500px; margin:0 auto; }
+        .ab2-prin-in { position:relative; z-index:1; max-width:none; margin:0 auto; }
         .ab2-prin-head { margin-bottom:clamp(34px,4.4vw,60px); }
         .ab2-prin-title { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,4.2vw,58px); line-height:1.08; letter-spacing:-0.03em; color:#fff; margin:16px 0 0; }
         .ab2-prin-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(16px,1.6vw,24px); }
@@ -314,7 +376,7 @@ export function AboutPage() {
         .ab2-prin-d { font-family:'Inter',sans-serif; font-size:clamp(14px,1.05vw,16.5px); line-height:1.75; color:rgba(255,255,255,0.62); margin:0; }
 
         /* ── 7 · Quote ── */
-        .ab2-quote-sec { position:relative; overflow:hidden; background:radial-gradient(60% 80% at 50% 0%, rgba(60,185,140,0.12), transparent 62%), linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(72px,10vw,150px) clamp(24px,6vw,120px); }
+        .ab2-quote-sec { position:relative; overflow:hidden; background:radial-gradient(60% 80% at 50% 0%, rgba(60,185,140,0.12), transparent 62%), linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(72px,10vw,150px) 45px; }
         .ab2-quote-sec::before { content:''; position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(rgba(19,41,61,0.05) 1px, transparent 1px); background-size:30px 30px; }
         .ab2-quote { position:relative; z-index:1; max-width:1100px; margin:0 auto; font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(28px,4.2vw,66px); line-height:1.24; letter-spacing:-0.03em; color:${NAVY}; text-align:center; }
         .ab2-quote-mark { display:block; font-size:1.6em; line-height:0.5; color:${GREEN}; opacity:0.55; }
@@ -336,10 +398,7 @@ export function AboutPage() {
           .ab2-disc-tag { display:none; }
         }
         @media (min-width:1920px){
-          .ab2-hero-in, .ab2-thesis-in, .ab2-disc-wrap, .ab2-nums-in, .ab2-prin-in { max-width:1780px; }
-        }
-        @media (prefers-reduced-motion:reduce){
-          .ab2-marq-track { animation:none; }
+          .ab2-hero-in, .ab2-thesis-in, .ab2-disc-wrap, .ab2-nums-in, .ab2-prin-in { max-width:none; }
         }
       `}</style>
     </div>

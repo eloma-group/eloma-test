@@ -311,12 +311,12 @@ export function EgBusinesses() {
       <style>{`
         .egb {
           position: relative; overflow-x: hidden;
-          padding: clamp(56px, 8vw, 130px) clamp(24px, 4vw, 64px);
+          padding: clamp(56px, 8vw, 130px) 45px;
           background:
             radial-gradient(60% 55% at 12% 30%, rgba(60,185,140,0.05), transparent 60%),
             linear-gradient(180deg, #ffffff 0%, #fbfaf8 100%);
         }
-        .egb-in { position: relative; max-width: 1720px; margin: 0 auto; }
+        .egb-in { position: relative; max-width: none; margin: 0 auto; }
 
         /* ── header ── */
         .egb-h {
@@ -527,8 +527,8 @@ export function EgBusinesses() {
         @media (max-width: 400px) { .egb-stats { gap: 12px; } }
 
         /* ── large screens ── */
-        @media (min-width: 1920px) { .egb-in { max-width: 1860px; } }
-        @media (min-width: 2560px) { .egb-in { max-width: 2360px; } }
+        @media (min-width: 1920px) { .egb-in { max-width: none; } }
+        @media (min-width: 2560px) { .egb-in { max-width: none; } }
 
         @media (prefers-reduced-motion: reduce) {
           .egb-card, .egb-cta, .egb-sheen, .egb-ic, .egb-map, .egb-accent { transition: none; }

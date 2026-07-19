@@ -58,7 +58,7 @@ export function PartnersPage() {
                 <span className="pt-eyebrow-dot" />Our Partners
               </motion.p>
               <motion.h1 className="pt-hero-h1" initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.08 }}>
-                Partnerships that drive <span className="g">trust,</span> innovation &amp; growth.
+                Partnerships that drive<br /><span className="pt-nw"><span className="g">trust,</span> innovation &amp; growth.</span>
               </motion.h1>
               <motion.p className="pt-hero-lead" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.18 }}>
                 We work with world-leading brands and the Australian Government to deliver secure, reliable solutions across every industry we serve.
@@ -71,7 +71,7 @@ export function PartnersPage() {
             <div className="pt-trust-grid">
               {PARTNERS.map(p => (
                 <div className="pt-trust-cell" key={p.name}>
-                  <img src={p.logo} alt={p.name} loading="lazy" decoding="async" />
+                  <img src={p.logo} alt={p.name} decoding="async" />
                 </div>
               ))}
               <div className="pt-trust-cell pt-trust-more">&amp; more</div>
@@ -170,7 +170,7 @@ export function PartnersPage() {
       <FlyFooter />
 
       <style>{`
-        .pt-wrap { max-width:1760px; margin:0 auto; }
+        .pt-wrap { max-width:none; margin:0 auto; }
         .g { color:${GREEN}; }
         .pt-eyebrow { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(10px,0.8vw,12px); letter-spacing:2.5px; text-transform:uppercase; color:${GREEN}; }
         .pt-eyebrow-dot { width:7px; height:7px; border-radius:50%; background:${GREEN}; box-shadow:0 0 0 4px rgba(60,185,140,0.16); flex-shrink:0; }
@@ -179,14 +179,15 @@ export function PartnersPage() {
         /* 1 · Hero */
         .pt-hero { position:relative; overflow:hidden;
           background: radial-gradient(58% 50% at 88% 2%, rgba(60,185,140,0.12), transparent 60%), linear-gradient(180deg,#ffffff 0%,#f3faf7 100%);
-          padding: clamp(120px,14vw,200px) clamp(24px,5vw,80px) clamp(56px,7vw,100px); }
+          padding: clamp(120px,14vw,200px) 45px clamp(56px,7vw,100px); }
         .pt-hero-dots { position:absolute; inset:0; pointer-events:none; opacity:0.5; background-image:radial-gradient(rgba(19,41,61,0.05) 1px, transparent 1px); background-size:26px 26px; -webkit-mask-image:linear-gradient(180deg,#000,transparent 82%); mask-image:linear-gradient(180deg,#000,transparent 82%); }
         .pt-hero-glow { position:absolute; top:-120px; right:-80px; width:480px; height:480px; border-radius:50%; background:radial-gradient(circle, rgba(60,185,140,0.16), transparent 64%); pointer-events:none; }
         .pt-hero-in { position:relative; z-index:1; }
-        .pt-hero-top { display:block; max-width:900px; }
-        .pt-hero-copy { max-width:900px; }
+        .pt-hero-top { display:block; max-width:none; margin:0 auto; text-align:center; }
+        .pt-hero-copy { max-width:none; margin:0 auto; }
+        .pt-hero-h1 .pt-nw { white-space:nowrap; }
         .pt-hero-h1 { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(38px,5.2vw,84px); line-height:1.03; letter-spacing:-0.038em; color:${NAVY}; margin:clamp(18px,2.2vw,28px) 0 0; }
-        .pt-hero-lead { font-family:'Inter',sans-serif; font-size:clamp(15px,1.25vw,19px); line-height:1.8; color:${MUTED}; max-width:52ch; margin:clamp(20px,2.4vw,28px) 0 0; }
+        .pt-hero-lead { font-family:'Inter',sans-serif; font-size:clamp(15px,1.25vw,19px); line-height:1.8; color:${MUTED}; max-width:52ch; margin:clamp(20px,2.4vw,28px) auto 0; }
 
         /* ASD government partnership spotlight (in hero) */
         .pt-hero-asd { position:relative; overflow:hidden; align-self:stretch;
@@ -206,16 +207,16 @@ export function PartnersPage() {
 
         /* trusted-by logo wall */
         .pt-trust { margin-top:clamp(40px,5vw,72px); }
-        .pt-trust-lb { display:block; font-family:'Inter',sans-serif; font-size:clamp(10px,0.8vw,12px); font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:${MUTED}; margin-bottom:clamp(16px,1.8vw,22px); }
+        .pt-trust-lb { display:block; text-align:center; font-family:'Inter',sans-serif; font-size:clamp(10px,0.8vw,12px); font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:${MUTED}; margin-bottom:clamp(16px,1.8vw,22px); }
         .pt-trust-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:1px; background:rgba(26,43,60,0.1); border:1px solid rgba(26,43,60,0.1); border-radius:22px; overflow:hidden; }
-        .pt-trust-cell { background:#fff; display:flex; align-items:center; justify-content:center; padding:clamp(16px,2vw,26px); min-height:clamp(86px,8vw,116px); transition:background 0.4s ease; }
+        .pt-trust-cell { background:#fff; display:flex; align-items:center; justify-content:center; padding:clamp(18px,2.2vw,30px); min-height:clamp(100px,9.5vw,132px); transition:background 0.4s ease; }
         .pt-trust-cell:hover { background:rgba(60,185,140,0.05); }
-        .pt-trust-cell img { height:clamp(30px,3vw,42px); width:auto; max-width:78%; object-fit:contain; filter:grayscale(1) opacity(0.62); transition:filter 0.4s ease, transform 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}; }
-        .pt-trust-cell:hover img { filter:none; transform:translateY(-2px); }
+        .pt-trust-cell img { height:clamp(46px,4.8vw,66px); width:auto; max-width:94%; object-fit:contain; transition:transform 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}; }
+        .pt-trust-cell:hover img { transform:translateY(-2px) scale(1.04); }
         .pt-trust-more { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(13px,1.1vw,16px); letter-spacing:-0.01em; color:${GREEN}; }
 
         /* 1.5 · Featured - Australian Signals Directorate */
-        .pt-asd { position:relative; overflow:hidden; background:linear-gradient(135deg,#04264C 0%,#002248 100%); padding:clamp(56px,7vw,110px) clamp(24px,5vw,80px); }
+        .pt-asd { position:relative; overflow:hidden; background:linear-gradient(135deg,#04264C 0%,#002248 100%); padding:clamp(56px,7vw,110px) 45px; }
         .pt-asd-glow { position:absolute; top:-140px; right:-100px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle, rgba(60,185,140,0.22), transparent 62%); pointer-events:none; }
         .pt-asd-in { position:relative; z-index:1; display:grid; grid-template-columns:1.05fr 0.95fr; gap:clamp(36px,5vw,80px); align-items:center; }
         .pt-eyebrow-on-dark { color:#fff; }
@@ -229,7 +230,7 @@ export function PartnersPage() {
         .pt-asd-visual img { display:block; width:100%; height:auto; }
 
         /* 2 · Partner profiles */
-        .pt-list-sec { background:#fff; padding:clamp(56px,7vw,120px) clamp(24px,5vw,80px); }
+        .pt-list-sec { background:#fff; padding:clamp(56px,7vw,120px) 45px; }
         .pt-list-head { max-width:920px; margin-bottom:clamp(34px,4vw,56px); }
         .pt-list-p { font-family:'Inter',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.8; color:${MUTED}; margin:clamp(18px,2vw,26px) 0 0; }
         .pt-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,1.6vw,22px); }
@@ -237,15 +238,16 @@ export function PartnersPage() {
         .pt-card-accent { position:absolute; top:0; left:0; right:0; height:3px; background:${GREEN}; transform:scaleX(0); transform-origin:left; transition:transform 0.45s ${'cubic-bezier(0.16,1,0.3,1)'}; }
         .pt-card:hover { transform:translateY(-6px); border-color:rgba(60,185,140,0.5); box-shadow:0 36px 70px -40px rgba(19,41,61,0.3); }
         .pt-card:hover .pt-card-accent { transform:scaleX(1); }
-        .pt-card-logo { height:clamp(50px,5vw,64px); display:flex; align-items:center; margin-bottom:clamp(20px,2.2vw,28px); }
-        .pt-card-logo img { height:clamp(40px,4vw,52px); width:auto; max-width:100%; object-fit:contain; object-position:left center; }
+        .pt-card-logo { height:clamp(58px,5.8vw,76px); display:flex; align-items:center; margin-bottom:clamp(20px,2.2vw,28px); }
+        .pt-card-logo img { height:clamp(48px,5vw,68px); width:auto; max-width:100%; object-fit:contain; object-position:left center; }
+        .pt-card-logo img[src*="isuzu"] { height:clamp(30px,3.2vw,44px); max-width:64%; }
         .pt-card-meta { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
         .pt-card-name { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(19px,1.7vw,25px); letter-spacing:-0.02em; color:${NAVY}; margin:0; }
         .pt-card-sector { font-family:'Inter',sans-serif; font-size:10.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:${GREEN}; }
         .pt-card-body { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15px); line-height:1.75; color:${MUTED}; margin:0; }
 
         /* 3 · Why it matters */
-        .pt-why-sec { position:relative; overflow:hidden; background:linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(56px,7vw,120px) clamp(24px,5vw,80px); }
+        .pt-why-sec { position:relative; overflow:hidden; background:linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(56px,7vw,120px) 45px; }
         .pt-why-glow { position:absolute; top:-120px; left:-90px; width:420px; height:420px; border-radius:50%; background:radial-gradient(circle, rgba(60,185,140,0.12), transparent 64%); pointer-events:none; }
         .pt-why-top { position:relative; z-index:1; display:grid; grid-template-columns:1.1fr 0.9fr; gap:clamp(32px,5vw,80px); align-items:center; margin-bottom:clamp(40px,5vw,72px); }
         .pt-why-p { font-family:'Inter',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.8; color:${MUTED}; margin:clamp(18px,2vw,26px) 0 0; max-width:54ch; }
@@ -276,6 +278,7 @@ export function PartnersPage() {
         @media (max-width:620px){
           .pt-grid { grid-template-columns:1fr; }
           .pt-trust-grid { grid-template-columns:repeat(3,1fr); }
+          .pt-hero-h1 .pt-nw { white-space:normal; }
         }
         @media (max-width:420px){
           .pt-trust-grid { grid-template-columns:repeat(2,1fr); }
@@ -284,9 +287,8 @@ export function PartnersPage() {
           .pt-values { grid-template-columns:1fr; }
         }
         @media (min-width:1920px){
-          .pt-wrap { max-width:1820px; }
-          .pt-hero, .pt-list-sec, .pt-why-sec { padding-left:clamp(48px,3.6vw,70px); padding-right:clamp(48px,3.6vw,70px); }
-          .pt-hero-copy { max-width:1080px; }
+          .pt-wrap { max-width:none; }
+          .pt-hero, .pt-list-sec, .pt-why-sec { padding-left:45px; padding-right:45px; }
           .pt-hero-h1 { font-size:100px; }
           .pt-h2 { font-size:72px; }
           .pt-asd-h2 { font-size:68px; }
@@ -294,10 +296,9 @@ export function PartnersPage() {
           .pt-hero-lead { font-size:20px; }
         }
         @media (min-width:2560px){
-          .pt-wrap { max-width:2420px; }
-          .pt-hero, .pt-list-sec, .pt-why-sec { padding-left:70px; padding-right:70px; }
+          .pt-wrap { max-width:none; }
+          .pt-hero, .pt-list-sec, .pt-why-sec { padding-left:45px; padding-right:45px; }
           .pt-hero { padding-top:clamp(160px,8vw,220px); }
-          .pt-hero-copy { max-width:1400px; }
           .pt-hero-h1 { font-size:124px; }
           .pt-h2 { font-size:96px; }
           .pt-asd-h2 { font-size:88px; }

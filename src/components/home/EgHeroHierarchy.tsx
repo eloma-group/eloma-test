@@ -26,7 +26,7 @@ export function EgHeroHierarchy() {
              this section, so the bg video never sits under the header */
           min-height: calc(100vh - 52px); min-height: calc(100dvh - 52px);
           display: flex; align-items: center;
-          padding: clamp(56px, 8vh, 110px) clamp(20px, 3.5vw, 56px);
+          padding: clamp(56px, 8vh, 110px) 45px;
           /* fills any letterbox area around the fully-visible (uncropped) video */
           background: #0a1522;
         }
@@ -128,7 +128,7 @@ export function EgHeroHierarchy() {
           disablePictureInPicture
           aria-hidden
         >
-          <source src="/images/hero-eloma-logo.mp4" type="video/mp4" />
+          <source src="/images/hero-eloma-group.mp4" type="video/mp4" />
         </video>
       )}
       <span className="eg-heroh-scrim" aria-hidden />

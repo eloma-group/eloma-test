@@ -162,7 +162,7 @@ export function FlyFooter() {
       <div style={{ height: 2, background: `linear-gradient(90deg, transparent, ${GREEN}, transparent)` }} />
 
       {/* ── Main grid ── */}
-      <div style={{ padding: 'clamp(56px,7vw,96px) clamp(24px,5vw,80px) 0', position: 'relative', zIndex: 1 }}>
+      <div style={{ padding: 'clamp(56px,7vw,96px) 45px 0', position: 'relative', zIndex: 1 }}>
         <div className="ff-inner">
           <div
             className="ff-grid"
@@ -350,7 +350,7 @@ export function FlyFooter() {
       </div>
 
       {/* ── Bottom bar ── */}
-      <div style={{ padding: '0 clamp(24px,5vw,80px)', position: 'relative', zIndex: 1 }}>
+      <div style={{ padding: '0 45px', position: 'relative', zIndex: 1 }}>
         <div className="ff-inner">
           <div style={{
             padding: 'clamp(18px,2.5vw,28px) 0 clamp(22px,3vw,32px)',

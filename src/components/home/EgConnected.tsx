@@ -58,8 +58,8 @@ export function EgConnected() {
           radial-gradient(46% 60% at 100% 84%, rgba(212,175,55,0.14) 0%, transparent 55%),
           radial-gradient(60% 50% at 50% -6%, rgba(212,175,55,0.07), transparent 60%),
           linear-gradient(180deg,#ffffff 0%, #faf7ee 100%);
-          padding:clamp(64px,9vw,140px) clamp(24px,5vw,80px); }
-        .cg-in { max-width:1640px; margin:0 auto; }
+          padding:clamp(64px,9vw,140px) 45px; }
+        .cg-in { max-width:none; margin:0 auto; }
         .cg-top { display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
           margin:0 0 clamp(20px,3vw,38px); }
         .cg-head { text-align:center; max-width:60ch; margin:0 auto clamp(28px,4vw,52px); }

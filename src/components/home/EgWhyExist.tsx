@@ -47,7 +47,7 @@ export function EgWhyExist() {
           linear-gradient(180deg, rgba(24,30,28,0) 84%, rgba(24,30,28,0.10) 94%, rgba(20,26,24,0.24) 100%),
           linear-gradient(90deg, rgba(255,255,255,0) 58%, rgba(255,255,255,0.18) 100%);
         }
-        .eg-wy-inner { position:relative; z-index:2; max-width: none; margin:0 auto; padding: clamp(56px,8vw,120px) clamp(24px,5vw,80px); }
+        .eg-wy-inner { position:relative; z-index:2; max-width: none; margin:0 auto; padding: clamp(56px,8vw,120px) 45px; }
         .eg-wy-head { text-align:center; margin-bottom: clamp(36px,5vw,60px); }
         .eg-wy-title { font-family:'Poppins',sans-serif; font-weight:700; text-transform:uppercase; font-size:clamp(26px,3.4vw,46px); color:#000; margin:0; letter-spacing:0.04em; }
         .eg-wy-sub { font-family:'Inter',sans-serif; font-size:clamp(11px,0.9vw,13px); letter-spacing:3px; text-transform:uppercase; color:rgba(19,41,61,0.55); margin:12px 0 0; }

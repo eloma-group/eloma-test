@@ -166,7 +166,7 @@ export function EgCompanies() {
       <style>{`
         .eg-oc {
           position: relative; overflow-x: clip;
-          padding: clamp(56px, 8vw, 130px) clamp(24px, 4vw, 64px) clamp(64px, 9vw, 150px);
+          padding: clamp(56px, 8vw, 130px) 45px clamp(64px, 9vw, 150px);
           background:
             radial-gradient(52% 46% at 50% 48%, rgba(198,162,78,0.09), transparent 64%),
             radial-gradient(120% 80% at 50% 0%, rgba(233,222,196,0.10), transparent 58%),
@@ -183,7 +183,7 @@ export function EgCompanies() {
           content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
           background: radial-gradient(125% 90% at 50% 42%, transparent 52%, rgba(120,95,40,0.07) 100%);
         }
-        .eg-oc-wrap { position: relative; z-index: 1; max-width: 1560px; margin: 0 auto; }
+        .eg-oc-wrap { position: relative; z-index: 1; max-width: none; margin: 0 auto; }
 
         /* ── header ── */
         .eg-oc-head { text-align: center; margin: 0 auto clamp(30px, 4vw, 60px); }
@@ -452,8 +452,8 @@ export function EgCompanies() {
         }
 
         /* ═══ large screens ═══ */
-        @media (min-width: 1920px) { .eg-oc-wrap { max-width: 1780px; } .eg-oc-arena { max-width: 1560px; } }
-        @media (min-width: 2560px) { .eg-oc-wrap { max-width: 2320px; } .eg-oc-arena { max-width: 1720px; } }
+        @media (min-width: 1920px) { .eg-oc-wrap { max-width: none; } .eg-oc-arena { max-width: 1560px; } }
+        @media (min-width: 2560px) { .eg-oc-wrap { max-width: none; } .eg-oc-arena { max-width: 1720px; } }
 
         @media (prefers-reduced-motion: reduce) {
           .eg-oc-sheen, .eg-oc-glow, .eg-oc-mesh,

@@ -206,7 +206,7 @@ export function EgDigitalPage() {
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
-        .dg-wrap { max-width: 1720px; margin: 0 auto; }
+        .dg-wrap { max-width: none; margin: 0 auto; }
         .dg-hl { color:${INDIGO}; }
         .dg-eyebrow { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'JetBrains Mono',monospace; font-weight:600; font-size:clamp(10px,0.8vw,12px); letter-spacing:1.5px; text-transform:uppercase; color:${INDIGO}; }
         .dg-eyebrow-dot { width:7px; height:7px; border-radius:2px; background:${INDIGO}; box-shadow:0 0 0 4px rgba(79,70,229,0.16); flex-shrink:0; }
@@ -224,7 +224,7 @@ export function EgDigitalPage() {
         .dg-btn-g:hover { transform:translateY(-2px); border-color:${INDIGO}; color:${INDIGO}; }
 
         /* HERO */
-        .dg-hero { position:relative; overflow:hidden; background:linear-gradient(180deg,#ffffff 0%,${PAPER} 100%); padding:clamp(120px,13vw,185px) clamp(24px,5vw,72px) clamp(60px,7vw,110px); }
+        .dg-hero { position:relative; overflow:hidden; background:linear-gradient(180deg,#ffffff 0%,${PAPER} 100%); padding:clamp(120px,13vw,185px) 45px clamp(60px,7vw,110px); }
         .dg-hero-blob { position:absolute; top:-140px; right:-60px; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle, rgba(99,102,241,0.14), transparent 62%); pointer-events:none; }
         .dg-hero-in { position:relative; z-index:1; display:grid; grid-template-columns:1.02fr 0.98fr; gap:clamp(36px,5vw,72px); align-items:center; }
         .dg-crumb { display:flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:clamp(10px,0.82vw,12px); color:${MUTED}; margin-bottom:clamp(20px,2.2vw,28px); flex-wrap:wrap; }
@@ -258,7 +258,7 @@ export function EgDigitalPage() {
         .dg-chip svg { color:#FBBF24; }
 
         /* CAPABILITIES spec grid */
-        .dg-caps { background:#fff; padding:clamp(64px,8vw,130px) clamp(24px,5vw,72px) clamp(60px,7vw,120px); }
+        .dg-caps { background:#fff; padding:clamp(64px,8vw,130px) 45px clamp(60px,7vw,120px); }
         .dg-spec { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.4vw,20px); }
         .dg-cell { position:relative; overflow:hidden; background:${PAPER}; border:1px solid rgba(17,19,24,0.08); border-radius:18px; padding:clamp(24px,2.4vw,36px); transition:transform .45s cubic-bezier(0.16,1,0.3,1), border-color .45s ease, box-shadow .45s ease, background .45s ease; }
         .dg-cell::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:${INDIGO}; transform:scaleX(0); transform-origin:left; transition:transform .45s cubic-bezier(0.16,1,0.3,1); }
@@ -273,7 +273,7 @@ export function EgDigitalPage() {
         .dg-cell-tag { font-family:'JetBrains Mono',monospace; font-size:11px; color:${INDIGO}; opacity:0.85; }
 
         /* WORK SHOWCASE */
-        .dg-work { background:${PAPER}; padding:clamp(60px,7vw,120px) clamp(24px,5vw,72px); }
+        .dg-work { background:${PAPER}; padding:clamp(60px,7vw,120px) 45px; }
         .dg-work-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,1.8vw,26px); }
         .dg-work-card { background:#fff; border:1px solid rgba(17,19,24,0.08); border-radius:20px; overflow:hidden; transition:transform .45s cubic-bezier(0.16,1,0.3,1), box-shadow .45s ease, border-color .4s ease; }
         .dg-work-card:hover { transform:translateY(-8px); border-color:rgba(79,70,229,0.4); box-shadow:0 44px 84px -48px rgba(17,19,24,0.4); }
@@ -288,7 +288,7 @@ export function EgDigitalPage() {
         .dg-work-l { display:block; font-family:'JetBrains Mono',monospace; font-size:10px; color:${MUTED}; margin-top:5px; }
 
         /* METRICS (light band) */
-        .dg-metrics { background:#fff; padding:clamp(60px,7vw,120px) clamp(24px,5vw,72px); }
+        .dg-metrics { background:#fff; padding:clamp(60px,7vw,120px) 45px; }
         .dg-metrics-in { display:grid; grid-template-columns:0.85fr 1.15fr; gap:clamp(32px,5vw,72px); align-items:center; }
         .dg-metrics-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(22px,2.6vw,40px); }
         .dg-stat { display:flex; flex-direction:column; gap:8px; padding-left:clamp(18px,2vw,26px); border-left:2px solid rgba(79,70,229,0.35); }
@@ -296,7 +296,7 @@ export function EgDigitalPage() {
         .dg-stat-l { font-family:'JetBrains Mono',monospace; font-size:clamp(11px,0.9vw,13.5px); color:${INDIGO}; }
 
         /* SPLIT */
-        .dg-split { background:${PAPER}; padding:clamp(60px,7vw,120px) clamp(24px,5vw,72px); }
+        .dg-split { background:${PAPER}; padding:clamp(60px,7vw,120px) 45px; }
         .dg-split-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(32px,5vw,72px); align-items:center; }
         .dg-split-media { border-radius:16px; overflow:hidden; aspect-ratio:5/4; box-shadow:0 44px 84px -48px rgba(17,19,24,0.4); }
         .dg-split-media img { width:100%; height:100%; object-fit:cover; display:block; }
@@ -305,8 +305,8 @@ export function EgDigitalPage() {
         .dg-check-ic { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:rgba(79,70,229,0.12); color:${INDIGO}; flex-shrink:0; }
 
         /* CTA (light, full-width closing band) */
-        .dg-cta { position:relative; background:#fff; border-top:1px solid rgba(17,19,24,0.1); padding:clamp(64px,8vw,128px) clamp(24px,5vw,72px); }
-        .dg-cta::before { content:''; position:absolute; top:-1px; left:clamp(24px,5vw,72px); width:60px; height:3px; background:${INDIGO}; }
+        .dg-cta { position:relative; background:#fff; border-top:1px solid rgba(17,19,24,0.1); padding:clamp(64px,8vw,128px) 45px; }
+        .dg-cta::before { content:''; position:absolute; top:-1px; left:15px; width:60px; height:3px; background:${INDIGO}; }
         .dg-cta-in { display:grid; grid-template-columns:1.15fr 0.85fr; gap:clamp(28px,4vw,72px); align-items:end; }
         .dg-cta-h { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(34px,4.6vw,72px); line-height:1.0; letter-spacing:-0.04em; color:${INK}; margin:16px 0 0; }
         .dg-cta-act { display:flex; flex-direction:column; align-items:flex-start; gap:clamp(20px,2.4vw,28px); padding-bottom:6px; }
@@ -331,13 +331,13 @@ export function EgDigitalPage() {
           .dg-work-result { text-align:left; }
         }
         @media (min-width:1920px){
-          .dg-wrap { max-width:1860px; }
+          .dg-wrap { max-width:none; }
           .dg-h1 { font-size:116px; }
           .dg-h2 { font-size:66px; }
           .dg-lead,.dg-sec-p { font-size:20px; }
         }
         @media (min-width:2560px){
-          .dg-wrap { max-width:2360px; }
+          .dg-wrap { max-width:none; }
           .dg-h1 { font-size:150px; }
           .dg-h2 { font-size:92px; }
           .dg-cell-d { font-size:18px; }

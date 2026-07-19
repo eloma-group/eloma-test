@@ -208,7 +208,7 @@ export function ElomaGroupPage() {
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&display=swap');
-        .eg-wrap { max-width: 1680px; margin: 0 auto; }
+        .eg-wrap { max-width: none; margin: 0 auto; }
         .eg-hl { color:${GREEN}; }
         .eg-eyebrow { display:inline-flex; align-items:center; gap:14px; margin:0; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(10px,0.82vw,12.5px); letter-spacing:2.5px; text-transform:uppercase; color:${GREEN}; }
         .eg-eyebrow-line { width:32px; height:1.5px; background:${GREEN}; flex-shrink:0; }
@@ -223,7 +223,7 @@ export function ElomaGroupPage() {
         .eg-btn-g:hover { transform:translateY(-2px); border-color:${GREEN}; color:${GREEN}; }
 
         /* HERO */
-        .eg-hero { position:relative; background:linear-gradient(180deg,#ffffff 0%,${PAPER} 100%); padding:clamp(120px,13vw,185px) clamp(24px,5vw,72px) clamp(60px,7vw,110px); }
+        .eg-hero { position:relative; background:linear-gradient(180deg,#ffffff 0%,${PAPER} 100%); padding:clamp(120px,13vw,185px) 45px clamp(60px,7vw,110px); }
         .eg-hero-in { display:grid; grid-template-columns:1.08fr 0.92fr; gap:clamp(36px,5vw,80px); align-items:center; }
         .eg-crumb { display:flex; align-items:center; gap:9px; font-family:'Inter',sans-serif; font-size:clamp(11px,0.85vw,13px); color:${MUTED}; margin-bottom:clamp(20px,2.4vw,30px); flex-wrap:wrap; }
         .eg-crumb a { color:${MUTED}; text-decoration:none; transition:color .2s ease; }
@@ -239,7 +239,7 @@ export function ElomaGroupPage() {
         .eg-hero-plate-txt { display:block; font-family:'Inter',sans-serif; font-size:clamp(11px,0.9vw,13px); color:${MUTED}; margin-top:2px; }
 
         /* SHARED SERVICES */
-        .eg-svc { background:#fff; padding:clamp(64px,8vw,130px) clamp(24px,5vw,72px); }
+        .eg-svc { background:#fff; padding:clamp(64px,8vw,130px) 45px; }
         .eg-svc-head { display:grid; grid-template-columns:1.1fr 0.9fr; gap:clamp(24px,4vw,64px); align-items:end; margin-bottom:clamp(38px,4.5vw,64px); }
         .eg-svc-lead { font-family:'Inter',sans-serif; font-size:clamp(14px,1.1vw,17px); line-height:1.8; color:${MUTED}; margin:0; }
         .eg-svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.4vw,20px); }
@@ -251,7 +251,7 @@ export function ElomaGroupPage() {
         .eg-svc-d { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.75; color:${MUTED}; margin:0; }
 
         /* HOLDINGS INDEX */
-        .eg-hold { background:${PAPER}; padding:clamp(60px,7vw,120px) clamp(24px,5vw,72px); }
+        .eg-hold { background:${PAPER}; padding:clamp(60px,7vw,120px) 45px; }
         .eg-hold-head { margin-bottom:clamp(30px,4vw,52px); }
         .eg-index { border-top:2px solid ${INK}; }
         .eg-index-row { display:grid; grid-template-columns:clamp(76px,9vw,132px) 1.5fr 1fr auto; gap:clamp(16px,2.4vw,44px); align-items:center; padding:clamp(16px,2vw,26px) clamp(6px,1vw,14px); border-top:1px solid rgba(12,28,42,0.16); text-decoration:none; transition:padding-left .4s cubic-bezier(0.16,1,0.3,1), background .35s ease; }
@@ -266,7 +266,7 @@ export function ElomaGroupPage() {
         .eg-index-row:hover .eg-index-arrow { background:${GREEN}; border-color:${GREEN}; color:${INK}; transform:translate(3px,-3px); }
 
         /* PRINCIPLES */
-        .eg-prin { background:#fff; padding:clamp(60px,7vw,120px) clamp(24px,5vw,72px); }
+        .eg-prin { background:#fff; padding:clamp(60px,7vw,120px) 45px; }
         .eg-prin-grid { display:grid; grid-template-columns:0.85fr 1.15fr; gap:clamp(32px,5vw,80px); align-items:start; }
         .eg-prin-intro { position:sticky; top:100px; }
         .eg-prin-cards { display:grid; grid-template-columns:1fr 1fr; gap:clamp(14px,1.6vw,22px); }
@@ -277,7 +277,7 @@ export function ElomaGroupPage() {
         .eg-prin-d { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.75; color:${MUTED}; margin:0; }
 
         /* NUMBERS BAND (light) */
-        .eg-band { background:${PAPER}; padding:clamp(48px,5.5vw,88px) clamp(24px,5vw,72px); }
+        .eg-band { background:${PAPER}; padding:clamp(48px,5.5vw,88px) 45px; }
         .eg-band-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(20px,2vw,32px); }
         .eg-band-item { display:flex; flex-direction:column; gap:8px; }
         .eg-band-item + .eg-band-item { padding-left:clamp(20px,2vw,32px); border-left:1px solid rgba(12,28,42,0.14); }
@@ -286,7 +286,7 @@ export function ElomaGroupPage() {
         .eg-band-l { font-family:'Inter',sans-serif; font-size:clamp(11px,0.9vw,14px); color:${MUTED}; letter-spacing:0.4px; }
 
         /* STEWARDSHIP */
-        .eg-stew { background:#fff; padding:clamp(60px,7vw,120px) clamp(24px,5vw,72px); }
+        .eg-stew { background:#fff; padding:clamp(60px,7vw,120px) 45px; }
         .eg-stew-grid { display:grid; grid-template-columns:0.9fr 1.1fr; gap:clamp(32px,5vw,72px); align-items:center; }
         .eg-stew-media { border-radius:14px; overflow:hidden; aspect-ratio:1/1; box-shadow:0 44px 84px -48px rgba(12,28,42,0.45); }
         .eg-stew-media img { width:100%; height:100%; object-fit:cover; display:block; }
@@ -297,8 +297,8 @@ export function ElomaGroupPage() {
         .eg-stew-role { display:block; font-family:'Inter',sans-serif; font-size:clamp(12px,1vw,14px); letter-spacing:1.5px; text-transform:uppercase; color:${GREEN}; margin-top:5px; }
 
         /* CTA (light, full-width closing band) */
-        .eg-cta { position:relative; background:${PAPER}; border-top:1px solid rgba(12,28,42,0.1); padding:clamp(64px,8vw,128px) clamp(24px,5vw,72px); }
-        .eg-cta::before { content:''; position:absolute; top:-1px; left:clamp(24px,5vw,72px); width:60px; height:3px; background:${GREEN}; }
+        .eg-cta { position:relative; background:${PAPER}; border-top:1px solid rgba(12,28,42,0.1); padding:clamp(64px,8vw,128px) 45px; }
+        .eg-cta::before { content:''; position:absolute; top:-1px; left:15px; width:60px; height:3px; background:${GREEN}; }
         .eg-cta-in { display:grid; grid-template-columns:1.15fr 0.85fr; gap:clamp(28px,4vw,72px); align-items:end; }
         .eg-cta-h { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(34px,4.6vw,72px); line-height:1.0; letter-spacing:-0.03em; color:${INK}; margin:16px 0 0; }
         .eg-cta-act { display:flex; flex-direction:column; align-items:flex-start; gap:clamp(20px,2.4vw,28px); padding-bottom:6px; }
@@ -329,13 +329,13 @@ export function ElomaGroupPage() {
           .eg-band-item + .eg-band-item { border-left:none; padding-left:0; }
         }
         @media (min-width:1920px){
-          .eg-wrap { max-width:1820px; }
+          .eg-wrap { max-width:none; }
           .eg-h1 { font-size:118px; }
           .eg-h2 { font-size:66px; }
           .eg-lead,.eg-p { font-size:20px; }
         }
         @media (min-width:2560px){
-          .eg-wrap { max-width:2320px; }
+          .eg-wrap { max-width:none; }
           .eg-h1 { font-size:152px; }
           .eg-h2 { font-size:92px; }
           .eg-stew-txt { font-size:58px; }

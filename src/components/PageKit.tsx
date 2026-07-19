@@ -35,9 +35,10 @@ interface HeroProps {
   line2: string
   description?: string
   stats?: { n: string; label: string }[]
+  inline?: boolean
 }
 
-export function PageHero({ badge, line1, line2, description, stats }: HeroProps) {
+export function PageHero({ badge, line1, line2, description, stats, inline }: HeroProps) {
   return (
     <section style={{ position: 'relative', overflow: 'hidden' }}>
       <style>{`
@@ -47,7 +48,7 @@ export function PageHero({ badge, line1, line2, description, stats }: HeroProps)
             radial-gradient(60% 55% at 80% 0%, rgba(60,185,140,0.10), transparent 60%),
             radial-gradient(50% 50% at 0% 100%, rgba(19,41,61,0.05), transparent 60%),
             linear-gradient(180deg, #ffffff 0%, #f3faf7 100%);
-          padding: clamp(130px,15vw,210px) clamp(24px,5vw,80px) clamp(56px,7vw,96px);
+          padding: clamp(130px,15vw,210px) 45px clamp(56px,7vw,96px);
           text-align: center;
         }
         .pk-hero-h1 {
@@ -85,7 +86,7 @@ export function PageHero({ badge, line1, line2, description, stats }: HeroProps)
           <Eyebrow label={badge} center />
         </motion.div>
         <motion.h1 className="pk-hero-h1" initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.85, ease: EASE, delay: 0.08 }}>
-          <span style={{ color: NAVY }}>{line1}</span><br />
+          <span style={{ color: NAVY }}>{line1}</span>{inline ? ' ' : <br />}
           <span style={{ color: GREEN }}>{line2}</span>
         </motion.h1>
         {description && (
@@ -121,7 +122,7 @@ export function PageCTA({ line1, line2, sub, href = '/contact#contact-form', but
   return (
     <section style={{
       position: 'relative', overflow: 'hidden', background: NAVY,
-      padding: 'clamp(72px,10vw,130px) clamp(24px,5vw,80px)', textAlign: 'center',
+      padding: 'clamp(72px,10vw,130px) 45px', textAlign: 'center',
     }}>
       <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', bottom: -120, right: '8%', width: 520, height: 520, borderRadius: '50%', background: `radial-gradient(circle, rgba(60,185,140,0.12) 0%, transparent 62%)`, pointerEvents: 'none' }} />
@@ -161,10 +162,10 @@ export function Section({ children, mint, style }: { children: ReactNode; mint?:
       background: mint
         ? 'linear-gradient(180deg, #ffffff 0%, #f3faf7 100%)'
         : '#ffffff',
-      padding: 'clamp(64px,8vw,120px) clamp(24px,5vw,80px)',
+      padding: 'clamp(64px,8vw,120px) 45px',
       ...style,
     }}>
-      <div style={{ maxWidth: 1760, margin: '0 auto' }}>{children}</div>
+      <div style={{ maxWidth: 'none', margin: '0 auto' }}>{children}</div>
     </section>
   )
 }

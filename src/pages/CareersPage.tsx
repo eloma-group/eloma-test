@@ -207,7 +207,7 @@ export function CareersPage() {
       <FlyFooter />
 
       <style>{`
-        .cx-wrap { max-width:1760px; margin:0 auto; }
+        .cx-wrap { max-width:none; margin:0 auto; }
         .g { color:${GREEN}; }
         .cx-eyebrow { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(10px,0.8vw,12px); letter-spacing:2.5px; text-transform:uppercase; color:${GREEN}; }
         .cx-eyebrow.lt { color:#8fe3c4; }
@@ -227,7 +227,7 @@ export function CareersPage() {
 
         /* 1 · Hero */
         .cx-hero { position:relative; overflow:hidden; background:linear-gradient(180deg,#ffffff 0%,#f3faf7 100%);
-          padding: clamp(120px,14vw,200px) clamp(24px,5vw,80px) clamp(60px,7vw,110px); }
+          padding: clamp(120px,14vw,200px) 45px clamp(60px,7vw,110px); }
         .cx-hero-in { display:grid; grid-template-columns:1.05fr 0.95fr; gap:clamp(32px,5vw,80px); align-items:center; }
         .cx-hero-h1 { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(44px,6.4vw,104px); line-height:0.98; letter-spacing:-0.04em; color:${NAVY}; margin:clamp(18px,2.2vw,28px) 0 0; }
         .cx-hero-lead { font-family:'Inter',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; max-width:52ch; margin:clamp(20px,2.4vw,30px) 0 clamp(26px,3vw,38px); }
@@ -243,7 +243,7 @@ export function CareersPage() {
         .cx-metric-div { width:1px; height:38px; background:rgba(19,41,61,0.14); }
 
         /* 2 · Perks — sticky split with rows */
-        .cx-perks-sec { background:#fff; padding:clamp(56px,7vw,120px) clamp(24px,5vw,80px); }
+        .cx-perks-sec { background:#fff; padding:clamp(56px,7vw,120px) 45px; }
         .cx-perks-split { display:grid; grid-template-columns:0.82fr 1.18fr; gap:clamp(32px,5vw,88px); align-items:start; }
         .cx-perks-aside { position:sticky; top:104px; max-width:none; }
         .cx-perks-intro { font-family:'Inter',sans-serif; font-size:clamp(14.5px,1.1vw,17px); line-height:1.8; color:${MUTED}; margin:clamp(18px,2vw,26px) 0 clamp(24px,3vw,34px); max-width:42ch; }
@@ -264,7 +264,7 @@ export function CareersPage() {
         .cx-prow-x { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.72; color:${MUTED}; margin:0; max-width:56ch; }
 
         /* 3 · Culture band */
-        .cx-culture { position:relative; overflow:hidden; min-height:clamp(420px,52vw,600px); display:flex; align-items:center; padding:clamp(56px,8vw,120px) clamp(24px,5vw,80px); }
+        .cx-culture { position:relative; overflow:hidden; min-height:clamp(420px,52vw,600px); display:flex; align-items:center; padding:clamp(56px,8vw,120px) 45px; }
         .cx-culture-media { position:absolute; inset:0; }
         .cx-culture-media img { width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.04); animation:cxzoom 20s ease-in-out infinite alternate; }
         @keyframes cxzoom { to { transform:scale(1.12); } }
@@ -274,7 +274,7 @@ export function CareersPage() {
         .cx-culture-p { font-family:'Inter',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.82; color:rgba(255,255,255,0.72); margin:0; max-width:52ch; }
 
         /* 4 · Roles */
-        .cx-roles-sec { background:linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(56px,7vw,120px) clamp(24px,5vw,80px); }
+        .cx-roles-sec { background:linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(56px,7vw,120px) 45px; }
         .cx-roles-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:clamp(28px,3.4vw,46px); }
         .cx-filter { display:flex; flex-wrap:wrap; gap:9px; }
         .cx-pill { font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:${NAVY}; background:#fff; border:1px solid rgba(26,43,60,0.14); border-radius:99px; padding:11px 18px; min-height:44px; cursor:pointer; transition:transform 0.25s cubic-bezier(0.16,1,0.3,1), background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
@@ -300,7 +300,7 @@ export function CareersPage() {
         .cx-note-link:hover { text-decoration:underline; }
 
         /* 5 · How we hire */
-        .cx-hire-sec { position:relative; overflow:hidden; background:linear-gradient(165deg,${NAVY} 0%,#16334a 100%); padding:clamp(64px,8vw,130px) clamp(24px,5vw,80px); }
+        .cx-hire-sec { position:relative; overflow:hidden; background:linear-gradient(165deg,${NAVY} 0%,#16334a 100%); padding:clamp(64px,8vw,130px) 45px; }
         .cx-steps { position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(20px,2.4vw,36px); margin-top:clamp(40px,5vw,64px); }
         .cx-steps-line { position:absolute; top:30px; left:12%; right:12%; height:1px; background:linear-gradient(90deg, transparent, rgba(60,185,140,0.5) 12%, rgba(60,185,140,0.5) 88%, transparent); }
         .cx-step { position:relative; text-align:center; display:flex; flex-direction:column; align-items:center; }
@@ -310,7 +310,7 @@ export function CareersPage() {
         .cx-step-x { font-family:'Inter',sans-serif; font-size:clamp(13px,1vw,14.5px); line-height:1.7; color:rgba(255,255,255,0.6); margin:0; max-width:26ch; }
 
         /* 6 · CTA */
-        .cx-cta { position:relative; overflow:hidden; background:linear-gradient(180deg,#f3faf7,#ffffff); padding:clamp(72px,9vw,140px) clamp(24px,5vw,80px); text-align:center; }
+        .cx-cta { position:relative; overflow:hidden; background:linear-gradient(180deg,#f3faf7,#ffffff); padding:clamp(72px,9vw,140px) 45px; text-align:center; }
         .cx-cta-glow { position:absolute; top:-140px; left:50%; transform:translateX(-50%); width:600px; height:400px; border-radius:50%; background:radial-gradient(circle, rgba(60,185,140,0.14), transparent 64%); pointer-events:none; }
         .cx-cta-in { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; }
         .cx-cta-h { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(34px,5.4vw,84px); letter-spacing:-0.035em; line-height:1.05; color:${NAVY}; margin:0; }
@@ -336,7 +336,7 @@ export function CareersPage() {
           .cx-steps { grid-template-columns:1fr; }
         }
         @media (min-width:1920px){
-          .cx-wrap { max-width:1900px; }
+          .cx-wrap { max-width:none; }
           .cx-hero-h1 { font-size:116px; }
           .cx-h2, .cx-cta-h { font-size:76px; }
           .cx-hero-lead, .cx-cta-p { font-size:19px; }

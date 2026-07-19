@@ -58,7 +58,7 @@ export function EgLife() {
           background:
             radial-gradient(58% 52% at 14% 26%, rgba(176,137,74,0.06), transparent 60%),
             linear-gradient(180deg, #f6f3ec 0%, #f2eee5 100%);
-          padding: clamp(56px,8vw,132px) clamp(24px,4vw,64px);
+          padding: clamp(56px,8vw,132px) 45px;
         }
         .eg-life-inner {
           position: relative; z-index: 1; width: 100%; margin: 0 auto;

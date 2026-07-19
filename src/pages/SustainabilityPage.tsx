@@ -182,8 +182,8 @@ export function SustainabilityPage() {
 
       <style>{`
         .g { color:${GREEN}; }
-        .sx-wrap { max-width:1280px; margin:0 auto; padding:0 clamp(24px,5vw,64px); }
-        @media (min-width:1920px){ .sx-wrap { max-width:1480px; } }
+        .sx-wrap { max-width:none; margin:0 auto; padding:0 45px; }
+        @media (min-width:1920px){ .sx-wrap { max-width:none; } }
 
         .sx-eyebrow { display:inline-flex; align-items:center; gap:10px; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(10px,0.8vw,12px); letter-spacing:2.5px; text-transform:uppercase; color:${GREEN}; }
         .sx-eyebrow.lt { color:#bff0dc; }
