@@ -163,7 +163,7 @@ export function Header() {
                     fontSize: '14.5px',
                     fontWeight: 600,
                     color: textColor,
-                    letterSpacing: '0.1px',
+                    letterSpacing: '0.4px',
                     transition: 'color 0.25s ease, opacity 0.15s ease',
                     whiteSpace: 'nowrap',
                     cursor: 'pointer',
