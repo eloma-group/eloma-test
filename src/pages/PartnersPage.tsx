@@ -4,20 +4,20 @@ import { Header } from '../components/Header/Header'
 import { FlyFooter } from '../components/FlyFooter'
 import { PageCTA, NAVY, GREEN, MUTED, EASE } from '../components/PageKit'
 
-type Partner = { name: string; sector: string; logo: string; body: string }
+type Partner = { name: string; sector: string; logo: string; s: number; body: string }
 
 const PARTNERS: Partner[] = [
-  { name: 'Microsoft', sector: 'Technology & Cloud', logo: '/partners/microsoft.svg', body: 'As one of the world’s leading technology companies, Microsoft supports businesses through innovative digital solutions, cloud technologies, productivity tools, and enterprise systems. Our association reflects our commitment to embracing technology that drives growth, efficiency, and innovation.' },
-  { name: 'Amazon Web Services', sector: 'Cloud & Infrastructure', logo: '/partners/aws.svg', body: 'As the world’s most comprehensive and broadly adopted cloud platform, Amazon Web Services (AWS) powers businesses with secure, scalable infrastructure, advanced computing, storage, and intelligent data solutions. Our association with AWS reflects our commitment to building reliable, future-ready systems that drive transformation at scale.' },
-  { name: 'Google Cloud', sector: 'Cloud & Data Platform', logo: '/partners/googlecloud.svg', body: 'Google Cloud delivers secure, intelligent infrastructure trusted by enterprises worldwide - spanning compute, data analytics, and industry-leading AI. Working alongside platforms like Google Cloud keeps our solutions fast, scalable, and ready for what comes next.' },
-  { name: 'Oracle', sector: 'Enterprise Software & Database', logo: '/partners/oracle.svg', body: 'Oracle is a global leader in enterprise software, databases, and cloud applications that run mission-critical operations for organizations of every size. Our association with Oracle underpins the reliability and performance our clients depend on.' },
-  { name: 'Salesforce', sector: 'CRM & Customer Platform', logo: '/partners/salesforce.svg', body: 'Salesforce is the world’s leading customer relationship platform, helping organizations unify sales, service, and marketing around a single view of the customer. Our alignment with Salesforce reflects a commitment to building lasting, data-driven customer relationships.' },
-  { name: 'Shopify', sector: 'Commerce & Retail', logo: '/partners/shopify.svg', body: 'Shopify powers millions of businesses with a flexible commerce platform built for growth - from first sale to global scale. Collaborating with commerce leaders like Shopify strengthens our ability to deliver modern, conversion-ready retail experiences.' },
-  { name: 'Zoho', sector: 'Business Software Suite', logo: '/partners/zoho.svg', body: 'Zoho offers a comprehensive suite of cloud business applications spanning sales, finance, operations, and collaboration. Partnering with Zoho lets us deliver integrated, cost-effective tools that help businesses operate smarter from a single ecosystem.' },
-  { name: 'Sage', sector: 'Accounting & ERP', logo: '/partners/sage.svg', body: 'Sage is a trusted name in accounting, finance, and ERP software, helping businesses manage cash flow, compliance, and growth with confidence. Our work alongside Sage reinforces our focus on accurate, accountable financial operations.' },
-  { name: 'Amazon', sector: 'Global Commerce & Technology', logo: '/partners/amazon.svg', body: 'Amazon is one of the world’s most influential companies, setting the global standard for commerce, logistics, and customer-centric innovation. Aligning with a brand like Amazon reflects our commitment to operational excellence, scale, and a relentless focus on the customer.' },
-  { name: 'Tesla', sector: 'Innovation & Engineering', logo: '/partners/tesla.svg', body: 'Known for its innovation and forward-thinking approach, Tesla represents excellence in engineering, sustainability, and technological advancement. Partnerships with globally recognized brands like Tesla reinforce our focus on modern, future-ready business solutions.' },
-  { name: 'Isuzu', sector: 'Commercial Transportation', logo: '/partners/isuzu.svg', body: 'A trusted name in commercial transportation, Isuzu is recognized worldwide for reliability, durability, and performance. Through collaborations with industry leaders such as Isuzu, we strengthen our transportation capabilities and support efficient movement across supply chains.' },
+  { name: 'Microsoft', sector: 'Technology & Cloud', logo: '/partners/microsoft.svg', s: 1.45, body: 'As one of the world’s leading technology companies, Microsoft supports businesses through innovative digital solutions, cloud technologies, productivity tools, and enterprise systems. Our association reflects our commitment to embracing technology that drives growth, efficiency, and innovation.' },
+  { name: 'Amazon Web Services', sector: 'Cloud & Infrastructure', logo: '/partners/aws.svg', s: 0.85, body: 'As the world’s most comprehensive and broadly adopted cloud platform, Amazon Web Services (AWS) powers businesses with secure, scalable infrastructure, advanced computing, storage, and intelligent data solutions. Our association with AWS reflects our commitment to building reliable, future-ready systems that drive transformation at scale.' },
+  { name: 'Google Cloud', sector: 'Cloud & Data Platform', logo: '/partners/googlecloud.svg', s: 1.15, body: 'Google Cloud delivers secure, intelligent infrastructure trusted by enterprises worldwide - spanning compute, data analytics, and industry-leading AI. Working alongside platforms like Google Cloud keeps our solutions fast, scalable, and ready for what comes next.' },
+  { name: 'Oracle', sector: 'Enterprise Software & Database', logo: '/partners/oracle.svg', s: 1.05, body: 'Oracle is a global leader in enterprise software, databases, and cloud applications that run mission-critical operations for organizations of every size. Our association with Oracle underpins the reliability and performance our clients depend on.' },
+  { name: 'Salesforce', sector: 'CRM & Customer Platform', logo: '/partners/salesforce.svg', s: 0.8, body: 'Salesforce is the world’s leading customer relationship platform, helping organizations unify sales, service, and marketing around a single view of the customer. Our alignment with Salesforce reflects a commitment to building lasting, data-driven customer relationships.' },
+  { name: 'Shopify', sector: 'Commerce & Retail', logo: '/partners/shopify.svg', s: 1.3, body: 'Shopify powers millions of businesses with a flexible commerce platform built for growth - from first sale to global scale. Collaborating with commerce leaders like Shopify strengthens our ability to deliver modern, conversion-ready retail experiences.' },
+  { name: 'Zoho', sector: 'Business Software Suite', logo: '/partners/zoho.svg', s: 1.25, body: 'Zoho offers a comprehensive suite of cloud business applications spanning sales, finance, operations, and collaboration. Partnering with Zoho lets us deliver integrated, cost-effective tools that help businesses operate smarter from a single ecosystem.' },
+  { name: 'Sage', sector: 'Accounting & ERP', logo: '/partners/sage.svg', s: 0.66, body: 'Sage is a trusted name in accounting, finance, and ERP software, helping businesses manage cash flow, compliance, and growth with confidence. Our work alongside Sage reinforces our focus on accurate, accountable financial operations.' },
+  { name: 'Amazon', sector: 'Global Commerce & Technology', logo: '/partners/amazon.svg', s: 1.0, body: 'Amazon is one of the world’s most influential companies, setting the global standard for commerce, logistics, and customer-centric innovation. Aligning with a brand like Amazon reflects our commitment to operational excellence, scale, and a relentless focus on the customer.' },
+  { name: 'Tesla', sector: 'Innovation & Engineering', logo: '/partners/tesla.svg', s: 1.25, body: 'Known for its innovation and forward-thinking approach, Tesla represents excellence in engineering, sustainability, and technological advancement. Partnerships with globally recognized brands like Tesla reinforce our focus on modern, future-ready business solutions.' },
+  { name: 'Isuzu', sector: 'Commercial Transportation', logo: '/partners/isuzu.svg', s: 0.5, body: 'A trusted name in commercial transportation, Isuzu is recognized worldwide for reliability, durability, and performance. Through collaborations with industry leaders such as Isuzu, we strengthen our transportation capabilities and support efficient movement across supply chains.' },
 ]
 
 const BENEFITS = [
@@ -71,7 +71,7 @@ export function PartnersPage() {
             <div className="pt-trust-grid">
               {PARTNERS.map(p => (
                 <div className="pt-trust-cell" key={p.name}>
-                  <img src={p.logo} alt={p.name} decoding="async" />
+                  <img src={p.logo} alt={p.name} style={{ ['--s' as string]: p.s } as React.CSSProperties} decoding="async" />
                 </div>
               ))}
               <div className="pt-trust-cell pt-trust-more">&amp; more</div>
@@ -117,7 +117,7 @@ export function PartnersPage() {
                 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.5, delay: (i % 3) * 0.06, ease: EASE }}>
                 <span className="pt-card-accent" aria-hidden />
                 <div className="pt-card-logo">
-                  <img src={p.logo} alt={p.name} height={40} loading="lazy" decoding="async" />
+                  <img src={p.logo} alt={p.name} style={{ ['--s' as string]: p.s } as React.CSSProperties} loading="lazy" decoding="async" />
                 </div>
                 <div className="pt-card-meta">
                   <h3 className="pt-card-name">{p.name}</h3>
@@ -211,7 +211,7 @@ export function PartnersPage() {
         .pt-trust-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:1px; background:rgba(26,43,60,0.1); border:1px solid rgba(26,43,60,0.1); border-radius:22px; overflow:hidden; }
         .pt-trust-cell { background:#fff; display:flex; align-items:center; justify-content:center; padding:clamp(18px,2.2vw,30px); min-height:clamp(100px,9.5vw,132px); transition:background 0.4s ease; }
         .pt-trust-cell:hover { background:rgba(60,185,140,0.05); }
-        .pt-trust-cell img { height:clamp(32px,3.4vw,42px); width:auto; max-width:100%; object-fit:contain; transition:transform 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}; }
+        .pt-trust-cell img { height:calc(clamp(30px,3.2vw,40px) * var(--s,1)); width:auto; max-width:100%; object-fit:contain; transition:transform 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}; }
         .pt-trust-cell:hover img { transform:translateY(-2px) scale(1.04); }
         .pt-trust-more { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(13px,1.1vw,16px); letter-spacing:-0.01em; color:${GREEN}; }
 
@@ -238,8 +238,8 @@ export function PartnersPage() {
         .pt-card-accent { position:absolute; top:0; left:0; right:0; height:3px; background:${GREEN}; transform:scaleX(0); transform-origin:left; transition:transform 0.45s ${'cubic-bezier(0.16,1,0.3,1)'}; }
         .pt-card:hover { transform:translateY(-6px); border-color:rgba(60,185,140,0.5); box-shadow:0 36px 70px -40px rgba(19,41,61,0.3); }
         .pt-card:hover .pt-card-accent { transform:scaleX(1); }
-        .pt-card-logo { height:clamp(48px,4.8vw,58px); display:flex; align-items:center; margin-bottom:clamp(20px,2.2vw,28px); }
-        .pt-card-logo img { height:clamp(42px,4.4vw,54px); width:auto; max-width:100%; object-fit:contain; object-position:left center; }
+        .pt-card-logo { height:clamp(56px,5.6vw,70px); display:flex; align-items:center; margin-bottom:clamp(20px,2.2vw,28px); }
+        .pt-card-logo img { height:calc(clamp(34px,3.6vw,44px) * var(--s,1)); width:auto; max-width:100%; object-fit:contain; object-position:left center; }
         .pt-card-meta { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
         .pt-card-name { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(19px,1.7vw,25px); letter-spacing:-0.02em; color:${NAVY}; margin:0; }
         .pt-card-sector { font-family:'Inter',sans-serif; font-size:10.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:${GREEN}; }
