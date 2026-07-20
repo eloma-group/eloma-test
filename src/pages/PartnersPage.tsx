@@ -211,7 +211,7 @@ export function PartnersPage() {
         .pt-trust-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:1px; background:rgba(26,43,60,0.1); border:1px solid rgba(26,43,60,0.1); border-radius:22px; overflow:hidden; }
         .pt-trust-cell { background:#fff; display:flex; align-items:center; justify-content:center; padding:clamp(18px,2.2vw,30px); min-height:clamp(100px,9.5vw,132px); transition:background 0.4s ease; }
         .pt-trust-cell:hover { background:rgba(60,185,140,0.05); }
-        .pt-trust-cell img { height:calc(clamp(30px,3.2vw,40px) * var(--s,1)); width:auto; max-width:100%; object-fit:contain; transition:transform 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}; }
+        .pt-trust-cell img { height:calc(clamp(34px,3.6vw,46px) * var(--s,1)); width:auto; max-width:100%; object-fit:contain; transition:transform 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}; }
         .pt-trust-cell:hover img { transform:translateY(-2px) scale(1.04); }
         .pt-trust-more { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(13px,1.1vw,16px); letter-spacing:-0.01em; color:${GREEN}; }
 
@@ -238,8 +238,8 @@ export function PartnersPage() {
         .pt-card-accent { position:absolute; top:0; left:0; right:0; height:3px; background:${GREEN}; transform:scaleX(0); transform-origin:left; transition:transform 0.45s ${'cubic-bezier(0.16,1,0.3,1)'}; }
         .pt-card:hover { transform:translateY(-6px); border-color:rgba(60,185,140,0.5); box-shadow:0 36px 70px -40px rgba(19,41,61,0.3); }
         .pt-card:hover .pt-card-accent { transform:scaleX(1); }
-        .pt-card-logo { height:clamp(56px,5.6vw,70px); display:flex; align-items:center; margin-bottom:clamp(20px,2.2vw,28px); }
-        .pt-card-logo img { height:calc(clamp(34px,3.6vw,44px) * var(--s,1)); width:auto; max-width:100%; object-fit:contain; object-position:left center; }
+        .pt-card-logo { height:clamp(60px,6vw,76px); display:flex; align-items:center; margin-bottom:clamp(20px,2.2vw,28px); }
+        .pt-card-logo img { height:calc(clamp(38px,4vw,50px) * var(--s,1)); width:auto; max-width:100%; object-fit:contain; object-position:left center; }
         .pt-card-meta { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
         .pt-card-name { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(19px,1.7vw,25px); letter-spacing:-0.02em; color:${NAVY}; margin:0; }
         .pt-card-sector { font-family:'Inter',sans-serif; font-size:10.5px; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:${GREEN}; }
