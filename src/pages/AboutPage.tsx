@@ -1,24 +1,29 @@
-import { useRef, useState } from 'react'
-import { motion, useReducedMotion, useScroll } from 'framer-motion'
-import { ArrowUpRight, Timer, Layers3, Wrench, Handshake } from 'lucide-react'
+import { type CSSProperties } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
+import { Timer, Layers3, Wrench, Handshake, Laptop, Ship, Truck, Plane, Building2 } from 'lucide-react'
 import { Header } from '../components/Header/Header'
 import { FlyFooter } from '../components/FlyFooter'
 import { PageCTA, NAVY, GREEN, MUTED, EASE } from '../components/PageKit'
 
-const img = (id: string, w: number) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`
-
 /* small meta chips under the hero headline */
 const TAGS = ['Australian owned', 'Multi-sector', 'Long-term capital', 'Operator-led']
 
-/* signature hover-reveal list — the disciplines the group operates */
+/* the disciplines the group operates — an expanding image-panel gallery */
 const DISCIPLINES = [
-  { name: 'Technology & Digital', tag: 'EG Digital', img: 'photo-1518770660439-4636190af475' },
-  { name: 'Global Trade & Imports', tag: 'EG Imports', img: 'photo-1494412574643-ff11b0a5c1c3' },
-  { name: 'Transport & Logistics', tag: 'BIVRY', img: 'photo-1601584115197-04ecc0da31d7' },
-  { name: 'Travel & Mobility', tag: 'EG Travels', img: 'photo-1436491865332-7a61a109cc05' },
-  { name: 'Group & Shared Services', tag: 'Eloma Group', img: 'photo-1497366216548-37526070297c' },
+  { name: 'Technology & Digital', tag: 'EG Digital', img: 'photo-1518770660439-4636190af475',
+    desc: 'Modern software, cloud and IT infrastructure — engineered for growth and built to scale.' },
+  { name: 'Global Trade & Imports', tag: 'EG Imports', img: 'photo-1494412574643-ff11b0a5c1c3',
+    desc: 'Cross-border sourcing and trade, delivered with precision, speed and hard-earned trust.' },
+  { name: 'Transport & Logistics', tag: 'BIVRY', img: 'photo-1601584115197-04ecc0da31d7',
+    desc: 'Road freight and logistics that arrive on time, every time — visibility end to end.' },
+  { name: 'Travel & Mobility', tag: 'EG Travels', img: 'photo-1436491865332-7a61a109cc05',
+    desc: 'Corporate and leisure journeys designed entirely around the people who take them.' },
+  { name: 'Group & Shared Services', tag: 'Eloma Group', img: 'photo-1497366216548-37526070297c',
+    desc: 'The capital, systems and governance backbone that sits beneath every company.' },
 ]
+
+/* small line-icon per discipline for the diamond feature rows */
+const DISC_ICONS = [Laptop, Ship, Truck, Plane, Building2]
 
 const NUMBERS = [
   { n: '05', l: 'Operating companies' },
@@ -46,13 +51,12 @@ const JOURNEY = [
   { year: '2026', title: 'Growth with purpose', desc: 'Joining the UN Global Compact and signing the Women’s Empowerment Principles — growth defined by ethics, inclusion and lasting impact.' },
 ]
 
+/* accent colour per milestone — a bright, distinct palette echoing the
+   reference slide (numbered circles joined by a colour-segmented rail) */
+const TL_COLORS = ['#2C5480', '#33A9DE', '#E39A2B', '#D0443B', '#7BA83F', '#2FA79F', '#C0552D', '#5B6BB5']
+
 export function AboutPage() {
   const reduce = useReducedMotion() ?? false
-  const listRef = useRef<HTMLDivElement>(null)
-  const journeyRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: journeyRef, offset: ['start 62%', 'end 58%'] })
-  const floatRef = useRef<HTMLDivElement>(null)
-  const [active, setActive] = useState<number | null>(null)
 
   const rise = (d = 0) => ({
     initial: reduce ? false : { opacity: 0, y: 26 },
@@ -60,14 +64,6 @@ export function AboutPage() {
     viewport: { once: true, margin: '-60px' },
     transition: { duration: 0.8, delay: d, ease: EASE },
   })
-
-  // cursor-following floating preview for the disciplines list
-  const onMove = (e: React.MouseEvent) => {
-    const box = listRef.current, el = floatRef.current
-    if (!box || !el) return
-    const r = box.getBoundingClientRect()
-    el.style.transform = `translate(${e.clientX - r.left}px, ${e.clientY - r.top}px)`
-  }
 
   return (
     <div style={{ overflowX: 'clip', background: '#fff' }}>
@@ -112,27 +108,34 @@ export function AboutPage() {
             </motion.p>
           </div>
 
-          <div className="oj-line" ref={journeyRef}>
-            <span className="oj-spine" aria-hidden />
-            <motion.span className="oj-spine-fill" aria-hidden style={{ scaleY: reduce ? 1 : scrollYProgress }} />
-            {JOURNEY.map((m, i) => (
-              <motion.div
-                key={m.year + m.title}
-                className="oj-item"
-                data-side={i % 2 === 0 ? 'l' : 'r'}
-                initial={reduce ? false : { opacity: 0, y: 34 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-70px' }}
-                transition={{ duration: 0.6, ease: EASE }}
-              >
-                <span className="oj-node" aria-hidden><i /></span>
-                <div className="oj-card">
-                  <span className="oj-year">{m.year}</span>
-                  <h3 className="oj-title">{m.title}</h3>
-                  <p className="oj-desc">{m.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+          <div className="tl2-track" style={{ ['--n' as string]: JOURNEY.length } as CSSProperties}>
+            {JOURNEY.map((m, i) => {
+              const up = i % 2 === 0
+              return (
+                <motion.div
+                  key={m.year + m.title}
+                  className="tl2-item"
+                  style={{ '--c': TL_COLORS[i % TL_COLORS.length] } as CSSProperties}
+                  initial={reduce ? false : { opacity: 0, y: up ? -20 : 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.55, ease: EASE, delay: i * 0.06 }}
+                >
+                  <span className="tl2-seg" aria-hidden />
+                  <div className={`tl2-callout ${up ? 'up' : 'down'}`}>
+                    {up && <span className="tl2-year">{m.year}</span>}
+                    <div className="tl2-box">
+                      <h3 className="tl2-title">{m.title}</h3>
+                      <span className="tl2-uline" aria-hidden />
+                      <p className="tl2-desc">{m.desc}</p>
+                    </div>
+                    {!up && <span className="tl2-year">{m.year}</span>}
+                  </div>
+                  <span className={`tl2-conn ${up ? 'up' : 'down'}`} aria-hidden />
+                  <div className="tl2-circle">{String(i + 1).padStart(2, '0')}</div>
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -163,43 +166,59 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* ── 4 · Disciplines — cursor-reveal list ── */}
-      <section className="ab2-disc-sec">
-        <div className="ab2-disc-wrap">
-          <motion.div className="ab2-disc-head" {...rise()}>
-            <p className="ab2-kicker"><span>02</span> What we operate</p>
-            <h2 className="ab2-disc-title">A portfolio built on <span className="g">focus.</span></h2>
-          </motion.div>
-
-          <div
-            className="ab2-disc"
-            ref={listRef}
-            onMouseMove={reduce ? undefined : onMove}
-            onMouseLeave={() => setActive(null)}
-          >
-            {!reduce && (
-              <div className="ab2-disc-float" ref={floatRef} aria-hidden>
-                {DISCIPLINES.map((d, i) => (
-                  <img key={d.name} src={img(d.img, 720)} alt="" loading="lazy" decoding="async" className={active === i ? 'on' : ''} />
-                ))}
+      {/* ── 4 · What we operate — diamond mosaic + feature list ── */}
+      <section className="ab2-cap-sec">
+        <div className="ab2-cap-wrap">
+          <div className="ben">
+            <motion.div
+              className="ben-visual"
+              initial={reduce ? false : { opacity: 0, scale: 0.92 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.85, ease: EASE }}
+              aria-hidden
+            >
+              <div className="ph">
+                <span className="ph-accent" aria-hidden />
+                <span className="ph-dots" aria-hidden />
+                <div className="ph-main"><img src="/images/operate-office.png" alt="" loading="lazy" decoding="async" /></div>
+                <div className="ph-sub"><img src="/images/eg-imports.png" alt="" loading="lazy" decoding="async" /></div>
+                <div className="ph-badge">
+                  <b>05</b>
+                  <span>Operating<br />companies</span>
+                </div>
               </div>
-            )}
-            {DISCIPLINES.map((d, i) => (
-              <motion.div
-                key={d.name}
-                className={`ab2-disc-row${active === i ? ' on' : ''}`}
-                onMouseEnter={() => setActive(i)}
-                initial={reduce ? false : { opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.6, delay: i * 0.05, ease: EASE }}
-              >
-                <span className="ab2-disc-no">0{i + 1}</span>
-                <span className="ab2-disc-name">{d.name}</span>
-                <span className="ab2-disc-tag">{d.tag}</span>
-                <ArrowUpRight className="ab2-disc-arr" size={22} strokeWidth={2} />
-              </motion.div>
-            ))}
+            </motion.div>
+
+            <div className="ben-content">
+              <motion.p className="ab2-kicker" {...rise()}><span>02</span> What we operate</motion.p>
+              <motion.h2 className="ab2-cap-title" {...rise(0.05)}>A portfolio built on <span className="g">focus.</span></motion.h2>
+              <motion.p className="ab2-cap-sub" {...rise(0.1)}>
+                Five specialist companies, one operating standard — each with the backbone to grow and the freedom to lead.
+              </motion.p>
+
+              <ul className="ben-list">
+                {DISCIPLINES.map((d, i) => {
+                  const Icon = DISC_ICONS[i % DISC_ICONS.length]
+                  return (
+                    <motion.li
+                      key={d.name}
+                      className="ben-row"
+                      initial={reduce ? false : { opacity: 0, x: 24 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: '-40px' }}
+                      transition={{ duration: 0.55, delay: i * 0.07, ease: EASE }}
+                    >
+                      <span className="ben-ico" aria-hidden><Icon size={22} strokeWidth={1.8} /></span>
+                      <div className="ben-rt">
+                        <h3>{d.name}</h3>
+                        <p>{d.desc}</p>
+                      </div>
+                    </motion.li>
+                  )
+                })}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -279,42 +298,64 @@ export function AboutPage() {
           padding:9px 18px; border:1px solid rgba(19,41,61,0.14); border-radius:99px; background:rgba(255,255,255,0.6); }
 
 
-        /* ── 2 · Our Journey (timeline) ── */
-        .oj { position:relative; overflow:hidden; background:#ffffff; padding:clamp(64px,9vw,140px) 45px clamp(72px,10vw,150px); }
-        .oj-in { max-width:1160px; margin:0 auto; }
-        .oj-head { text-align:center; max-width:720px; margin:0 auto clamp(46px,6vw,80px); }
+        /* ── 2 · Our Journey (horizontal numbered timeline) ── */
+        .oj { position:relative; overflow:hidden;
+          background:#ffffff;
+          padding:clamp(64px,9vw,140px) 45px clamp(72px,10vw,150px); }
+        .oj-in { position:relative; z-index:1; max-width:none; margin:0 auto; }
+        .oj-head { text-align:center; max-width:720px; margin:0 auto clamp(30px,4vw,54px); }
         .oj-eyebrow { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(10px,0.8vw,12px); letter-spacing:2.6px; text-transform:uppercase; color:${GREEN}; }
         .oj-eyebrow .oj-dot { width:7px; height:7px; border-radius:50%; background:${GREEN}; box-shadow:0 0 0 4px rgba(60,185,140,0.16); }
         .oj-h { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,4.4vw,62px); line-height:1.06; letter-spacing:-0.03em; color:${NAVY}; margin:clamp(14px,1.8vw,22px) 0 0; }
         .oj-sub { font-family:'Inter',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; margin:clamp(16px,2vw,22px) 0 0; }
 
-        .oj-line { position:relative; padding:clamp(6px,1vw,12px) 0; }
-        .oj-spine, .oj-spine-fill { position:absolute; top:0; bottom:0; left:calc(50% - 1px); width:2px; border-radius:2px; }
-        .oj-spine { background:rgba(19,41,61,0.12); }
-        .oj-spine-fill { background:linear-gradient(180deg, ${GREEN} 0%, rgba(60,185,140,0.55) 100%); transform-origin:top center; box-shadow:0 0 18px rgba(60,185,140,0.5); }
+        /* horizontal numbered timeline — circles on a colour-segmented rail,
+           callouts alternating above / below (exactly like the reference slide) */
+        .tl2-track { position:relative; display:grid; grid-template-columns:repeat(var(--n), 1fr); margin-top:clamp(26px,3.4vw,52px); }
+        .tl2-item { position:relative; min-height:calc(var(--zone) * 2 + var(--cs)); --cs:clamp(62px,5.4vw,90px); --zone:clamp(150px,17vw,215px); }
 
-        .oj-item { position:relative; width:50%; box-sizing:border-box; padding:0 clamp(26px,3.2vw,54px); margin-bottom:clamp(28px,3.6vw,52px); }
-        .oj-item:last-child { margin-bottom:0; }
-        .oj-item[data-side="l"] { left:0; text-align:right; }
-        .oj-item[data-side="r"] { left:50%; text-align:left; }
+        /* the coloured rail segment sitting behind each circle */
+        .tl2-seg { position:absolute; top:50%; left:-1px; right:-1px; height:4px; transform:translateY(-50%); background:var(--c); z-index:0; border-radius:2px; }
 
-        .oj-node { position:absolute; top:10px; width:22px; height:22px; border-radius:50%; background:#fff; border:2px solid ${GREEN}; z-index:2; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 6px rgba(60,185,140,0.12); }
-        .oj-node i { width:7px; height:7px; border-radius:50%; background:${GREEN}; transition:transform .4s ${'cubic-bezier(0.16,1,0.3,1)'}; }
-        .oj-item[data-side="l"] .oj-node { right:-11px; }
-        .oj-item[data-side="r"] .oj-node { left:-11px; }
-        .oj-item:hover .oj-node { border-color:${NAVY}; }
-        .oj-item:hover .oj-node i { transform:scale(1.5); }
+        /* number circle — soft radial fill, white gap + thin colour ring */
+        .tl2-circle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:3;
+          width:var(--cs); aspect-ratio:1; border-radius:50%; display:grid; place-items:center;
+          background:radial-gradient(circle at 36% 30%, rgba(255,255,255,0.42), rgba(255,255,255,0) 48%), var(--c);
+          box-shadow:0 0 0 5px #fff, 0 0 0 7px var(--c), 0 12px 24px -10px rgba(19,41,61,0.5);
+          color:#fff; font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(18px,1.6vw,26px); letter-spacing:0.03em; }
 
-        .oj-card { position:relative; display:inline-block; text-align:left; max-width:100%; background:#fff; border:1px solid rgba(19,41,61,0.1); border-radius:18px; padding:clamp(20px,2.2vw,30px); box-shadow:0 30px 60px -46px rgba(19,41,61,0.45); transition:transform .5s ${'cubic-bezier(0.16,1,0.3,1)'}, box-shadow .5s ease, border-color .5s ease; }
-        .oj-card:hover { transform:translateY(-5px); border-color:rgba(60,185,140,0.45); box-shadow:0 46px 84px -46px rgba(19,41,61,0.42); }
-        .oj-year { display:inline-block; font-family:'Poppins',sans-serif; font-weight:700; font-size:13px; letter-spacing:0.4px; color:${GREEN}; background:rgba(60,185,140,0.1); padding:5px 13px; border-radius:99px; }
-        .oj-title { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(18px,1.7vw,25px); letter-spacing:-0.02em; line-height:1.18; color:${NAVY}; margin:14px 0 8px; text-wrap:balance; }
-        .oj-desc { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.7; color:${MUTED}; margin:0; }
+        /* vertical connector from the circle to its callout, with an end dot */
+        .tl2-conn { position:absolute; left:50%; transform:translateX(-50%); width:2px; height:clamp(24px,2.6vw,34px); background:var(--c); z-index:1; }
+        .tl2-conn.up { bottom:calc(50% + var(--cs) / 2); }
+        .tl2-conn.down { top:calc(50% + var(--cs) / 2); }
+        .tl2-conn::after { content:''; position:absolute; left:50%; transform:translateX(-50%); width:9px; height:9px; border-radius:50%; background:var(--c); }
+        .tl2-conn.up::after { top:-4px; }
+        .tl2-conn.down::after { bottom:-4px; }
 
-        @media (max-width:760px){
-          .oj-spine, .oj-spine-fill { left:10px; }
-          .oj-item, .oj-item[data-side="l"], .oj-item[data-side="r"] { width:100%; left:0; text-align:left; padding:0 0 0 clamp(38px,11vw,52px); margin-bottom:24px; }
-          .oj-item[data-side="l"] .oj-node, .oj-item[data-side="r"] .oj-node { left:0; right:auto; }
+        /* callout block */
+        .tl2-callout { position:absolute; left:50%; transform:translateX(-50%); z-index:2;
+          width:clamp(150px,15.5vw,214px); display:flex; flex-direction:column; align-items:flex-start; text-align:left; }
+        .tl2-callout.up { bottom:calc(50% + var(--cs) / 2 + clamp(24px,2.6vw,34px)); }
+        .tl2-callout.down { top:calc(50% + var(--cs) / 2 + clamp(24px,2.6vw,34px)); }
+        .tl2-year { font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(20px,2vw,30px); line-height:1; letter-spacing:-0.01em; color:${NAVY}; }
+        .tl2-callout.up .tl2-year { margin:0 0 clamp(8px,1vw,12px); }
+        .tl2-callout.down .tl2-year { margin:clamp(8px,1vw,12px) 0 0; }
+        .tl2-title { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(14px,1.15vw,17px); line-height:1.2; letter-spacing:-0.01em; color:${NAVY}; margin:0; }
+        .tl2-uline { display:block; width:clamp(40px,3.4vw,52px); height:3px; border-radius:2px; background:var(--c); margin:clamp(6px,0.7vw,9px) 0 clamp(7px,0.8vw,10px); }
+        .tl2-desc { font-family:'Inter',sans-serif; font-size:clamp(11px,0.85vw,13px); line-height:1.55; color:${MUTED}; margin:0; }
+
+        /* ≤1024px — collapse the horizontal rail into a clean vertical timeline */
+        @media (max-width:1024px){
+          .tl2-track { display:flex; flex-direction:column; gap:clamp(20px,3vw,30px); margin-top:clamp(20px,4vw,32px); }
+          .tl2-item { min-height:0; display:grid; grid-template-columns:var(--cs) 1fr; align-items:center; column-gap:clamp(16px,4vw,26px); }
+          .tl2-item::before { content:''; position:absolute; left:calc(var(--cs) / 2); top:50%; height:calc(100% + clamp(20px,3vw,30px)); width:2px; transform:translateX(-50%); background:var(--c); opacity:0.4; z-index:0; }
+          .tl2-item:last-child::before { display:none; }
+          .tl2-seg, .tl2-conn { display:none; }
+          .tl2-circle { position:relative; top:auto; left:auto; transform:none; }
+          .tl2-callout, .tl2-callout.up, .tl2-callout.down { position:static; transform:none; inset:auto; width:auto; }
+          .tl2-callout.up .tl2-year, .tl2-callout.down .tl2-year { margin:0 0 6px; }
+          .tl2-callout.down { flex-direction:column; }
+          .tl2-callout.down .tl2-year { order:-1; margin:0 0 6px; }
         }
 
         /* ── 3 · Thesis ── */
@@ -326,27 +367,53 @@ export function AboutPage() {
         .ab2-thesis-body p { font-family:'Inter',sans-serif; font-size:clamp(16px,1.3vw,20px); line-height:1.85; color:${MUTED}; margin:0; }
         .ab2-thesis-body p:first-child { color:${NAVY}; font-weight:500; }
 
-        /* ── 4 · Disciplines ── */
-        .ab2-disc-sec { background:#fff; padding:clamp(64px,8vw,130px) 45px; }
-        .ab2-disc-wrap { max-width:none; margin:0 auto; }
-        .ab2-disc-head { margin-bottom:clamp(30px,4vw,54px); }
-        .ab2-disc-title { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,4.2vw,58px); line-height:1.06; letter-spacing:-0.03em; color:${NAVY}; margin:16px 0 0; }
-        .ab2-disc { position:relative; border-top:1px solid rgba(19,41,61,0.14); }
-        .ab2-disc-float { position:absolute; top:0; left:0; width:0; height:0; z-index:4; pointer-events:none; will-change:transform; }
-        .ab2-disc-float img { position:absolute; width:clamp(240px,24vw,360px); aspect-ratio:4/3; object-fit:cover; border-radius:16px;
-          transform:translate(-50%,-50%) scale(0.86); opacity:0; box-shadow:0 40px 80px -34px rgba(19,41,61,0.6);
-          transition:opacity .35s ease, transform .55s cubic-bezier(0.16,1,0.3,1); }
-        .ab2-disc-float img.on { opacity:1; transform:translate(-50%,-50%) scale(1) rotate(-2.5deg); }
-        .ab2-disc-row { position:relative; display:grid; grid-template-columns:64px 1fr auto 40px; align-items:center; gap:clamp(14px,2vw,32px);
-          padding:clamp(22px,3vw,40px) clamp(6px,1vw,18px); border-bottom:1px solid rgba(19,41,61,0.14); cursor:default;
-          transition:padding-left .5s cubic-bezier(0.16,1,0.3,1), background .4s ease; }
-        .ab2-disc-row.on { padding-left:clamp(16px,2vw,34px); background:linear-gradient(90deg, rgba(60,185,140,0.05), transparent 70%); }
-        .ab2-disc-no { font-family:'Inter',sans-serif; font-weight:700; font-size:13px; letter-spacing:1px; color:${GREEN}; font-variant-numeric:tabular-nums; }
-        .ab2-disc-name { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(24px,3.4vw,54px); letter-spacing:-0.03em; line-height:1; color:${NAVY}; transition:color .35s ease, transform .5s cubic-bezier(0.16,1,0.3,1); }
-        .ab2-disc-row.on .ab2-disc-name { color:${GREEN}; }
-        .ab2-disc-tag { font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(11px,0.85vw,13px); letter-spacing:2px; text-transform:uppercase; color:${MUTED}; white-space:nowrap; }
-        .ab2-disc-arr { color:${NAVY}; opacity:0.25; transition:opacity .35s ease, transform .5s cubic-bezier(0.16,1,0.3,1); }
-        .ab2-disc-row.on .ab2-disc-arr { opacity:1; color:${GREEN}; transform:translate(4px,-4px); }
+        /* ── 4 · What we operate — diamond mosaic + feature list ── */
+        .ab2-cap-sec { position:relative; overflow:hidden; background:#fff; padding:clamp(64px,8vw,130px) 45px; }
+        /* subtle green diamond corner accents */
+        .ab2-cap-sec::before { content:''; position:absolute; top:clamp(24px,3vw,54px); right:clamp(24px,3vw,54px);
+          width:clamp(26px,3vw,44px); aspect-ratio:1; transform:rotate(45deg); border:3px solid ${GREEN}; opacity:0.5; z-index:0; }
+        .ab2-cap-sec::after { content:''; position:absolute; bottom:clamp(24px,3vw,54px); left:clamp(24px,3vw,54px);
+          width:clamp(20px,2.4vw,34px); aspect-ratio:1; transform:rotate(45deg); background:linear-gradient(135deg,${GREEN},#2f9d75); opacity:0.5; z-index:0; }
+        .ab2-cap-wrap { position:relative; z-index:1; max-width:none; margin:0 auto; }
+        .ab2-cap-title { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,4.2vw,58px); line-height:1.06; letter-spacing:-0.03em; color:${NAVY}; margin:16px 0 0; }
+        .ab2-cap-sub { font-family:'Inter',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.7; color:${MUTED}; margin:clamp(14px,1.6vw,20px) 0 0; max-width:64ch; }
+
+        .ben { display:grid; grid-template-columns:1fr 1.05fr; gap:clamp(30px,5vw,90px); align-items:center; }
+
+        /* left — clean overlapping image composition with a green accent + badge */
+        .ben-visual { position:relative; display:flex; justify-content:center; }
+        .ph { position:relative; width:100%; max-width:720px; aspect-ratio:1 / 1.12; margin:0 auto; }
+        .ph-accent { position:absolute; top:-3%; right:-2%; width:64%; height:58%; border-radius:26px; z-index:0;
+          background:linear-gradient(150deg, ${GREEN}, #2f9d75); box-shadow:0 30px 60px -40px rgba(47,157,117,0.75); }
+        .ph-dots { position:absolute; bottom:5%; left:-5%; width:clamp(84px,10vw,128px); height:clamp(84px,10vw,128px); z-index:0; opacity:0.5;
+          background-image:radial-gradient(${GREEN} 2px, transparent 2px); background-size:16px 16px; }
+        .ph-main { position:absolute; top:7%; left:0; width:80%; height:76%; border-radius:24px; overflow:hidden; z-index:1;
+          box-shadow:0 46px 82px -44px rgba(19,41,61,0.6); }
+        .ph-main img { width:100%; height:100%; object-fit:cover; display:block; }
+        .ph-sub { position:absolute; right:1%; bottom:1%; width:47%; height:42%; border-radius:20px; overflow:hidden; z-index:2;
+          border:6px solid #fff; box-shadow:0 30px 52px -28px rgba(19,41,61,0.55); animation:ph-float 6.5s ease-in-out infinite; }
+        .ph-sub img { width:100%; height:100%; object-fit:cover; display:block; }
+        .ph-badge { position:absolute; left:-5%; bottom:22%; z-index:3; display:flex; align-items:center; gap:12px;
+          background:#fff; border-radius:16px; padding:clamp(11px,1.1vw,15px) clamp(15px,1.5vw,22px);
+          box-shadow:0 26px 46px -22px rgba(19,41,61,0.5); animation:ph-float 6.5s ease-in-out infinite 1.6s; }
+        .ph-badge b { font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(26px,3vw,40px); line-height:1; color:${GREEN}; }
+        .ph-badge span { font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(10px,0.78vw,12px); letter-spacing:1px; text-transform:uppercase; line-height:1.3; color:${NAVY}; }
+        @keyframes ph-float { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-9px); } }
+        @media (prefers-reduced-motion: reduce){ .ph-sub, .ph-badge { animation:none; } }
+
+        /* right — heading + feature rows with diamond icon badges */
+        .ben-content { min-width:0; }
+        .ben-list { list-style:none; margin:clamp(22px,3vw,40px) 0 0; padding:0; display:flex; flex-direction:column; gap:clamp(16px,2vw,26px); }
+        .ben-row { display:flex; gap:clamp(15px,1.6vw,24px); align-items:flex-start; }
+        .ben-ico { flex:none; width:clamp(46px,4vw,58px); aspect-ratio:1; display:grid; place-items:center; color:#fff;
+          background:linear-gradient(150deg,#2E7D46,#1F6B3A); clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+          box-shadow:0 12px 22px -12px rgba(31,107,58,0.85); transition:transform .5s cubic-bezier(0.16,1,0.3,1); }
+        .ben-row:hover .ben-ico { transform:rotate(90deg); }
+        .ben-rt { min-width:0; padding-top:clamp(2px,0.4vw,6px); }
+        .ben-rt h3 { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(16px,1.5vw,22px); letter-spacing:-0.01em; line-height:1.2; color:${NAVY}; margin:0 0 6px; }
+        .ben-rt p { font-family:'Inter',sans-serif; font-size:clamp(13px,1.05vw,16px); line-height:1.6; color:${MUTED}; margin:0; max-width:64ch; }
+
+        @media (prefers-reduced-motion: reduce){ .ben-ico { transition:none; } }
 
         /* ── 5 · Numbers ── */
         .ab2-nums-sec { background:linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(56px,7vw,120px) 45px; }
@@ -386,19 +453,19 @@ export function AboutPage() {
         @media (max-width:900px){
           .ab2-thesis-in { grid-template-columns:1fr; gap:clamp(28px,6vw,44px); }
           .ab2-thesis-stick { position:static; }
-          .ab2-disc-float { display:none; }
-          .ab2-disc-row { grid-template-columns:44px 1fr auto; }
-          .ab2-disc-arr { display:none; }
+          /* diamond mosaic → stack above the feature list */
+          .ben { grid-template-columns:1fr; gap:clamp(36px,7vw,56px); }
+          .ben-visual { order:-1; }
+          .ph { max-width:500px; }
           .ab2-prin-grid { grid-template-columns:1fr; }
         }
         @media (max-width:600px){
           .ab2-nums { grid-template-columns:1fr 1fr; }
           .ab2-num:nth-child(3), .ab2-num:nth-child(4){ border-top:1px solid rgba(19,41,61,0.1); }
           .ab2-num:nth-child(3){ border-left:none; padding-left:0; }
-          .ab2-disc-tag { display:none; }
         }
         @media (min-width:1920px){
-          .ab2-hero-in, .ab2-thesis-in, .ab2-disc-wrap, .ab2-nums-in, .ab2-prin-in { max-width:none; }
+          .ab2-hero-in, .ab2-thesis-in, .ab2-cap-wrap, .ab2-nums-in, .ab2-prin-in { max-width:none; }
         }
       `}</style>
     </div>

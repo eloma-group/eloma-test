@@ -48,7 +48,7 @@ const COMPANIES: Company[] = [
     id: 'photo-1461749280684-dccba630e2f6', src: '/images/eg-digital.png', slot: 'top', to: '/companies/eg-digital' },
   { slug: 'foundations', title: 'Eloma Group',
     blurb: 'The parent group and shared-services backbone behind every business.',
-    id: 'photo-1497366216548-37526070297c', slot: 'ul', to: '/companies/eloma-group' },
+    id: 'photo-1497366216548-37526070297c', src: '/images/eloma-group.png', slot: 'ul', to: '/companies/eloma-group' },
   { slug: 'imports', title: 'EG Imports',
     blurb: 'Global sourcing and cross-border trade, delivered with precision.',
     id: 'photo-1578575437130-527eed3abbec', src: '/images/eg-imports.png', slot: 'ur', to: '/companies/eg-imports' },
