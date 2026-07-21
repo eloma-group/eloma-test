@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'Eloma Sans';
-  src: url('/fonts/ElomaSans-Premium.otf') format('opentype');
+  font-family: 'Universal Sans';
+  src: url('/fonts/UniversalSans-Display-450.ttf') format('truetype');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
 @theme {
-  --font-sans: 'Eloma Sans', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Universal Sans', system-ui, -apple-system, sans-serif;
 
   --color-eg-navy:    #13293D;
   --color-eg-green:   #3CB98C;
@@ -35,41 +35,17 @@ html {
 body {
   background-color: #ffffff;
   color: #13293D;
-  font-family: 'Eloma Sans', system-ui, sans-serif;
+  font-family: 'Universal Sans', system-ui, sans-serif;
   font-weight: 400;
   line-height: 1.6;
-  letter-spacing: 0.02em;
-  word-spacing: 0.04em;
 }
 
-/* Force Eloma Sans everywhere, overriding per-page inline/class font-family
+/* Force Universal Sans everywhere, overriding per-page inline/class font-family
    declarations (Inter, Poppins, Oswald, Dancing Script, etc.). */
 *,
 *::before,
 *::after {
-  font-family: 'Eloma Sans', system-ui, -apple-system, sans-serif !important;
-}
-
-/* Loosen letter + word spacing on ALL text across every page (headings,
-   subheadings, paragraphs, descriptions, menu, lists). The premium font renders
-   very tight and most elements set their own tracking inline/via classes, so we
-   force it globally with !important — same mechanism as the font-family rule. */
-*,
-*::before,
-*::after {
-  letter-spacing: 0.03em !important;
-  word-spacing: 0.08em !important;
-}
-
-/* Keep uppercase eyebrow/label/kicker text from being tightened by the rule
-   above — those are designed with extra-wide tracking. */
-[class*="eyebrow"],
-[class*="kicker"],
-[class*="chip"],
-[class*="sector"],
-[class*="label"],
-[class*="trust-lb"] {
-  letter-spacing: 0.14em !important;
+  font-family: 'Universal Sans', system-ui, -apple-system, sans-serif !important;
 }
 
 img {
