@@ -45,19 +45,19 @@ type Company = {
 const COMPANIES: Company[] = [
   { slug: 'digital', title: 'EG Digital Australia',
     blurb: 'Modern digital experiences and IT infrastructure, engineered for growth.',
-    id: 'photo-1461749280684-dccba630e2f6', src: '/images/eg-digital.png', slot: 'top', to: '/companies/eg-digital' },
+    id: 'photo-1461749280684-dccba630e2f6', src: '/images/eg-digital.webp', slot: 'top', to: '/companies/eg-digital' },
   { slug: 'foundations', title: 'Eloma Group',
     blurb: 'The parent group and shared-services backbone behind every business.',
-    id: 'photo-1497366216548-37526070297c', src: '/images/eloma-group.png', slot: 'ul', to: '/companies/eloma-group' },
+    id: 'photo-1497366216548-37526070297c', src: '/images/eloma-group.webp', slot: 'ul', to: '/companies/eloma-group' },
   { slug: 'imports', title: 'EG Imports',
     blurb: 'Global sourcing and cross-border trade, delivered with precision.',
-    id: 'photo-1578575437130-527eed3abbec', src: '/images/eg-imports.png', slot: 'ur', to: '/companies/eg-imports' },
+    id: 'photo-1578575437130-527eed3abbec', src: '/images/eg-imports.webp', slot: 'ur', to: '/companies/eg-imports' },
   { slug: 'transport', title: 'EG Transport - BIVRY',
     blurb: 'Freight and road logistics that arrive on time, every time.',
     id: 'photo-1591768793355-74d04bb6608f', src: '/images/eg-transport.jpg', slot: 'll', to: '/companies/bivry' },
   { slug: 'travels', title: 'EG Travels',
     blurb: 'Corporate and leisure journeys designed around people.',
-    id: 'photo-1506973035872-a4ec16b8e8d9', src: '/images/eg-travels.png', slot: 'lr', to: '/companies/eg-travels' },
+    id: 'photo-1506973035872-a4ec16b8e8d9', src: '/images/eg-travels.webp', slot: 'lr', to: '/companies/eg-travels' },
 ]
 
 const img = (id: string, w: number) => {

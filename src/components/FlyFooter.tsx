@@ -334,7 +334,7 @@ export function FlyFooter() {
               onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.opacity = '1'; el.style.transform = 'scale(1.05)' }}
               onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.opacity = '0.9'; el.style.transform = 'scale(1)' }}
             >
-              <img src="/Shield Animation.gif" alt="EG Digital" style={{ height: 92, width: 'auto', display: 'block' }} />
+              <img src="/shield-animation.webp" alt="EG Digital" loading="lazy" decoding="async" style={{ height: 92, width: 'auto', display: 'block' }} />
             </a>
           </div>
 

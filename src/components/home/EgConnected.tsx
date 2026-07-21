@@ -9,10 +9,13 @@
      • cobe WebGL globe → ./EgConnectedCobe.tsx (+ ./EgGlobe.tsx)
      • CSS-podium globe → ./EgGlobeScene2.tsx
    ─────────────────────────────────────────────── */
+import { lazy, Suspense } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { CountUp } from './egScroll'
-import { EgWorldMap } from './EgWorldMap'
 import type { Place, Arc } from './EgWorldMap'
+
+// dotted-map ships a large world dataset; keep it out of the initial bundle.
+const EgWorldMap = lazy(() => import('./EgWorldMap').then(m => ({ default: m.EgWorldMap })))
 
 const INK   = '#13293D'
 const GREEN = '#3CB98C'
@@ -101,7 +104,9 @@ export function EgConnected() {
         </motion.div>
 
         <motion.div className="cg-map" {...rise(reduce, 0.08)}>
-          <EgWorldMap markers={MARKETS} arcs={ARCS} />
+          <Suspense fallback={null}>
+            <EgWorldMap markers={MARKETS} arcs={ARCS} />
+          </Suspense>
         </motion.div>
 
         <div className="cg-stats">

@@ -181,8 +181,8 @@ export function AboutPage() {
               <div className="ph">
                 <span className="ph-accent" aria-hidden />
                 <span className="ph-dots" aria-hidden />
-                <div className="ph-main"><img src="/images/operate-office.png" alt="" loading="lazy" decoding="async" /></div>
-                <div className="ph-sub"><img src="/images/eg-imports.png" alt="" loading="lazy" decoding="async" /></div>
+                <div className="ph-main"><img src="/images/operate-office.webp" alt="" loading="lazy" decoding="async" /></div>
+                <div className="ph-sub"><img src="/images/eg-imports.webp" alt="" loading="lazy" decoding="async" /></div>
                 <div className="ph-badge">
                   <b>05</b>
                   <span>Operating<br />companies</span>

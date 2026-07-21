@@ -128,7 +128,7 @@ export function BivryPage() {
       <section className="bv-fleet">
         <div className="bv-wrap bv-fleet-grid">
           <motion.div className="bv-fleet-media" {...rise()}>
-            <img src="/images/bivry-why.png" alt="BIVRY logistics operations" decoding="async" loading="lazy" />
+            <img src="/images/bivry-why.webp" alt="BIVRY logistics operations" decoding="async" loading="lazy" />
             <div className="bv-fleet-tag"><span className="bv-fleet-tag-n">GPS</span><span className="bv-fleet-tag-l">Every vehicle, tracked live</span></div>
             <div className="bv-fleet-chip"><span className="bv-fleet-chip-n">99.4%</span><span className="bv-fleet-chip-l">on-time-in-full</span></div>
           </motion.div>

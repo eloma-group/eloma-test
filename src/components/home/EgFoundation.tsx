@@ -8,7 +8,7 @@ const BLUE  = '#2F6FE0'
 const MUTED = 'rgba(26,43,60,0.62)'
 const EASE  = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
-const HERO = '/images/foundation.png'
+const HERO = '/images/foundation.webp'
 
 type Pillar = {
   no: string; icon: React.ReactNode; label: string; body: string

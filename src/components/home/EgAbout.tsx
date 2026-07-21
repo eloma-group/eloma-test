@@ -6,8 +6,8 @@ const GREEN = '#3CB98C'
 const MUTED = 'rgba(26,43,60,0.62)'
 const EASE  = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
-const ABOUT  = '/images/about.png'
-const FOUNDER = '/images/founder-rj.png'
+const ABOUT  = '/images/about.webp'
+const FOUNDER = '/images/founder-rj.webp'
 
 export function EgAbout() {
   const reduce = useReducedMotion()
