@@ -29,7 +29,7 @@ export function EgAbout() {
         }
         .eg-ab-tag { text-align:center; font-family:'Inter',sans-serif; font-size:clamp(11px,0.9vw,13px); letter-spacing:3px; text-transform:uppercase; color:${MUTED}; margin: 10px 0 clamp(6px,1.5vw,16px); }
         .eg-ab-script {
-          text-align:center; font-family:'Dancing Script', cursive; font-weight:700;
+          text-align:center; font-family:'Dancing Script', cursive !important; font-weight:700;
           font-size: clamp(44px, 8vw, 104px); color:#717C86; line-height:1; margin: 0 0 clamp(36px,5vw,60px);
         }
         .eg-ab-grid { display:grid; grid-template-columns: 1fr 1fr; gap: clamp(28px,4vw,64px); align-items:center; }
