@@ -10,15 +10,21 @@
       "/*.{css,js,json,txt,xml,woff,woff2,ttf,eot}"
     ]
   },
+  "routes": [
+    {
+      "route": "/assets/*",
+      "headers": { "Cache-Control": "public, max-age=31536000, immutable" }
+    },
+    {
+      "route": "/index.html",
+      "headers": { "Cache-Control": "no-cache" }
+    }
+  ],
   "mimeTypes": {
+    ".webp": "image/webp",
+    ".avif": "image/avif",
     ".json": "application/json",
     ".webm": "video/webm",
     ".mp4": "video/mp4"
-  },
-  "responseOverrides": {
-    "404": {
-      "rewrite": "/index.html",
-      "statusCode": 200
-    }
   }
 }
