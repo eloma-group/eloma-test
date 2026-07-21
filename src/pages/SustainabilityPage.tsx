@@ -59,7 +59,7 @@ export function SustainabilityPage() {
 
       {/* ── 1 · Hero — full-bleed image ── */}
       <section className="sx-hero">
-        <img className="sx-hero-bg" src="/images/env-hero.jpg" alt="" aria-hidden decoding="async" />
+        <img className="sx-hero-bg" src="/images/sustainability-hero.webp" alt="" aria-hidden decoding="async" />
         <span className="sx-hero-veil" aria-hidden />
         <div className="sx-wrap sx-hero-in">
           <Reveal as="span" className="sx-eyebrow lt"><span className="sx-eyebrow-dot" />Environmental Responsibility</Reveal>
