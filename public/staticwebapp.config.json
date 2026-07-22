@@ -4,7 +4,7 @@
     "exclude": [
       "/assets/*",
       "/images/*",
-      "/partners/*",
+      "/partner-logos/*",
       "/*.{png,jpg,jpeg,gif,svg,ico,webp,avif}",
       "/*.{mp4,webm}",
       "/*.{css,js,json,txt,xml,woff,woff2,ttf,eot}"
