@@ -99,9 +99,9 @@ export function EgTravelsPage() {
                 <span className="tv-pass-class">PREMIUM</span>
               </div>
               <div className="tv-pass-route">
-                <div className="tv-pass-city"><span className="tv-pass-code">MEL</span><span className="tv-pass-place">Melbourne</span></div>
+                <div className="tv-pass-city"><span className="tv-pass-code">SIN</span><span className="tv-pass-place">Singapore</span></div>
                 <div className="tv-pass-plane"><span className="tv-pass-dash" /><Plane size={18} strokeWidth={2} /><span className="tv-pass-dash" /></div>
-                <div className="tv-pass-city tv-pass-city-r"><span className="tv-pass-code">SIN</span><span className="tv-pass-place">Singapore</span></div>
+                <div className="tv-pass-city tv-pass-city-r"><span className="tv-pass-code">MEL</span><span className="tv-pass-place">Melbourne</span></div>
               </div>
               <div className="tv-pass-info">
                 <div><span className="tv-pass-k">Passenger</span><span className="tv-pass-v">Corporate &amp; Leisure</span></div>
@@ -225,7 +225,7 @@ export function EgTravelsPage() {
         .tv-hl-l { color:#6FD9E6; }
         .tv-eyebrow { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(10px,0.8vw,12px); letter-spacing:2.5px; text-transform:uppercase; color:${TEAL}; }
         .tv-eyebrow-dot { width:7px; height:7px; border-radius:50%; background:${TEAL}; box-shadow:0 0 0 4px rgba(21,150,166,0.16); flex-shrink:0; }
-        .tv-eyebrow-i { color:#8FE3ED; }
+        .tv-eyebrow-i { color:#fff; }
         .tv-eyebrow-i .tv-eyebrow-dot { background:#8FE3ED; box-shadow:0 0 0 4px rgba(143,227,237,0.16); }
         .tv-h2 { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,4.4vw,64px); line-height:1.12; letter-spacing:-0.035em; color:${NAVY}; margin:16px 0 0; padding-bottom:0.06em; }
         .tv-sec-head { max-width:900px; margin-bottom:clamp(38px,4.5vw,64px); }

@@ -19,7 +19,7 @@ export function EgAbout() {
   })
 
   return (
-    <section className="eg-ab" aria-label="About us">
+    <section className="eg-ab" aria-label="About us" data-reveal="off">
       <style>{`
         .eg-ab { background: #ffffff; padding: clamp(56px, 8vw, 120px) 45px 0; overflow: hidden; }
         .eg-ab-inner { width: 100%; max-width: none; margin: 0 auto; }

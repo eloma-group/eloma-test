@@ -191,6 +191,7 @@ export function BivryPage() {
         .bv-eyebrow-dot { width:7px; height:7px; border-radius:50%; background:${AMBER2}; box-shadow:0 0 0 4px rgba(60,185,140,0.2); flex-shrink:0; }
         .bv-eyebrow-d { color:#3cb98c; }
         .bv-eyebrow-ink { color:${INK}; }
+        .bv-hero-in .bv-eyebrow { color:#fff; }
         .bv-dot-ink { background:${INK}; box-shadow:0 0 0 4px rgba(11,27,36,0.14); }
         .bv-h2 { font-family:'Oswald',sans-serif; font-weight:600; font-size:clamp(30px,4.2vw,60px); line-height:1.04; letter-spacing:0.005em; text-transform:uppercase; color:${INK}; margin:16px 0 0; }
         .bv-sec-head { max-width:900px; margin-bottom:clamp(38px,4.5vw,64px); }
@@ -210,7 +211,7 @@ export function BivryPage() {
         /* HERO */
         .bv-hero { position:relative; overflow:hidden; min-height:100vh; min-height:100dvh; display:flex; align-items:flex-end; text-align:center; padding:clamp(120px,13vw,180px) 45px clamp(72px,9vw,120px); }
         .bv-hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-        .bv-hero-scrim { position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,27,36,0.55) 0%, rgba(11,27,36,0.5) 45%, rgba(11,27,36,0.72) 100%); }
+        .bv-hero-scrim { position:absolute; inset:0; background:linear-gradient(180deg, rgba(11,27,36,0.62) 0%, rgba(11,27,36,0.58) 38%, rgba(11,27,36,0.78) 72%, rgba(11,27,36,0.9) 100%); }
         .bv-hero-in { position:relative; z-index:1; width:100%; }
         .bv-crumb { display:flex; align-items:center; justify-content:center; gap:9px; font-family:'IBM Plex Mono',monospace; font-size:clamp(10px,0.82vw,12px); color:rgba(255,255,255,0.62); margin-bottom:clamp(20px,2.2vw,28px); flex-wrap:wrap; }
         .bv-crumb a { color:rgba(255,255,255,0.62); text-decoration:none; transition:color .2s ease; }

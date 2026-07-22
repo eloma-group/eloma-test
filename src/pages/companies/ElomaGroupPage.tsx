@@ -1,9 +1,14 @@
-import { useEffect } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowUpRight, ArrowRight, Landmark, Wallet, Users, Compass, Server, ShieldCheck, Hourglass, BadgeCheck, Zap, Sprout } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useReducedMotion, useMotionValue, useSpring } from 'framer-motion'
+import type { ReactNode, MouseEvent as ReactMouseEvent, CSSProperties } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ArrowUpRight, Landmark, Wallet, Users, Compass, Server, ShieldCheck, Hourglass, BadgeCheck, Zap, Sprout, Laptop, Ship, Truck, Plane } from 'lucide-react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Header } from '../../components/Header/Header'
 import { FlyFooter } from '../../components/FlyFooter'
+
+gsap.registerPlugin(ScrollTrigger)
 
 /* ═══════════════════════════════════════════════════
    ELOMA GROUP - "Feature Split" (light institutional)
@@ -31,11 +36,37 @@ const SERVICES = [
 ]
 
 const HOLDINGS = [
-  { name: 'EG Digital Australia', sector: 'Technology & Marketing', to: '/companies/eg-digital', id: 'photo-1487058792275-0ad4aaf24ca7' },
-  { name: 'EG Imports', sector: 'Global Trade & Sourcing', to: '/companies/eg-imports', id: 'photo-1494412574643-ff11b0a5c1c3' },
-  { name: 'EG Transport - BIVRY', sector: 'Transport & Logistics', to: '/companies/bivry', id: 'photo-1601584115197-04ecc0da31d7' },
-  { name: 'EG Travels', sector: 'Corporate & Leisure Travel', to: '/companies/eg-travels', id: 'photo-1507525428034-b723cf961d3e' },
+  { name: 'EG Digital Australia', sector: 'Technology & Marketing', to: '/companies/eg-digital' },
+  { name: 'EG Imports', sector: 'Global Trade & Sourcing', to: '/companies/eg-imports' },
+  { name: 'EG Transport — BIVRY', sector: 'Transport & Logistics', to: '/companies/bivry' },
+  { name: 'EG Travels', sector: 'Corporate & Leisure Travel', to: '/companies/eg-travels' },
 ]
+
+/* org-chart: a lucide mark + horizontal centre (%) per company (4 equal columns) */
+const KID_ICONS = [Laptop, Ship, Truck, Plane]
+const CHILD_X = [12.5, 37.5, 62.5, 87.5]
+
+/* cursor-tracked 3D tilt wrapper (framer-motion) — falls back to a plain box when motion is reduced */
+function TiltNode({ children, className, reduce }: { children: ReactNode; className: string; reduce: boolean }) {
+  const rx = useMotionValue(0)
+  const ry = useMotionValue(0)
+  const cfg = { stiffness: 170, damping: 15, mass: 0.4 }
+  const rotX = useSpring(rx, cfg)
+  const rotY = useSpring(ry, cfg)
+  if (reduce) return <div className={className}>{children}</div>
+  const onMove = (e: ReactMouseEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    ry.set(((e.clientX - r.left) / r.width - 0.5) * 18)
+    rx.set(-((e.clientY - r.top) / r.height - 0.5) * 18)
+  }
+  const reset = () => { rx.set(0); ry.set(0) }
+  return (
+    <motion.div className={className} onMouseMove={onMove} onMouseLeave={reset}
+      style={{ rotateX: rotX, rotateY: rotY, transformPerspective: 800, transformStyle: 'preserve-3d' }}>
+      {children}
+    </motion.div>
+  )
+}
 
 const PRINCIPLES = [
   { Icon: Hourglass, t: 'Own for the long term', d: 'We are owners, not traders. Every decision is made with decades in mind - protecting reputation, people and capital.' },
@@ -48,6 +79,42 @@ export function ElomaGroupPage() {
   const reduce = useReducedMotion()
   const nav = useNavigate()
   useEffect(() => { window.scrollTo(0, 0) }, [])
+
+  /* ── Holdings · org-chart tree · active child (hover) + GSAP scroll reveal & connector draw ── */
+  const [active, setActive] = useState(-1)
+  const portRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (reduce) return
+    const root = portRef.current
+    if (!root) return
+
+    const lenis = (window as unknown as { __lenis?: { on: (e: string, cb: () => void) => void; off: (e: string, cb: () => void) => void } }).__lenis
+    const onScroll = () => ScrollTrigger.update()
+    lenis?.on('scroll', onScroll)
+
+    const ctx = gsap.context(() => {
+      /* masked line-reveal for the heading + lead */
+      gsap.from(root.querySelectorAll('.eg-tree-anim'), {
+        yPercent: 118, opacity: 0, duration: 0.95, ease: 'power4.out', stagger: 0.1,
+        scrollTrigger: { trigger: root, start: 'top 80%' },
+      })
+
+      /* the chart assembles top-down: parent drops in, connectors DRAW, child nodes pop */
+      const tl = gsap.timeline({ scrollTrigger: { trigger: root.querySelector('.eg-tree-chart'), start: 'top 78%' } })
+      tl.from('.eg-tree-parent', { y: 26, autoAlpha: 0, duration: 0.6, ease: 'power3.out' })
+        .from('.eg-wire-stem', { scaleY: 0, duration: 0.28, ease: 'none' }, '-=0.1')
+        .from('.eg-wire-bus', { scaleX: 0, duration: 0.5, ease: 'power1.inOut' })
+        .from('.eg-wire-drop', { scaleY: 0, duration: 0.3, ease: 'none', stagger: 0.1 }, '-=0.08')
+        .from('.eg-tree-kid', { y: 30, autoAlpha: 0, duration: 0.6, ease: 'power3.out', stagger: 0.1 }, '-=0.25')
+    }, root)
+
+    ScrollTrigger.refresh()
+
+    return () => {
+      lenis?.off('scroll', onScroll)
+      ctx.revert()
+    }
+  }, [reduce])
 
   const rise = (d = 0) => reduce ? {} : ({
     initial: { opacity: 0, y: 28 }, whileInView: { opacity: 1, y: 0 },
@@ -82,7 +149,7 @@ export function ElomaGroupPage() {
           </div>
 
           <motion.div className="eg-hero-media" initial={reduce ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.22, ease: EASE }}>
-            <img src={img('photo-1554469384-e58fac16e23a', 1100)} alt="Eloma Group headquarters" decoding="async" />
+            <img src="/images/eg-parent-office.webp" alt="Eloma Group headquarters" decoding="async" />
             <div className="eg-hero-plate">
               <span className="eg-hero-plate-mark">EG</span>
               <div>
@@ -117,25 +184,68 @@ export function ElomaGroupPage() {
         </div>
       </section>
 
-      {/* ── HOLDINGS INDEX (illustrated) ── */}
-      <section className="eg-hold">
+      {/* ── HOLDINGS (org-chart hierarchy tree) ── */}
+      <section className="eg-tree" ref={portRef} data-reveal="off">
         <div className="eg-wrap">
-          <motion.div className="eg-hold-head" {...rise()}>
+          <div className="eg-tree-head">
             <p className="eg-eyebrow"><span className="eg-eyebrow-line" />The holdings</p>
-            <h2 className="eg-h2">Four specialist companies, one shared ambition.</h2>
-          </motion.div>
-          <div className="eg-index">
-            {HOLDINGS.map((c, i) => (
-              <motion.div key={c.name}
-                initial={reduce ? false : { opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.5, delay: i * 0.06, ease: EASE }}>
-                <Link to={c.to} className="eg-index-row">
-                  <span className="eg-index-thumb"><img src={img(c.id, 300)} alt={c.name} loading="lazy" decoding="async" /></span>
-                  <span className="eg-index-name">{c.name}</span>
-                  <span className="eg-index-sector">{c.sector}</span>
-                  <span className="eg-index-arrow"><ArrowRight size={19} strokeWidth={2} /></span>
-                </Link>
-              </motion.div>
-            ))}
+            <h2 className="eg-h2 eg-tree-title">
+              <span className="eg-tree-line"><span className="eg-tree-anim">How the group</span></span>
+              <span className="eg-tree-line"><span className="eg-tree-anim">is structured.</span></span>
+            </h2>
+            <p className="eg-tree-lead eg-tree-anim">Eloma Group is the parent and holding company. Four specialist businesses sit beneath it — each running on the group's shared capital, governance and expertise.</p>
+          </div>
+
+          <div className="eg-tree-chart">
+            {/* parent / holding company */}
+            <div className="eg-tree-parent">
+              <TiltNode className="eg-parent-card" reduce={!!reduce}>
+                <span className="eg-parent-ic"><img src="/apple-touch-icon.png" alt="Eloma Group logo" decoding="async" /></span>
+                <span className="eg-parent-txt">
+                  <span className="eg-parent-kicker">Parent &amp; Holding Company</span>
+                  <span className="eg-parent-name">Eloma Group</span>
+                </span>
+              </TiltNode>
+            </div>
+
+            {/* connectors — drawn by GSAP on scroll, active drop lights green */}
+            <div className="eg-tree-wire">
+              <span className="eg-wire-stem" />
+              <span className="eg-wire-bus" />
+              {CHILD_X.map((x, i) => (
+                <span key={i} className={`eg-wire-drop${i === active ? ' is-active' : ''}`} style={{ left: `${x}%` }} />
+              ))}
+              {/* one glow splits into 4 points that fan out to each subsidiary */}
+              {CHILD_X.map((x, i) => (
+                <span key={`spark-${i}`} className="eg-wire-spark" style={{ ['--tx']: `${x}%` } as CSSProperties} />
+              ))}
+            </div>
+
+            {/* subsidiaries */}
+            <div className="eg-tree-kids">
+              {HOLDINGS.map((c, i) => {
+                const Icon = KID_ICONS[i]
+                return (
+                  <div
+                    key={c.name}
+                    className="eg-tree-kid"
+                    onMouseEnter={() => setActive(i)}
+                    onMouseLeave={() => setActive(-1)}
+                  >
+                    <Link to={c.to} className="eg-kid-link" onFocus={() => setActive(i)} onBlur={() => setActive(-1)} aria-label={`${c.name} — ${c.sector}`}>
+                      <TiltNode className={`eg-kid-node${i === active ? ' is-active' : ''}`} reduce={!!reduce}>
+                        <span className="eg-kid-ic"><Icon size={26} strokeWidth={1.7} /></span>
+                        <span className="eg-kid-card">
+                          <span className="eg-kid-name">{c.name}</span>
+                          <span className="eg-kid-sector">{c.sector}</span>
+                          <span className="eg-kid-tag">Group company <ArrowUpRight size={13} strokeWidth={2.4} /></span>
+                        </span>
+                      </TiltNode>
+                    </Link>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
       </section>
@@ -250,20 +360,86 @@ export function ElomaGroupPage() {
         .eg-svc-t { font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:clamp(19px,1.7vw,25px); letter-spacing:-0.02em; color:${INK}; margin:0 0 10px; }
         .eg-svc-d { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.75; color:${MUTED}; margin:0; }
 
-        /* HOLDINGS INDEX */
-        .eg-hold { background:${PAPER}; padding:clamp(60px,7vw,120px) 45px; }
-        .eg-hold-head { margin-bottom:clamp(30px,4vw,52px); }
-        .eg-index { border-top:2px solid ${INK}; }
-        .eg-index-row { display:grid; grid-template-columns:clamp(76px,9vw,132px) 1.5fr 1fr auto; gap:clamp(16px,2.4vw,44px); align-items:center; padding:clamp(16px,2vw,26px) clamp(6px,1vw,14px); border-top:1px solid rgba(12,28,42,0.16); text-decoration:none; transition:padding-left .4s cubic-bezier(0.16,1,0.3,1), background .35s ease; }
-        .eg-index-row:first-child { border-top:none; }
-        .eg-index-row:hover { background:#fff; padding-left:clamp(14px,1.6vw,26px); }
-        .eg-index-thumb { border-radius:11px; overflow:hidden; aspect-ratio:3/2; }
-        .eg-index-thumb img { width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(0.3); transition:transform .5s cubic-bezier(0.16,1,0.3,1), filter .4s ease; }
-        .eg-index-row:hover .eg-index-thumb img { transform:scale(1.06); filter:grayscale(0); }
-        .eg-index-name { font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:clamp(20px,2.2vw,38px); letter-spacing:-0.02em; color:${INK}; line-height:1.05; }
-        .eg-index-sector { font-family:'Inter',sans-serif; font-size:clamp(12px,1vw,15px); color:${MUTED}; }
-        .eg-index-arrow { display:inline-flex; align-items:center; justify-content:center; width:46px; height:46px; border-radius:50%; border:1.5px solid rgba(12,28,42,0.18); color:${INK}; transition:transform .4s cubic-bezier(0.16,1,0.3,1), background .35s ease, color .35s ease, border-color .35s ease; }
-        .eg-index-row:hover .eg-index-arrow { background:${GREEN}; border-color:${GREEN}; color:${INK}; transform:translate(3px,-3px); }
+        /* HOLDINGS — org-chart hierarchy tree (light stage) */
+        .eg-tree { position:relative; background:linear-gradient(180deg,#ffffff 0%,${PAPER} 100%); padding:clamp(64px,8vw,128px) 45px; overflow:hidden; }
+        .eg-tree::before { content:''; position:absolute; inset:-8%; background:radial-gradient(70% 50% at 78% 4%, rgba(60,185,140,0.12), transparent 55%); pointer-events:none; animation:egTreeDrift 15s ease-in-out infinite alternate; }
+        @keyframes egTreeDrift { from{ transform:translate(0,0) scale(1); } to{ transform:translate(-5%,3%) scale(1.06); } }
+        .eg-tree .eg-wrap { position:relative; }
+        .eg-tree-head { text-align:center; max-width:760px; margin:0 auto clamp(30px,4vw,52px); }
+        .eg-tree-head .eg-eyebrow { justify-content:center; }
+        .eg-tree-title { color:${INK}; }
+        .eg-tree-line { display:block; overflow:hidden; padding-bottom:0.04em; }
+        .eg-tree-anim { display:block; }
+        .eg-tree-lead { font-family:'Inter',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.8; color:${MUTED}; margin:clamp(16px,1.8vw,22px) auto 0; max-width:62ch; }
+
+        .eg-tree-chart { max-width:none; margin:0 auto; }
+
+        /* parent / holding company box */
+        .eg-tree-parent { display:flex; justify-content:center; }
+        .eg-parent-card { position:relative; display:inline-flex; align-items:center; gap:clamp(14px,1.6vw,20px); background:${INK}; border-radius:16px;
+          padding:clamp(18px,1.9vw,26px) clamp(24px,2.8vw,40px); box-shadow:0 34px 60px -32px rgba(12,28,42,0.6); transform-style:preserve-3d; will-change:transform; }
+        .eg-parent-card::before { content:''; position:absolute; inset:0; border-radius:16px; z-index:-1; pointer-events:none; animation:egParentGlow 4.8s ease-in-out infinite; }
+        @keyframes egParentGlow { 0%{ box-shadow:0 0 46px 0 rgba(60,185,140,0.5); } 22%,100%{ box-shadow:0 0 24px -6px rgba(60,185,140,0.16); } }
+        .eg-parent-ic { position:relative; display:inline-flex; align-items:center; justify-content:center; width:clamp(48px,4.4vw,62px); height:clamp(48px,4.4vw,62px);
+          border-radius:13px; background:#fff; overflow:hidden; transform:translateZ(42px); box-shadow:0 8px 20px -10px rgba(0,0,0,0.5); }
+        .eg-parent-ic img { width:100%; height:100%; object-fit:cover; display:block; }
+        .eg-parent-ic::after { content:''; position:absolute; inset:0; border-radius:13px; border:1px solid rgba(60,185,140,0.6); animation:egParentPing 4.8s ease-out infinite; }
+        @keyframes egParentPing { 0%{ transform:scale(1); opacity:0.75; } 11%{ transform:scale(1.5); opacity:0; } 100%{ transform:scale(1.5); opacity:0; } }
+        .eg-parent-txt { display:flex; flex-direction:column; transform:translateZ(24px); }
+        .eg-parent-kicker { font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(9px,0.8vw,11.5px); letter-spacing:2px; text-transform:uppercase; color:${GREEN}; }
+        .eg-parent-name { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(23px,2.5vw,36px); letter-spacing:-0.025em; color:#fff; line-height:1.05; margin-top:3px; }
+
+        /* connectors — faint base line + a green energy pulse that flows parent → bus → subsidiaries */
+        .eg-tree-wire { position:relative; height:clamp(66px,7vw,104px); margin:clamp(2px,0.5vw,6px) 0; }
+        .eg-wire-stem, .eg-wire-bus, .eg-wire-drop { position:absolute; background:rgba(12,28,42,0.2); overflow:visible; }
+        .eg-wire-stem { left:50%; top:0; width:2px; height:42%; transform:translateX(-50%); transform-origin:top center; }
+        .eg-wire-bus { top:42%; left:12.5%; width:75%; height:2px; transform-origin:center; }
+        .eg-wire-drop { top:42%; width:2px; height:58%; transform:translateX(-50%); transform-origin:top center; transition:background .35s ease, box-shadow .35s ease; }
+        .eg-wire-drop.is-active { background:${GREEN}; box-shadow:0 0 10px rgba(60,185,140,0.6); }
+        /* one shared 4.8s cycle: a glow leaves the parent, splits into 4 points at the junction,
+           each fans out to its column, then runs down to its subsidiary */
+        .eg-wire-stem::after { content:''; position:absolute; left:50%; transform:translateX(-50%); width:4px; height:34%; border-radius:4px;
+          background:${GREEN}; box-shadow:0 0 11px 2px rgba(60,185,140,0.85); animation:egFlowStem 4.8s linear infinite; }
+        @keyframes egFlowStem { 0%{ top:-36%; opacity:0; } 3%{ opacity:1; } 26%{ top:100%; opacity:1; } 29%,100%{ top:100%; opacity:0; } }
+        .eg-wire-spark { position:absolute; top:42%; left:50%; width:7px; height:7px; margin:-3.5px 0 0 -3.5px; border-radius:50%;
+          background:${GREEN}; box-shadow:0 0 12px 3px rgba(60,185,140,0.9); opacity:0; animation:egSplit 4.8s ease-in-out infinite; }
+        @keyframes egSplit {
+          0%,25% { left:50%; top:42%; opacity:0; }
+          28% { left:50%; top:42%; opacity:1; }
+          45% { left:var(--tx); top:42%; opacity:1; }
+          93% { left:var(--tx); top:100%; opacity:1; }
+          98%,100% { left:var(--tx); top:100%; opacity:0; }
+        }
+
+        /* subsidiary nodes */
+        .eg-tree-kids { display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(16px,2vw,40px); }
+        .eg-tree-kid { display:flex; justify-content:center; }
+        .eg-kid-link { display:block; width:100%; max-width:340px; text-decoration:none; }
+        .eg-kid-node { display:flex; flex-direction:column; align-items:center; text-align:center; transform-style:preserve-3d; will-change:transform; }
+        .eg-kid-ic { position:relative; z-index:2; display:inline-flex; align-items:center; justify-content:center; width:clamp(58px,6vw,76px); height:clamp(58px,6vw,76px);
+          border-radius:50%; background:#fff; border:3px solid ${INK}; color:${INK}; transform:translateZ(48px);
+          box-shadow:0 16px 30px -16px rgba(12,28,42,0.4); transition:border-color .4s ease, color .4s ease, background .4s ease, box-shadow .4s ease; }
+        .eg-kid-node.is-active .eg-kid-ic { border-color:${GREEN}; color:${GREEN}; background:rgba(60,185,140,0.08);
+          box-shadow:0 0 0 5px rgba(60,185,140,0.14), 0 20px 40px -18px rgba(60,185,140,0.45); }
+        /* the circle "receives" the wave: a glow flash + an expanding ping ring */
+        .eg-kid-ic::before { content:''; position:absolute; inset:0; border-radius:50%; opacity:0; box-shadow:0 0 22px 4px rgba(60,185,140,0.7); animation:egKidFlash 4.8s ease-out infinite; pointer-events:none; }
+        .eg-kid-ic::after { content:''; position:absolute; inset:-2px; border-radius:50%; border:2px solid ${GREEN}; opacity:0; animation:egKidPing 4.8s ease-out infinite; pointer-events:none; }
+        @keyframes egKidFlash { 0%,90%{ opacity:0; } 94%{ opacity:1; } 99%,100%{ opacity:0; } }
+        @keyframes egKidPing { 0%,90%{ transform:scale(1); opacity:0; } 93%{ transform:scale(1); opacity:0.9; } 100%{ transform:scale(1.55); opacity:0; } }
+        .eg-kid-card { position:relative; z-index:1; width:100%; margin-top:clamp(12px,1.4vw,18px); background:#fff; border:1px solid rgba(12,28,42,0.1);
+          border-radius:16px; padding:clamp(16px,1.7vw,24px) clamp(12px,1.4vw,20px); box-shadow:0 22px 44px -30px rgba(12,28,42,0.3);
+          transform:translateZ(20px); transition:border-color .4s ease, box-shadow .4s ease; display:flex; flex-direction:column; align-items:center; gap:5px;
+          animation:egCardFloat 5.5s ease-in-out infinite; }
+        .eg-tree-kid:nth-child(2) .eg-kid-card { animation-delay:.7s; }
+        .eg-tree-kid:nth-child(3) .eg-kid-card { animation-delay:1.4s; }
+        .eg-tree-kid:nth-child(4) .eg-kid-card { animation-delay:2.1s; }
+        @keyframes egCardFloat { 0%,100%{ transform:translateZ(20px) translateY(0); } 50%{ transform:translateZ(20px) translateY(-7px); } }
+        .eg-kid-node.is-active .eg-kid-card { border-color:rgba(60,185,140,0.5); box-shadow:0 34px 64px -34px rgba(12,28,42,0.42); }
+        .eg-kid-name { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(16px,1.5vw,21px); letter-spacing:-0.015em; color:${INK}; line-height:1.1; }
+        .eg-kid-sector { font-family:'Inter',sans-serif; font-size:clamp(12px,0.95vw,14px); line-height:1.4; color:${MUTED}; }
+        .eg-kid-tag { display:inline-flex; align-items:center; gap:5px; margin-top:5px; font-family:'Inter',sans-serif; font-weight:600;
+          font-size:clamp(10px,0.82vw,12px); letter-spacing:0.3px; color:${GREEN}; opacity:0; transform:translateY(4px); transition:opacity .35s ease, transform .35s ease; }
+        .eg-kid-node.is-active .eg-kid-tag { opacity:1; transform:translateY(0); }
 
         /* PRINCIPLES */
         .eg-prin { background:#fff; padding:clamp(60px,7vw,120px) 45px; }
@@ -316,13 +492,19 @@ export function ElomaGroupPage() {
           .eg-stew-media { order:-1; max-width:520px; }
           .eg-cta-in { grid-template-columns:1fr; align-items:start; gap:clamp(24px,5vw,36px); }
         }
+        /* holdings tree → stack the subsidiaries into a single vertical chain */
+        @media (max-width:860px){
+          .eg-tree-wire { display:none; }
+          .eg-tree-kids { grid-template-columns:1fr; gap:clamp(26px,6vw,38px); max-width:400px; margin:0 auto; position:relative; padding-top:clamp(24px,6vw,34px); }
+          .eg-tree-kids::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:2px; height:100%; background:rgba(12,28,42,0.16); }
+          .eg-kid-tag { opacity:1; transform:none; }
+        }
         @media (max-width:640px){
           .eg-svc-grid { grid-template-columns:1fr; }
           .eg-prin-cards { grid-template-columns:1fr; }
-          .eg-index-row { grid-template-columns:clamp(64px,20vw,90px) 1fr auto; gap:16px; }
-          .eg-index-sector { grid-column:2; grid-row:2; }
           .eg-band-grid { grid-template-columns:1fr 1fr; gap:32px 20px; }
           .eg-band-item:nth-child(3){ border-left:none; padding-left:0; }
+          .eg-parent-card { flex-direction:column; text-align:center; gap:12px; }
         }
         @media (max-width:400px){
           .eg-band-grid { grid-template-columns:1fr; }
@@ -339,10 +521,16 @@ export function ElomaGroupPage() {
           .eg-h1 { font-size:152px; }
           .eg-h2 { font-size:92px; }
           .eg-stew-txt { font-size:58px; }
-          .eg-index-name { font-size:44px; }
+          .eg-parent-name { font-size:44px; }
+          .eg-kid-name { font-size:26px; }
         }
         @media (prefers-reduced-motion: reduce){
-          .eg-btn,.eg-svc-card,.eg-svc-ic,.eg-index-row,.eg-index-arrow,.eg-prin-card { transition:none; }
+          .eg-btn,.eg-svc-card,.eg-svc-ic,.eg-prin-card,.eg-kid-ic,.eg-kid-card,.eg-kid-tag,.eg-wire-drop { transition:none; }
+          .eg-tree::before,.eg-parent-card::before,.eg-parent-ic::after,.eg-kid-card,
+          .eg-kid-ic::before,.eg-kid-ic::after,
+          .eg-wire-stem::after,.eg-wire-spark { animation:none; }
+          .eg-wire-spark { display:none; }
+          .eg-kid-card { transform:translateZ(20px); }
         }
       `}</style>
     </div>

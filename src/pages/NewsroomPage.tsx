@@ -1,9 +1,13 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, FileText, Download, Users, Mail } from 'lucide-react'
 import { Header } from '../components/Header/Header'
 import { FlyFooter } from '../components/FlyFooter'
 import { PageCTA, NAVY, GREEN, MUTED, EASE } from '../components/PageKit'
+
+gsap.registerPlugin(ScrollTrigger)
 
 type Item = { tag: string; date: string; read: string; title: string; body: string }
 
@@ -19,11 +23,11 @@ const NEWS: Item[] = [
 
 const CATS = ['All', 'Announcement', 'Company', 'Partnership', 'Sustainability']
 
+/* downloadable press-kit assets — sheets in the "press folder" */
 const KIT = [
-  { Icon: Download, t: 'Brand & Logo Pack', s: 'Logos, wordmarks and usage guidelines' },
-  { Icon: FileText, t: 'Company Fact Sheet', s: 'Group overview, figures and structure' },
-  { Icon: Users, t: 'Leadership Bios & Photos', s: 'Executive profiles and headshots' },
-  { Icon: Mail, t: 'Media Enquiries', s: 'Reach our communications team directly' },
+  { Icon: Download, tab: 'ZIP', t: 'Brand & Logo Pack', s: 'Logos, wordmarks, colour palette and clear-space guidelines.', size: '24 MB' },
+  { Icon: FileText, tab: 'PDF', t: 'Company Fact Sheet', s: 'Group overview, key figures and structure.', size: '1.8 MB' },
+  { Icon: Users, tab: 'ZIP', t: 'Leadership Bios & Photos', s: 'Executive profiles and hi-res headshots.', size: '42 MB' },
 ]
 
 export function NewsroomPage() {
@@ -40,6 +44,58 @@ export function NewsroomPage() {
     viewport: { once: true, margin: '-60px' },
     transition: { duration: 0.7, delay: d, ease: EASE },
   })
+
+  /* ── Press Folder · GSAP scroll-driven "fan open" reveal ──
+     the sheets start stacked at the centre and fan out into a neat row as
+     the section scrolls into view (scrubbed), synced to the Lenis scroll */
+  const pressRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const root = pressRef.current
+    if (!root) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const lenis = (window as unknown as { __lenis?: { on: (e: string, cb: () => void) => void; off: (e: string, cb: () => void) => void } }).__lenis
+    const onScroll = () => ScrollTrigger.update()
+    lenis?.on('scroll', onScroll)
+
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia()
+
+      /* desktop / tablet — collapse into a fanned stack, then open on scroll */
+      mm.add('(min-width: 760px)', () => {
+        const cards = gsap.utils.toArray<HTMLElement>('.pk-card')
+        const n = cards.length
+        if (!n) return
+        const mid = (n - 1) / 2
+        const step = n > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 0
+
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: root, start: 'top 82%', end: 'top 34%', scrub: 0.6 },
+        })
+        cards.forEach((card, i) => {
+          const off = i - mid
+          tl.fromTo(card,
+            { x: -off * step, y: 44 - Math.abs(off) * 7, rotation: off * 6, scale: 0.9, transformOrigin: '50% 135%' },
+            { x: 0, y: 0, rotation: 0, scale: 1, ease: 'power3.out' },
+            0)
+        })
+      })
+
+      /* mobile — simple staggered fade-up (no fan) */
+      mm.add('(max-width: 759px)', () => {
+        gsap.from('.pk-card', {
+          autoAlpha: 0, y: 34, duration: 0.6, ease: 'power3.out', stagger: 0.08,
+          scrollTrigger: { trigger: root, start: 'top 84%' },
+        })
+      })
+    }, root)
+
+    ScrollTrigger.refresh()
+    return () => {
+      lenis?.off('scroll', onScroll)
+      ctx.revert()
+    }
+  }, [])
 
   return (
     <div style={{ overflowX: 'hidden', background: '#fff' }}>
@@ -137,29 +193,58 @@ export function NewsroomPage() {
         </div>
       </section>
 
-      {/* ── 4 · Press kit ── */}
-      <section className="nw-press-sec">
-        <span className="nw-press-glow" aria-hidden />
-        <div className="nw-wrap nw-press-grid">
-          <motion.div className="nw-press-l" {...rise()}>
-            <p className="nw-eyebrow"><span className="nw-eyebrow-dot" />Press &amp; media</p>
-            <h2 className="nw-press-h">Media <span className="g">resources.</span></h2>
-            <p className="nw-press-p">Everything you need to tell the Eloma story accurately. For interviews, figures or anything not listed here, reach our communications team directly.</p>
-          </motion.div>
+      {/* ── 4 · Press & media — "The Press Folder" (GSAP fan-out) ── */}
+      <section className="pk" ref={pressRef} data-reveal="off">
+        <span className="pk-glow" aria-hidden />
+        <div className="nw-wrap">
+          <div className="pk-head">
+            <div className="pk-head-l">
+              <p className="nw-eyebrow"><span className="nw-eyebrow-dot" />Press &amp; media</p>
+              <h2 className="pk-h">The press <span className="g">folder.</span></h2>
+            </div>
+            <p className="pk-lead">
+              Everything you need to tell the Eloma story accurately — brand assets, figures and leadership.
+            </p>
+          </div>
 
-          <motion.div className="nw-kit" {...rise(0.08)}>
+          <div className="pk-deck">
             {KIT.map((k, i) => (
-              <div key={k.t} className="nw-kit-row">
-                <span className="nw-mono nw-kit-no">{String(i + 1).padStart(2, '0')}</span>
-                <span className="nw-kit-ic"><k.Icon size={19} /></span>
-                <span className="nw-kit-tx">
-                  <span className="nw-kit-t">{k.t}</span>
-                  <span className="nw-kit-s">{k.s}</span>
-                </span>
-                <ArrowUpRight className="nw-kit-go" size={17} strokeWidth={2.4} />
-              </div>
+              <article key={k.t} className="pk-card">
+                <div className="pk-card-in">
+                  <span className="pk-ghost" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
+                  <span className="pk-tab">{k.tab}</span>
+                  <span className="pk-ic"><k.Icon size={20} strokeWidth={1.8} /></span>
+                  <div className="pk-card-body">
+                    <h3 className="pk-t">{k.t}</h3>
+                    <p className="pk-s">{k.s}</p>
+                  </div>
+                  <button type="button" className="pk-dl">
+                    <span className="pk-dl-bar" aria-hidden />
+                    <span className="pk-dl-tx">Download</span>
+                    <span className="pk-dl-meta">{k.size}</span>
+                    <Download size={15} strokeWidth={2.4} />
+                  </button>
+                </div>
+              </article>
             ))}
-          </motion.div>
+
+            {/* contact sheet — green */}
+            <article className="pk-card pk-card-contact">
+              <div className="pk-card-in">
+                <span className="pk-ghost" aria-hidden>04</span>
+                <span className="pk-tab dark">ASK</span>
+                <span className="pk-ic light"><Mail size={20} strokeWidth={1.9} /></span>
+                <div className="pk-card-body">
+                  <h3 className="pk-t light">Media enquiries</h3>
+                  <p className="pk-s light">Interviews, figures or anything not listed here — talk to our comms team.</p>
+                </div>
+                <a className="pk-dl solid" href="mailto:press@elomagroup.com">
+                  <span className="pk-dl-tx">Email us</span>
+                  <ArrowUpRight size={15} strokeWidth={2.4} />
+                </a>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -238,25 +323,72 @@ export function NewsroomPage() {
         .nw-card:hover .nw-card-arrow { background:${GREEN}; color:#fff; transform:translate(2px,-2px); }
         .nw-empty { font-family:'Inter',sans-serif; font-size:15px; color:${MUTED}; text-align:center; padding:48px 0; }
 
-        /* 4 · Press kit - light theme */
-        .nw-press-sec { position:relative; overflow:hidden; background:linear-gradient(180deg,#ffffff 0%,#f3faf7 100%); padding:clamp(56px,7vw,110px) 45px; }
-        .nw-press-sec::before { content:''; position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(rgba(19,41,61,0.04) 1px, transparent 1px); background-size:24px 24px; -webkit-mask-image:linear-gradient(180deg,transparent,#000 60%); mask-image:linear-gradient(180deg,transparent,#000 60%); }
-        .nw-press-glow { position:absolute; bottom:-120px; left:-90px; width:420px; height:420px; border-radius:50%; background:radial-gradient(circle, rgba(60,185,140,0.14), transparent 64%); pointer-events:none; }
-        .nw-press-grid { position:relative; z-index:1; display:grid; grid-template-columns:0.9fr 1.1fr; gap:clamp(36px,5vw,90px); align-items:center; }
-        .nw-press-h { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(32px,4.4vw,64px); letter-spacing:-0.035em; line-height:1.02; color:${NAVY}; margin:16px 0 18px; }
-        .nw-press-p { font-family:'Inter',sans-serif; font-size:clamp(14px,1.1vw,16px); line-height:1.8; color:${MUTED}; margin:0; max-width:46ch; }
+        /* 4 · Press & media — "The Press Folder" (navy, GSAP fan-out) */
+        .pk { position:relative; overflow:hidden; background:${NAVY}; padding:clamp(60px,8vw,120px) 45px clamp(70px,9vw,130px); }
+        .pk::before { content:''; position:absolute; inset:0; pointer-events:none; z-index:0;
+          background-image:radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size:30px 30px; }
+        .pk-glow { position:absolute; top:-140px; left:-100px; width:520px; height:520px; border-radius:50%;
+          background:radial-gradient(circle, rgba(60,185,140,0.18), transparent 64%); pointer-events:none; z-index:0; }
+        .pk .nw-wrap { position:relative; z-index:1; }
 
-        .nw-kit { display:flex; flex-direction:column; border-top:1px solid rgba(26,43,60,0.12); }
-        .nw-kit-row { display:flex; align-items:center; gap:clamp(14px,1.6vw,20px); text-decoration:none; padding:clamp(18px,2vw,26px) clamp(4px,1vw,14px); border-bottom:1px solid rgba(26,43,60,0.12); transition:padding-left 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}, background 0.35s ease; }
-        .nw-kit-row:hover { padding-left:clamp(14px,1.8vw,26px); background:rgba(60,185,140,0.05); }
-        .nw-kit-no { color:rgba(26,43,60,0.3); flex-shrink:0; }
-        .nw-kit-ic { display:inline-flex; align-items:center; justify-content:center; width:46px; height:46px; border-radius:13px; background:rgba(60,185,140,0.12); color:${GREEN}; flex-shrink:0; transition:background 0.35s ease, color 0.35s ease; }
-        .nw-kit-row:hover .nw-kit-ic { background:${GREEN}; color:#fff; }
-        .nw-kit-tx { display:flex; flex-direction:column; gap:3px; flex:1; min-width:0; }
-        .nw-kit-t { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(15px,1.3vw,19px); color:${NAVY}; letter-spacing:-0.01em; }
-        .nw-kit-s { font-family:'Inter',sans-serif; font-size:13px; color:${MUTED}; }
-        .nw-kit-go { color:rgba(26,43,60,0.3); flex-shrink:0; transition:transform 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}, color 0.3s ease; }
-        .nw-kit-row:hover .nw-kit-go { color:${GREEN}; transform:translate(3px,-3px); }
+        .pk-head { display:flex; justify-content:space-between; align-items:flex-end; gap:clamp(20px,4vw,64px);
+          flex-wrap:wrap; margin-bottom:clamp(34px,4.6vw,72px); }
+        .pk-h { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(34px,4.6vw,68px); letter-spacing:-0.035em; line-height:1.0; color:#fff; margin:clamp(12px,1.6vw,20px) 0 0; }
+        .pk-lead { font-family:'Inter',sans-serif; font-size:clamp(14px,1.05vw,16.5px); line-height:1.8; color:rgba(255,255,255,0.6); margin:0; max-width:44ch; }
+
+        /* the fanned deck of sheets */
+        .pk-deck { display:flex; flex-wrap:nowrap; justify-content:center; align-items:stretch; gap:clamp(16px,2vw,30px); }
+        .pk-card { flex:0 0 auto; width:clamp(200px,19vw,244px); will-change:transform; }
+        .pk-card:hover { z-index:5; }
+        .pk-card-in { position:relative; overflow:hidden; height:100%; min-height:clamp(292px,30vw,368px);
+          display:flex; flex-direction:column; padding:clamp(20px,1.7vw,28px); border-radius:20px; background:#fff;
+          box-shadow:0 34px 66px -40px rgba(0,0,0,0.75);
+          transition:transform .5s cubic-bezier(0.16,1,0.3,1), box-shadow .5s ease; }
+        .pk-card-in::after { content:''; position:absolute; inset:0; border-radius:20px; pointer-events:none; border:1.5px solid transparent; transition:border-color .4s ease; }
+        .pk-card:hover .pk-card-in { transform:translateY(-14px); box-shadow:0 54px 90px -42px rgba(0,0,0,0.85); }
+        .pk-card:hover .pk-card-in::after { border-color:rgba(60,185,140,0.6); }
+
+        .pk-ghost { position:absolute; top:clamp(14px,1.5vw,20px); right:clamp(14px,1.5vw,20px); z-index:0; pointer-events:none; user-select:none;
+          font-family:'Poppins',sans-serif; font-weight:800; font-size:clamp(58px,6.4vw,92px); line-height:0.7; letter-spacing:-0.05em; color:rgba(19,41,61,0.07); }
+
+        /* folder tab (format label) */
+        .pk-tab { position:relative; z-index:1; align-self:flex-start; font-family:'Inter',sans-serif; font-weight:800; font-size:10.5px; letter-spacing:1.6px; text-transform:uppercase;
+          color:${GREEN}; background:rgba(60,185,140,0.12); padding:5px 11px; border-radius:7px; }
+        .pk-tab.dark { color:#fff; background:rgba(255,255,255,0.22); }
+
+        .pk-ic { position:relative; z-index:1; display:inline-flex; align-items:center; justify-content:center; width:clamp(44px,3.6vw,52px); aspect-ratio:1; margin-top:clamp(16px,1.8vw,24px);
+          border-radius:13px; background:rgba(60,185,140,0.12); color:${GREEN};
+          transition:transform .5s cubic-bezier(0.16,1,0.3,1), background .35s ease, color .35s ease; }
+        .pk-card:hover .pk-ic { background:${GREEN}; color:#fff; transform:translateY(-2px) rotate(-6deg); }
+        .pk-ic.light { background:rgba(255,255,255,0.2); color:#fff; }
+        .pk-card-contact:hover .pk-ic.light { background:#fff; color:${GREEN}; }
+
+        .pk-card-body { position:relative; z-index:1; margin-top:auto; padding-top:clamp(20px,2vw,28px); }
+        .pk-t { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(17px,1.35vw,20px); line-height:1.22; letter-spacing:-0.02em; color:${NAVY}; margin:0; }
+        .pk-s { font-family:'Inter',sans-serif; font-size:clamp(12.5px,0.92vw,13.5px); line-height:1.6; color:${MUTED}; margin:8px 0 0; }
+        .pk-t.light { color:#fff; }
+        .pk-s.light { color:rgba(255,255,255,0.85); }
+
+        /* download button — green bar fills on hover */
+        .pk-dl { position:relative; overflow:hidden; z-index:1; align-self:stretch; margin-top:clamp(16px,1.8vw,22px); cursor:pointer;
+          display:inline-flex; align-items:center; gap:9px; padding:11px 15px; border-radius:11px;
+          border:1px solid rgba(19,41,61,0.16); background:transparent; color:${NAVY}; text-decoration:none;
+          font-family:'Inter',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:0.3px;
+          transition:color .35s ease, border-color .35s ease; }
+        .pk-dl-tx, .pk-dl-meta, .pk-dl svg { position:relative; z-index:1; }
+        .pk-dl-meta { margin-left:auto; font-weight:600; font-size:11px; letter-spacing:0.5px; color:rgba(19,41,61,0.45); transition:color .35s ease; }
+        .pk-dl svg { transition:transform .4s cubic-bezier(0.16,1,0.3,1); }
+        .pk-dl-bar { position:absolute; inset:0; z-index:0; background:${GREEN}; transform:scaleX(0); transform-origin:left center; transition:transform .45s cubic-bezier(0.16,1,0.3,1); }
+        .pk-card:hover .pk-dl { color:#fff; border-color:${GREEN}; }
+        .pk-card:hover .pk-dl .pk-dl-meta { color:rgba(255,255,255,0.85); }
+        .pk-card:hover .pk-dl-bar { transform:scaleX(1); }
+        .pk-card:hover .pk-dl svg { transform:translateY(2px); }
+
+        /* contact sheet — green */
+        .pk-card-contact .pk-card-in { background:linear-gradient(155deg, ${GREEN}, #2f9d75); box-shadow:0 34px 70px -42px rgba(60,185,140,0.9); }
+        .pk-card-contact .pk-ghost { color:rgba(255,255,255,0.12); }
+        .pk-card-contact .pk-dl.solid { border-color:transparent; background:${NAVY}; color:#fff; justify-content:center; }
+        .pk-card-contact:hover .pk-dl.solid svg { transform:translate(3px,-3px); }
 
         /* ── responsive ── */
         @media (max-width:900px){
@@ -264,21 +396,26 @@ export function NewsroomPage() {
           .nw-hero-side { border-top:none; padding-top:0; }
           .nw-lead { grid-template-columns:1fr; gap:clamp(20px,4vw,32px); }
           .nw-lead-r { justify-content:flex-start; }
-          .nw-press-grid { grid-template-columns:1fr; gap:clamp(34px,6vw,48px); }
+          /* deck → responsive grid of sheets */
+          .pk-deck { flex-wrap:wrap; }
+          .pk-card { width:clamp(220px,42vw,300px); }
         }
         @media (max-width:680px){
           .nw-grid { grid-template-columns:1fr; }
           .nw-mast-brand { font-size:14px; }
           .nw-mast-meta { display:none; }
           .nw-mast-rule { flex:1; }
+          .pk-deck { flex-direction:column; align-items:stretch; gap:14px; }
+          .pk-card { width:100%; }
+          .pk-card-in { min-height:0; }
         }
         @media (min-width:1920px){
           .nw-wrap { max-width:none; }
           .nw-hero-h1 { font-size:140px; }
           .nw-lead-title { font-size:80px; }
           .nw-list-h { font-size:88px; }
-          .nw-press-h { font-size:72px; }
-          .nw-hero-lead, .nw-press-p { font-size:18px; }
+          .pk-h { font-size:72px; }
+          .nw-hero-lead, .pk-lead { font-size:18px; }
         }
         @media (min-width:2560px){
           .nw-wrap { max-width:none; }
@@ -287,10 +424,10 @@ export function NewsroomPage() {
           .nw-lead-title { font-size:104px; }
           .nw-lead-no { font-size:440px; }
           .nw-list-h { font-size:112px; }
-          .nw-press-h { font-size:92px; }
-          .nw-hero-lead, .nw-press-p, .nw-lead-body { font-size:22px; }
+          .pk-h { font-size:92px; }
+          .nw-hero-lead, .pk-lead, .nw-lead-body { font-size:22px; }
           .nw-card-title { font-size:34px; }
-          .nw-kit-t { font-size:24px; }
+          .pk-t { font-size:24px; }
         }
       `}</style>
     </div>

@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { HomePage } from './pages/HomePage'
+import { SectionRevealer } from './components/SectionRevealer'
 
 const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })))
 const BlogsPage = lazy(() => import('./pages/BlogsPage').then(m => ({ default: m.BlogsPage })))
@@ -18,6 +19,7 @@ const EgTravelsPage = lazy(() => import('./pages/companies/EgTravelsPage').then(
 function App() {
   return (
     <BrowserRouter>
+      <SectionRevealer />
       <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<HomePage />} />

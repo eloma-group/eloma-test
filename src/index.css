@@ -72,6 +72,14 @@ body {
   letter-spacing: 0.14em !important;
 }
 
+/* Headings render too loose under the global tracking rule above. Pull the
+   per-letter and word spacing back to a tight, natural display setting so
+   headings read normally across every page. */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.015em !important;
+  word-spacing: normal !important;
+}
+
 img {
   display: block;
   max-width: 100%;

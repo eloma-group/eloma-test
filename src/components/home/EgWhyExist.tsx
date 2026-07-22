@@ -30,7 +30,7 @@ export function EgWhyExist() {
   })
   const bgY = useTransform(scrollYProgress, [0, 1], ['-12%', '12%'])
   return (
-    <section className="eg-wy" aria-label="Why we exist" ref={secRef}>
+    <section className="eg-wy" aria-label="Why we exist" ref={secRef} data-reveal="off">
       <style>{`
         .eg-wy { position: relative; overflow: hidden; }
         .eg-wy-bg { position:absolute; inset:0; z-index:0; overflow:hidden; }

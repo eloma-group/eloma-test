@@ -1,3 +1,9 @@
+import { useState, useRef, useEffect } from 'react'
+import type { MouseEvent as ReactMouseEvent } from 'react'
+import { useReducedMotion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   Wind, Truck, Recycle, Waves, Leaf, ArrowUpRight,
   CircleDot, FileText, ShieldCheck, Gauge, Users,
@@ -7,8 +13,13 @@ import { FlyFooter } from '../components/FlyFooter'
 import { PageCTA, NAVY, GREEN, MUTED } from '../components/PageKit'
 import { Reveal, CountUp } from '../components/home/egScroll'
 
+gsap.registerPlugin(ScrollTrigger)
+
 const img = (id: string, w: number) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`
+
+/* circumference of the readiness ring (r = 42) */
+const RING_C = 2 * Math.PI * 42
 
 const HERO_STATS = [
   { n: '2040', l: 'Net-zero commitment' },
@@ -46,13 +57,49 @@ const ROAD = [
 ]
 
 const REPORTS = [
-  { Icon: FileText, title: 'Annual Sustainability Report', meta: '2024 — soon' },
-  { Icon: Gauge, title: 'Carbon Footprint Disclosure', meta: 'In progress' },
-  { Icon: ShieldCheck, title: 'ESG & Governance Statement', meta: 'Yearly' },
-  { Icon: Users, title: 'Community Impact Update', meta: 'Quarterly' },
+  { Icon: FileText, title: 'Annual Sustainability Report', meta: '2024 — soon', edition: 'Edition 2024', status: 'Finalising', progress: 82,
+    blurb: 'Our full-year account of emissions, energy, materials and community impact across every Eloma company.' },
+  { Icon: Gauge, title: 'Carbon Footprint Disclosure', meta: 'In progress', edition: 'Scope 1 · 2 · 3', status: 'In progress', progress: 64,
+    blurb: 'A measured, audit-ready footprint — reported, not estimated — across all three emissions scopes.' },
+  { Icon: ShieldCheck, title: 'ESG & Governance Statement', meta: 'Yearly', edition: 'Published yearly', status: 'Available', progress: 100,
+    blurb: 'How we govern, manage risk and hold every company to one ethical standard across the group.' },
+  { Icon: Users, title: 'Community Impact Update', meta: 'Quarterly', edition: 'Every quarter', status: 'Available', progress: 100,
+    blurb: 'The people side of progress — local hiring, partnerships and the programmes we back each quarter.' },
 ]
 
 export function SustainabilityPage() {
+  /* ── Open reporting · interactive reading room ── */
+  const [active, setActive] = useState(0)
+  const reduce = useReducedMotion()
+  const repRef = useRef<HTMLElement>(null)
+  const R = REPORTS[active]
+
+  useEffect(() => {
+    if (reduce) return
+    const root = repRef.current
+    if (!root) return
+    const lenis = (window as unknown as { __lenis?: { on: (e: string, cb: () => void) => void; off: (e: string, cb: () => void) => void } }).__lenis
+    const onScroll = () => ScrollTrigger.update()
+    lenis?.on('scroll', onScroll)
+    const ctx = gsap.context(() => {
+      gsap.from('.rr-anim', { yPercent: 115, opacity: 0, duration: 0.9, ease: 'power4.out', stagger: 0.09, scrollTrigger: { trigger: root, start: 'top 78%' } })
+      gsap.from('.rr-row', { x: -26, autoAlpha: 0, duration: 0.7, ease: 'power3.out', stagger: 0.1, scrollTrigger: { trigger: '.rr-index', start: 'top 84%' } })
+      gsap.from('.rr-cover', { clipPath: 'inset(0% 0% 0% 100%)', duration: 1.15, ease: 'power4.out', scrollTrigger: { trigger: '.rr-cover', start: 'top 84%' } })
+    }, root)
+    ScrollTrigger.refresh()
+    return () => { lenis?.off('scroll', onScroll); ctx.revert() }
+  }, [reduce])
+
+  const onCoverMove = (e: ReactMouseEvent<HTMLElement>) => {
+    if (reduce) return
+    const el = e.currentTarget
+    const r = el.getBoundingClientRect()
+    const rx = -((e.clientY - r.top) / r.height - 0.5) * 8
+    const ry = ((e.clientX - r.left) / r.width - 0.5) * 8
+    el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`
+  }
+  const onCoverLeave = (e: ReactMouseEvent<HTMLElement>) => { e.currentTarget.style.transform = '' }
+
   return (
     <div style={{ overflowX: 'hidden', background: '#fff' }}>
       <Header />
@@ -149,31 +196,65 @@ export function SustainabilityPage() {
         </div>
       </section>
 
-      {/* ── 5 · Open reporting ── */}
-      <section className="sx-sec sx-mint">
-        <div className="sx-wrap">
-          <Reveal className="sx-head">
-            <p className="sx-kicker"><span>04</span> Open reporting</p>
-            <h2 className="sx-h2">Everything, <span className="g">on the record.</span></h2>
-          </Reveal>
+      {/* ── 5 · Open reporting — interactive disclosure reading room ── */}
+      <section className="sx-sec sx-mint rr" ref={repRef} data-reveal="off">
+        <div className="sx-wrap rr-grid">
+          <div className="rr-left">
+            <div className="rr-head">
+              <p className="sx-kicker"><span>04</span> Open reporting</p>
+              <h2 className="sx-h2 rr-h2">
+                <span className="rr-mask"><span className="rr-anim">Everything,</span></span>
+                <span className="rr-mask"><span className="rr-anim">on the <span className="g">record.</span></span></span>
+              </h2>
+              <p className="rr-lead rr-anim">Radical transparency, by default. Hover a document to preview what we publish — and how far along each disclosure is.</p>
+            </div>
 
-          <div className="sx-rep">
-            {REPORTS.map((r, i) => (
-              <Reveal as="div" key={r.title} delay={i * 0.05} y={20}>
-                <a className="sx-rep-item">
-                  <span className="sx-rep-ic"><r.Icon size={20} strokeWidth={1.7} /></span>
-                  <span className="sx-rep-t">{r.title}</span>
-                  <span className="sx-rep-meta">{r.meta}</span>
-                  <ArrowUpRight className="sx-rep-arr" size={18} strokeWidth={2.2} />
-                </a>
-              </Reveal>
-            ))}
+            <div className="rr-index">
+              {REPORTS.map((r, i) => (
+                <button key={r.title} className={`rr-row${i === active ? ' on' : ''}`}
+                  onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)} onClick={() => setActive(i)}
+                  aria-label={`${r.title} — ${r.meta}`}>
+                  <span className="rr-row-bar" aria-hidden />
+                  <span className="rr-row-n">0{i + 1}</span>
+                  <span className="rr-row-ic"><r.Icon size={18} strokeWidth={1.8} /></span>
+                  <span className="rr-row-t">{r.title}</span>
+                  <span className="rr-row-meta">{r.meta}</span>
+                </button>
+              ))}
+            </div>
           </div>
 
-          <p className="sx-note">
-            <Leaf size={15} strokeWidth={2.2} style={{ color: GREEN, flexShrink: 0 }} />
-            Documents are published as they’re finalised — reach out to our team for the latest figures.
-          </p>
+          <div className="rr-right">
+            <article className="rr-cover" onMouseMove={onCoverMove} onMouseLeave={onCoverLeave}>
+              <span className="rr-cover-grid" aria-hidden />
+              <span className="rr-cover-sheen" aria-hidden />
+              <div className="rr-cover-top">
+                <span className="rr-cover-brand"><Leaf size={14} strokeWidth={2.3} /> EG · Sustainability</span>
+                <span className="rr-cover-ed" key={`ed${active}`}>{R.edition}</span>
+              </div>
+              <div className="rr-cover-mid" key={active}>
+                <span className="rr-cover-status"><span className="rr-cover-status-dot" />{R.status}</span>
+                <h3 className="rr-cover-title">{R.title}</h3>
+                <p className="rr-cover-blurb">{R.blurb}</p>
+              </div>
+              <div className="rr-cover-foot">
+                <div className="rr-ring">
+                  <svg viewBox="0 0 96 96">
+                    <circle className="rr-ring-track" cx="48" cy="48" r="42" />
+                    <circle className="rr-ring-val" cx="48" cy="48" r="42"
+                      style={{ strokeDasharray: RING_C, strokeDashoffset: RING_C * (1 - R.progress / 100) }} />
+                  </svg>
+                  <span className="rr-ring-num">{R.progress}<em>%</em></span>
+                  <span className="rr-ring-lab">Ready</span>
+                </div>
+                <Link to="/contact#contact-form" className="rr-cover-cta">Request document <ArrowUpRight size={17} strokeWidth={2.2} /></Link>
+              </div>
+            </article>
+            <p className="rr-note">
+              <Leaf size={15} strokeWidth={2.2} style={{ color: GREEN, flexShrink: 0 }} />
+              Documents are published as they’re finalised — reach out to our team for the latest figures.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -251,19 +332,74 @@ export function SustainabilityPage() {
         .sx-road-t { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(16px,1.4vw,21px); color:${GREEN}; letter-spacing:-0.01em; margin:clamp(8px,1vw,12px) 0 8px; }
         .sx-road-x { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.66; color:${MUTED}; margin:0; }
 
-        /* 5 · Reports */
-        .sx-rep { border-top:1px solid rgba(19,41,61,0.14); }
-        .sx-rep-item { display:grid; grid-template-columns:44px 1fr auto 30px; align-items:center; gap:clamp(14px,1.8vw,24px);
-          padding:clamp(18px,2.2vw,28px) clamp(4px,1vw,12px); border-bottom:1px solid rgba(19,41,61,0.14); cursor:pointer; text-decoration:none;
-          transition:padding-left 0.45s cubic-bezier(0.16,1,0.3,1), background 0.4s ease; }
-        .sx-rep-item:hover { padding-left:clamp(12px,1.6vw,22px); background:linear-gradient(90deg, rgba(60,185,140,0.06), transparent 70%); }
-        .sx-rep-ic { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:12px; background:rgba(60,185,140,0.1); color:${GREEN}; transition:background 0.4s ease, color 0.4s ease; }
-        .sx-rep-item:hover .sx-rep-ic { background:${GREEN}; color:#fff; }
-        .sx-rep-t { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(16px,1.5vw,24px); letter-spacing:-0.02em; color:${NAVY}; }
-        .sx-rep-meta { font-family:'Inter',sans-serif; font-weight:700; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:${MUTED}; white-space:nowrap; }
-        .sx-rep-arr { color:rgba(19,41,61,0.3); transition:color 0.4s ease, transform 0.45s cubic-bezier(0.16,1,0.3,1); }
-        .sx-rep-item:hover .sx-rep-arr { color:${GREEN}; transform:translate(4px,-4px); }
-        .sx-note { display:flex; align-items:center; gap:10px; justify-content:center; margin:clamp(30px,4vw,48px) auto 0; max-width:600px; text-align:center; font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.6; color:${MUTED}; }
+        /* 5 · Open reporting — interactive reading room */
+        .rr-grid { display:grid; grid-template-columns:0.92fr 1.08fr; gap:clamp(30px,4vw,72px); align-items:center; }
+        .rr-head { margin-bottom:clamp(24px,3vw,38px); }
+        .rr-mask { display:block; overflow:hidden; padding-bottom:0.04em; }
+        .rr-anim { display:block; }
+        .rr-h2 { margin-top:14px; }
+        .rr-lead { font-family:'Inter',sans-serif; font-size:clamp(14px,1.05vw,16.5px); line-height:1.75; color:${MUTED}; margin:clamp(16px,1.8vw,22px) 0 0; max-width:46ch; }
+
+        /* interactive index */
+        .rr-index { display:flex; flex-direction:column; border-top:1px solid rgba(19,41,61,0.12); }
+        .rr-row { position:relative; display:grid; grid-template-columns:auto 40px 1fr auto; align-items:center; gap:clamp(12px,1.4vw,20px);
+          width:100%; text-align:left; background:none; border:none; border-bottom:1px solid rgba(19,41,61,0.12); cursor:pointer; font-family:inherit;
+          padding:clamp(15px,1.7vw,22px) clamp(6px,1vw,14px) clamp(15px,1.7vw,22px) clamp(15px,1.7vw,24px);
+          transition:background .4s ease, padding-left .45s cubic-bezier(0.16,1,0.3,1); }
+        .rr-row-bar { position:absolute; left:0; top:16%; bottom:16%; width:3px; border-radius:3px; background:${GREEN}; transform:scaleY(0); transform-origin:center; transition:transform .45s cubic-bezier(0.16,1,0.3,1); }
+        .rr-row.on { background:linear-gradient(90deg, rgba(60,185,140,0.09), transparent 74%); padding-left:clamp(22px,2.2vw,32px); }
+        .rr-row.on .rr-row-bar { transform:scaleY(1); }
+        .rr-row-n { font-family:'Inter',sans-serif; font-weight:700; font-size:12px; letter-spacing:1px; color:rgba(19,41,61,0.32); font-variant-numeric:tabular-nums; transition:color .4s ease; }
+        .rr-row.on .rr-row-n { color:${GREEN}; }
+        .rr-row-ic { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:11px; background:rgba(60,185,140,0.1); color:${GREEN};
+          transition:background .4s ease, color .4s ease, transform .45s cubic-bezier(0.16,1,0.3,1); }
+        .rr-row.on .rr-row-ic { background:${GREEN}; color:#fff; transform:translateY(-2px); }
+        .rr-row-t { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(15px,1.35vw,21px); letter-spacing:-0.02em; color:${NAVY}; line-height:1.15; }
+        .rr-row-meta { font-family:'Inter',sans-serif; font-weight:700; font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:${MUTED}; white-space:nowrap; }
+
+        /* the live report cover */
+        .rr-right { position:relative; }
+        .rr-cover { position:relative; overflow:hidden; border-radius:22px; padding:clamp(26px,3vw,42px); min-height:clamp(380px,44vw,468px);
+          display:flex; flex-direction:column; background:linear-gradient(158deg,#17324a 0%,${NAVY} 58%,#0e2032 100%);
+          box-shadow:0 50px 90px -50px rgba(19,41,61,0.65); transform-style:preserve-3d; transition:transform .4s cubic-bezier(0.16,1,0.3,1); will-change:transform; }
+        .rr-cover-grid { position:absolute; inset:0; pointer-events:none;
+          background-image:linear-gradient(rgba(255,255,255,0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.055) 1px, transparent 1px);
+          background-size:40px 40px; -webkit-mask-image:radial-gradient(120% 95% at 100% 0%, #000, transparent 68%); mask-image:radial-gradient(120% 95% at 100% 0%, #000, transparent 68%); }
+        .rr-cover-sheen { position:absolute; top:-30%; left:0; width:45%; height:160%; pointer-events:none;
+          background:linear-gradient(100deg, transparent, rgba(60,185,140,0.16), transparent); transform:skewX(-16deg); animation:rrSheen 7s linear infinite; }
+        @keyframes rrSheen { 0%{ transform:translateX(-160%) skewX(-16deg); } 100%{ transform:translateX(560%) skewX(-16deg); } }
+
+        .rr-cover-top { position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+        .rr-cover-brand { display:inline-flex; align-items:center; gap:7px; font-family:'Inter',sans-serif; font-weight:700; font-size:11px; letter-spacing:1.6px; text-transform:uppercase; color:rgba(255,255,255,0.62); }
+        .rr-cover-brand svg { color:${GREEN}; }
+        .rr-cover-ed { font-family:'Inter',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:0.5px; color:${GREEN}; white-space:nowrap; animation:rrFade .5s ease; }
+
+        .rr-cover-mid { position:relative; z-index:2; margin-top:auto; animation:rrSwap .6s cubic-bezier(0.16,1,0.3,1); }
+        @keyframes rrSwap { from{ opacity:0; transform:translateY(16px); } to{ opacity:1; transform:translateY(0); } }
+        @keyframes rrFade { from{ opacity:0; } to{ opacity:1; } }
+        .rr-cover-status { display:inline-flex; align-items:center; gap:8px; font-family:'Inter',sans-serif; font-weight:700; font-size:11px; letter-spacing:1.4px; text-transform:uppercase; color:${GREEN}; }
+        .rr-cover-status-dot { width:7px; height:7px; border-radius:50%; background:${GREEN}; animation:rrPulse 2.4s ease-out infinite; }
+        @keyframes rrPulse { 0%{ box-shadow:0 0 0 0 rgba(60,185,140,0.5); } 70%,100%{ box-shadow:0 0 0 8px rgba(60,185,140,0); } }
+        .rr-cover-title { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(24px,2.6vw,40px); line-height:1.05; letter-spacing:-0.03em; color:#fff; margin:clamp(10px,1.2vw,16px) 0 0; }
+        .rr-cover-blurb { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.65; color:rgba(255,255,255,0.7); margin:clamp(10px,1.2vw,15px) 0 0; max-width:42ch; }
+
+        .rr-cover-foot { position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+          margin-top:clamp(22px,2.4vw,32px); padding-top:clamp(18px,2vw,24px); border-top:1px solid rgba(255,255,255,0.12); }
+        .rr-ring { position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; width:clamp(76px,8vw,92px); height:clamp(76px,8vw,92px); flex-shrink:0; }
+        .rr-ring svg { position:absolute; inset:0; width:100%; height:100%; }
+        .rr-ring-track { fill:none; stroke:rgba(255,255,255,0.14); stroke-width:5; }
+        .rr-ring-val { fill:none; stroke:${GREEN}; stroke-width:5; stroke-linecap:round; transform:rotate(-90deg); transform-origin:50% 50%;
+          transition:stroke-dashoffset .9s cubic-bezier(0.16,1,0.3,1); filter:drop-shadow(0 0 6px rgba(60,185,140,0.5)); }
+        .rr-ring-num { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(16px,1.6vw,20px); color:#fff; line-height:1; }
+        .rr-ring-num em { font-style:normal; font-size:0.6em; color:${GREEN}; margin-left:1px; }
+        .rr-ring-lab { font-family:'Inter',sans-serif; font-weight:700; font-size:8.5px; letter-spacing:1.2px; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-top:3px; }
+        .rr-cover-cta { display:inline-flex; align-items:center; gap:8px; font-family:'Inter',sans-serif; font-weight:600; font-size:clamp(13px,1vw,15px); color:${NAVY}; text-decoration:none;
+          padding:12px 22px; border-radius:999px; background:${GREEN}; box-shadow:0 16px 34px -16px rgba(60,185,140,0.7);
+          transition:transform .35s cubic-bezier(0.16,1,0.3,1), gap .35s ease, box-shadow .35s ease; }
+        .rr-cover-cta:hover { transform:translateY(-2px); gap:12px; box-shadow:0 22px 44px -16px rgba(60,185,140,0.9); }
+        .rr-cover-cta svg { transition:transform .35s ease; }
+        .rr-cover-cta:hover svg { transform:translate(2px,-2px); }
+        .rr-note { display:flex; align-items:center; gap:10px; margin:clamp(20px,2.4vw,28px) 0 0; font-family:'Inter',sans-serif; font-size:13px; line-height:1.6; color:${MUTED}; }
 
         /* responsive */
         @media (max-width:1023px){
@@ -272,6 +408,8 @@ export function SustainabilityPage() {
           .sx-road::before { display:none; }
           .sx-road-node { padding-top:0; padding-left:30px; }
           .sx-road-dot { top:2px; }
+          .rr-grid { grid-template-columns:1fr; gap:clamp(28px,5vw,44px); }
+          .rr-cover { min-height:clamp(340px,64vw,420px); }
         }
         @media (max-width:600px){
           .sx-cards { grid-template-columns:1fr; max-width:460px; margin:0 auto; }
@@ -279,8 +417,13 @@ export function SustainabilityPage() {
           .sx-num:nth-child(3){ border-left:none; }
           .sx-num:nth-child(n+3){ border-top:1px solid rgba(255,255,255,0.12); padding-top:clamp(24px,6vw,32px); }
           .sx-road { grid-template-columns:1fr; }
-          .sx-rep-item { grid-template-columns:44px 1fr auto; }
-          .sx-rep-arr { display:none; }
+          .rr-row { grid-template-columns:auto 34px 1fr; }
+          .rr-row-meta { grid-column:3; grid-row:2; }
+          .rr-cover-foot { flex-direction:column; align-items:flex-start; }
+        }
+        @media (prefers-reduced-motion: reduce){
+          .rr-cover-sheen, .rr-cover-status-dot { animation:none; }
+          .rr-cover-mid, .rr-cover-ed { animation:none; }
         }
       `}</style>
     </div>

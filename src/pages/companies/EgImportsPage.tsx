@@ -210,6 +210,7 @@ export function EgImportsPage() {
         .im-hl-l { color:#5AA9E6; }
         .im-eyebrow { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(10px,0.8vw,12px); letter-spacing:2.5px; text-transform:uppercase; color:${BLUE}; }
         .im-eyebrow-dot { width:7px; height:7px; border-radius:50%; background:${BLUE}; box-shadow:0 0 0 4px rgba(28,109,181,0.16); flex-shrink:0; }
+        .im-hero-in .im-eyebrow { color:#fff; }
         .im-h2 { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,4.4vw,64px); line-height:1.12; letter-spacing:-0.035em; color:${NAVY}; margin:16px 0 0; padding-bottom:0.06em; }
         .im-sec-head { max-width:900px; margin-bottom:clamp(38px,4.5vw,64px); }
         .im-sec-p { font-family:'Inter',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; margin:clamp(16px,1.8vw,24px) 0 0; max-width:60ch; }
