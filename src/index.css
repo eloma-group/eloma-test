@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* =========================================================================
+   ELOMA BRAND TYPOGRAPHY — only two typefaces are used across the whole site
+   -------------------------------------------------------------------------
+   1) 'Eloma Sans Heading'  → every heading & subheading
+   2) 'Eloma Sans'          → every paragraph, text, description, label
+   ========================================================================= */
+
+/* --- HEADING typeface (headings + subheadings) --- */
+@font-face {
+  font-family: 'Eloma Sans Heading';
+  src: url('/fonts/ElomaSansHeading-Heading.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- BODY typeface (paragraphs / text / descriptions / labels) --- */
 @font-face {
   font-family: 'Eloma Sans';
   src: url('/fonts/ElomaSans-Premium.otf') format('opentype');
@@ -7,6 +24,11 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* NOTE: Every page now references only these two families directly
+   ('Eloma Sans Heading' for headings, 'Eloma Sans' for text). The only other
+   font kept is 'Dancing Script' (a decorative cursive), loaded from Google
+   Fonts via index.html and used intentionally in a couple of spots. */
 
 @theme {
   --font-sans: 'Eloma Sans', system-ui, -apple-system, sans-serif;
@@ -30,6 +52,7 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -37,46 +60,49 @@ body {
   color: #13293D;
   font-family: 'Eloma Sans', system-ui, sans-serif;
   font-weight: 400;
-  line-height: 1.6;
-  letter-spacing: 0.02em;
-  word-spacing: 0.04em;
+  line-height: 1.65;
+  /* Body text: a hair of positive tracking keeps the new premium font open and
+     legible; word-spacing kept modest so lines never look gappy or overlap. */
+  letter-spacing: 0.008em;
+  word-spacing: 0.02em;
 }
 
-/* Force Eloma Sans everywhere, overriding per-page inline/class font-family
-   declarations (Inter, Poppins, Oswald, Dancing Script, etc.). */
-*,
-*::before,
-*::after {
-  font-family: 'Eloma Sans', system-ui, -apple-system, sans-serif !important;
+/* -------------------------------------------------------------------------
+   SPACING GOVERNOR
+   The new Eloma fonts have their own metrics, so we normalise letter/word
+   spacing so nothing overlaps and everything reads cleanly. Three tiers:
+   headings, uppercase micro-labels, and (inherited) body text.
+   ------------------------------------------------------------------------- */
+
+/* Headings & subheadings — give a small POSITIVE gap so letters never sit
+   cramped/stuck together in the new Heading typeface. This uses !important to
+   override the tight negative tracking (-0.03em / -0.04em, etc.) that the
+   heading classes were authored with for the old fonts. Covers heading tags
+   plus div/span/p-based display headings (titles, quotes, masthead, hero). */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Eloma Sans Heading', system-ui, -apple-system, sans-serif;
+  line-height: 1.12;
 }
 
-/* Loosen letter + word spacing on ALL text across every page (headings,
-   subheadings, paragraphs, descriptions, menu, lists). The premium font renders
-   very tight and most elements set their own tracking inline/via classes, so we
-   force it globally with !important — same mechanism as the font-family rule. */
-*,
-*::before,
-*::after {
-  letter-spacing: 0.03em !important;
-  word-spacing: 0.08em !important;
+h1, h2, h3, h4, h5, h6,
+[class*="-h1"], [class*="-h2"], [class*="-h3"],
+[class*="hero-h"], [class*="mast-h"],
+[class*="title"], [class*="quote"] {
+  letter-spacing: 0.01em !important;
+  word-spacing: normal !important;
 }
 
-/* Keep uppercase eyebrow/label/kicker text from being tightened by the rule
-   above — those are designed with extra-wide tracking. */
+/* Uppercase eyebrows / kickers / labels / chips are designed with wide
+   tracking — keep them airy so the caps don't jam together. */
 [class*="eyebrow"],
 [class*="kicker"],
 [class*="chip"],
 [class*="sector"],
 [class*="label"],
-[class*="trust-lb"] {
-  letter-spacing: 0.14em !important;
-}
-
-/* Headings render too loose under the global tracking rule above. Pull the
-   per-letter and word spacing back to a tight, natural display setting so
-   headings read normally across every page. */
-h1, h2, h3, h4, h5, h6 {
-  letter-spacing: -0.015em !important;
+[class*="crumb"],
+[class*="trust-lb"],
+[class*="groove-t"] {
+  letter-spacing: 0.12em !important;
   word-spacing: normal !important;
 }
 

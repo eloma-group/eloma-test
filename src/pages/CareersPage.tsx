@@ -209,16 +209,16 @@ export function CareersPage() {
       <style>{`
         .cx-wrap { max-width:none; margin:0 auto; }
         .g { color:${GREEN}; }
-        .cx-eyebrow { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(10px,0.8vw,12px); letter-spacing:2.5px; text-transform:uppercase; color:${GREEN}; }
+        .cx-eyebrow { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'Eloma Sans',sans-serif; font-weight:700; font-size:clamp(10px,0.8vw,12px); letter-spacing:2.5px; text-transform:uppercase; color:${GREEN}; }
         .cx-eyebrow.lt { color:#8fe3c4; }
         .cx-eyebrow.center { justify-content:center; }
         .cx-eyebrow-dot { width:7px; height:7px; border-radius:50%; background:${GREEN}; box-shadow:0 0 0 4px rgba(60,185,140,0.16); flex-shrink:0; }
-        .cx-h2 { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,4.4vw,64px); letter-spacing:-0.035em; line-height:1.06; color:${NAVY}; margin:16px 0 0; }
+        .cx-h2 { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(30px,4.4vw,64px); letter-spacing:-0.035em; line-height:1.06; color:${NAVY}; margin:16px 0 0; }
         .cx-h2.lt { color:#fff; }
         .cx-head { margin-bottom:clamp(30px,4vw,54px); max-width:38ch; }
         .cx-head.center { max-width:none; text-align:center; }
 
-        .cx-btn { display:inline-flex; align-items:center; gap:10px; text-decoration:none; border-radius:14px; padding:15px 28px; min-height:48px; font-family:'Poppins',sans-serif; font-weight:500; font-size:clamp(14px,1.05vw,16px); cursor:pointer; transition:transform 0.25s cubic-bezier(0.16,1,0.3,1), background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+        .cx-btn { display:inline-flex; align-items:center; gap:10px; text-decoration:none; border-radius:14px; padding:15px 28px; min-height:48px; font-family:'Eloma Sans Heading',sans-serif; font-weight:500; font-size:clamp(14px,1.05vw,16px); cursor:pointer; transition:transform 0.25s cubic-bezier(0.16,1,0.3,1), background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
         .cx-btn-primary { background:${GREEN}; color:#fff; border:1px solid ${GREEN}; box-shadow:0 16px 34px -14px rgba(60,185,140,0.75); }
         .cx-btn-primary:hover { transform:translateY(-2px); background:#34ab80; }
         .cx-btn-primary.lg { padding:17px 38px; font-size:clamp(15px,1.1vw,18px); }
@@ -229,8 +229,8 @@ export function CareersPage() {
         .cx-hero { position:relative; overflow:hidden; background:linear-gradient(180deg,#ffffff 0%,#f3faf7 100%);
           padding: clamp(120px,14vw,200px) 45px clamp(60px,7vw,110px); }
         .cx-hero-in { display:grid; grid-template-columns:1.05fr 0.95fr; gap:clamp(32px,5vw,80px); align-items:center; }
-        .cx-hero-h1 { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(44px,6.4vw,104px); line-height:0.98; letter-spacing:-0.04em; color:${NAVY}; margin:clamp(18px,2.2vw,28px) 0 0; }
-        .cx-hero-lead { font-family:'Inter',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; max-width:52ch; margin:clamp(20px,2.4vw,30px) 0 clamp(26px,3vw,38px); }
+        .cx-hero-h1 { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(44px,6.4vw,104px); line-height:0.98; letter-spacing:-0.04em; color:${NAVY}; margin:clamp(18px,2.2vw,28px) 0 0; }
+        .cx-hero-lead { font-family:'Eloma Sans',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; max-width:52ch; margin:clamp(20px,2.4vw,30px) 0 clamp(26px,3vw,38px); }
         .cx-hero-btns { display:flex; flex-wrap:wrap; gap:12px; }
         .cx-hero-r { position:relative; }
         .cx-hero-frame { position:relative; overflow:hidden; border-radius:28px; aspect-ratio:4/3.4; box-shadow:0 50px 100px -50px rgba(19,41,61,0.5); }
@@ -238,18 +238,18 @@ export function CareersPage() {
         .cx-hero-r:hover .cx-hero-frame img { transform:scale(1.08); }
         .cx-hero-metric { position:absolute; left:-18px; bottom:-22px; display:flex; align-items:center; gap:clamp(14px,1.6vw,22px); padding:clamp(16px,1.6vw,22px) clamp(20px,2vw,28px); background:rgba(255,255,255,0.85); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.7); border-radius:20px; box-shadow:0 30px 60px -30px rgba(19,41,61,0.4); }
         .cx-metric-row { display:flex; align-items:center; gap:10px; }
-        .cx-metric-n { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,3vw,44px); letter-spacing:-0.04em; color:${GREEN}; line-height:1; }
-        .cx-metric-l { font-family:'Inter',sans-serif; font-size:11.5px; font-weight:600; line-height:1.25; color:${NAVY}; }
+        .cx-metric-n { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(30px,3vw,44px); letter-spacing:-0.04em; color:${GREEN}; line-height:1; }
+        .cx-metric-l { font-family:'Eloma Sans',sans-serif; font-size:11.5px; font-weight:600; line-height:1.25; color:${NAVY}; }
         .cx-metric-div { width:1px; height:38px; background:rgba(19,41,61,0.14); }
 
         /* 2 · Perks — sticky split with rows */
         .cx-perks-sec { background:#fff; padding:clamp(56px,7vw,120px) 45px; }
         .cx-perks-split { display:grid; grid-template-columns:0.82fr 1.18fr; gap:clamp(32px,5vw,88px); align-items:start; }
         .cx-perks-aside { position:sticky; top:104px; max-width:none; }
-        .cx-perks-intro { font-family:'Inter',sans-serif; font-size:clamp(14.5px,1.1vw,17px); line-height:1.8; color:${MUTED}; margin:clamp(18px,2vw,26px) 0 clamp(24px,3vw,34px); max-width:42ch; }
+        .cx-perks-intro { font-family:'Eloma Sans',sans-serif; font-size:clamp(14.5px,1.1vw,17px); line-height:1.8; color:${MUTED}; margin:clamp(18px,2vw,26px) 0 clamp(24px,3vw,34px); max-width:42ch; }
         .cx-perks-badge { display:inline-flex; align-items:center; gap:14px; padding:14px 20px 14px 16px; border-radius:18px; background:linear-gradient(158deg,#f3faf7,#e9f6f0); border:1px solid rgba(60,185,140,0.24); }
-        .cx-perks-badge-n { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(34px,3.4vw,48px); line-height:1; letter-spacing:-0.04em; color:${GREEN}; }
-        .cx-perks-badge-l { font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; line-height:1.3; color:${NAVY}; }
+        .cx-perks-badge-n { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(34px,3.4vw,48px); line-height:1; letter-spacing:-0.04em; color:${GREEN}; }
+        .cx-perks-badge-l { font-family:'Eloma Sans',sans-serif; font-size:12.5px; font-weight:600; line-height:1.3; color:${NAVY}; }
 
         .cx-perks-list { display:flex; flex-direction:column; }
         .cx-prow { position:relative; display:grid; grid-template-columns:auto 54px 1fr; gap:clamp(16px,2vw,28px); align-items:flex-start; padding:clamp(22px,2.6vw,34px) clamp(6px,1vw,14px); border-top:1px solid rgba(26,43,60,0.12); transition:padding-left 0.45s cubic-bezier(0.16,1,0.3,1); }
@@ -257,11 +257,11 @@ export function CareersPage() {
         .cx-prow::before { content:''; position:absolute; left:0; top:-1px; width:0; height:2px; background:${GREEN}; transition:width 0.5s cubic-bezier(0.16,1,0.3,1); }
         .cx-prow:hover { padding-left:clamp(14px,1.6vw,24px); }
         .cx-prow:hover::before { width:100%; }
-        .cx-prow-no { font-family:'Inter',sans-serif; font-weight:700; font-size:13px; letter-spacing:1px; color:${GREEN}; padding-top:16px; }
+        .cx-prow-no { font-family:'Eloma Sans',sans-serif; font-weight:700; font-size:13px; letter-spacing:1px; color:${GREEN}; padding-top:16px; }
         .cx-prow-ic { display:inline-flex; align-items:center; justify-content:center; width:54px; height:54px; border-radius:15px; background:rgba(60,185,140,0.1); color:${GREEN}; transition:transform 0.45s cubic-bezier(0.16,1,0.3,1), background 0.4s ease, color 0.4s ease; }
         .cx-prow:hover .cx-prow-ic { transform:rotate(-6deg); background:${GREEN}; color:#fff; }
-        .cx-prow-t { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(19px,1.7vw,26px); color:${NAVY}; letter-spacing:-0.02em; margin:0 0 8px; }
-        .cx-prow-x { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.72; color:${MUTED}; margin:0; max-width:56ch; }
+        .cx-prow-t { font-family:'Eloma Sans Heading',sans-serif; font-weight:600; font-size:clamp(19px,1.7vw,26px); color:${NAVY}; letter-spacing:-0.02em; margin:0 0 8px; }
+        .cx-prow-x { font-family:'Eloma Sans',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.72; color:${MUTED}; margin:0; max-width:56ch; }
 
         /* 3 · Culture band */
         .cx-culture { position:relative; overflow:hidden; min-height:clamp(420px,52vw,600px); display:flex; align-items:center; padding:clamp(56px,8vw,120px) 45px; }
@@ -270,14 +270,14 @@ export function CareersPage() {
         @keyframes cxzoom { to { transform:scale(1.12); } }
         .cx-culture-veil { position:absolute; inset:0; background:linear-gradient(100deg, rgba(11,26,38,0.92) 0%, rgba(11,26,38,0.72) 42%, rgba(11,26,38,0.28) 100%); }
         .cx-culture-copy { position:relative; z-index:1; max-width:640px; }
-        .cx-culture-h { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(28px,3.8vw,56px); line-height:1.06; letter-spacing:-0.03em; color:#fff; margin:16px 0 18px; }
-        .cx-culture-p { font-family:'Inter',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.82; color:rgba(255,255,255,0.72); margin:0; max-width:52ch; }
+        .cx-culture-h { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(28px,3.8vw,56px); line-height:1.06; letter-spacing:-0.03em; color:#fff; margin:16px 0 18px; }
+        .cx-culture-p { font-family:'Eloma Sans',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.82; color:rgba(255,255,255,0.72); margin:0; max-width:52ch; }
 
         /* 4 · Roles */
         .cx-roles-sec { background:linear-gradient(180deg,#ffffff,#f3faf7); padding:clamp(56px,7vw,120px) 45px; }
         .cx-roles-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:clamp(28px,3.4vw,46px); }
         .cx-filter { display:flex; flex-wrap:wrap; gap:9px; }
-        .cx-pill { font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:${NAVY}; background:#fff; border:1px solid rgba(26,43,60,0.14); border-radius:99px; padding:11px 18px; min-height:44px; cursor:pointer; transition:transform 0.25s cubic-bezier(0.16,1,0.3,1), background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+        .cx-pill { font-family:'Eloma Sans',sans-serif; font-size:13px; font-weight:600; color:${NAVY}; background:#fff; border:1px solid rgba(26,43,60,0.14); border-radius:99px; padding:11px 18px; min-height:44px; cursor:pointer; transition:transform 0.25s cubic-bezier(0.16,1,0.3,1), background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
         .cx-pill:hover { transform:translateY(-2px); border-color:${GREEN}; color:${GREEN}; }
         .cx-pill.on { background:${NAVY}; border-color:${NAVY}; color:#fff; }
         .cx-pill.on:hover { color:#fff; }
@@ -287,15 +287,15 @@ export function CareersPage() {
         .cx-role:hover { transform:translateY(-6px); border-color:rgba(60,185,140,0.5); box-shadow:0 36px 70px -40px rgba(19,41,61,0.32); }
         .cx-role:hover .cx-role-accent { transform:scaleY(1); }
         .cx-role-top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:clamp(14px,1.6vw,18px); }
-        .cx-role-co { font-family:'Inter',sans-serif; font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:${GREEN}; }
-        .cx-role-type { font-family:'Inter',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:${NAVY}; background:rgba(26,43,60,0.06); padding:6px 12px; border-radius:99px; }
-        .cx-role-title { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(20px,1.9vw,28px); line-height:1.18; letter-spacing:-0.02em; color:${NAVY}; margin:0 0 10px; }
-        .cx-role-desc { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15px); line-height:1.7; color:${MUTED}; margin:0 0 clamp(22px,2.4vw,30px); flex:1; }
+        .cx-role-co { font-family:'Eloma Sans',sans-serif; font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:${GREEN}; }
+        .cx-role-type { font-family:'Eloma Sans',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:${NAVY}; background:rgba(26,43,60,0.06); padding:6px 12px; border-radius:99px; }
+        .cx-role-title { font-family:'Eloma Sans Heading',sans-serif; font-weight:600; font-size:clamp(20px,1.9vw,28px); line-height:1.18; letter-spacing:-0.02em; color:${NAVY}; margin:0 0 10px; }
+        .cx-role-desc { font-family:'Eloma Sans',sans-serif; font-size:clamp(13.5px,1vw,15px); line-height:1.7; color:${MUTED}; margin:0 0 clamp(22px,2.4vw,30px); flex:1; }
         .cx-role-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; padding-top:clamp(16px,1.8vw,20px); border-top:1px solid rgba(26,43,60,0.1); }
-        .cx-role-loc { font-family:'Inter',sans-serif; font-size:13px; color:${MUTED}; font-weight:500; }
-        .cx-apply { display:inline-flex; align-items:center; gap:7px; font-family:'Poppins',sans-serif; font-size:13.5px; font-weight:500; color:${GREEN}; transition:gap 0.3s ease; }
+        .cx-role-loc { font-family:'Eloma Sans',sans-serif; font-size:13px; color:${MUTED}; font-weight:500; }
+        .cx-apply { display:inline-flex; align-items:center; gap:7px; font-family:'Eloma Sans Heading',sans-serif; font-size:13.5px; font-weight:500; color:${GREEN}; transition:gap 0.3s ease; }
         .cx-role:hover .cx-apply { gap:11px; }
-        .cx-note { font-family:'Inter',sans-serif; font-size:14.5px; color:${MUTED}; margin-top:clamp(24px,3vw,36px); }
+        .cx-note { font-family:'Eloma Sans',sans-serif; font-size:14.5px; color:${MUTED}; margin-top:clamp(24px,3vw,36px); }
         .cx-note-link { color:${GREEN}; font-weight:600; text-decoration:none; }
         .cx-note-link:hover { text-decoration:underline; }
 
@@ -305,17 +305,17 @@ export function CareersPage() {
         .cx-steps-line { position:absolute; top:30px; left:12%; right:12%; height:1px; background:linear-gradient(90deg, transparent, rgba(60,185,140,0.5) 12%, rgba(60,185,140,0.5) 88%, transparent); }
         .cx-step { position:relative; text-align:center; display:flex; flex-direction:column; align-items:center; }
         .cx-step-node { position:relative; z-index:1; display:inline-flex; align-items:center; justify-content:center; width:60px; height:60px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid rgba(60,185,140,0.4); color:${GREEN}; margin-bottom:18px; }
-        .cx-step-n { font-family:'Poppins',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:2px; color:${GREEN}; }
-        .cx-step-t { font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(17px,1.5vw,22px); color:#fff; letter-spacing:-0.01em; margin:8px 0 8px; }
-        .cx-step-x { font-family:'Inter',sans-serif; font-size:clamp(13px,1vw,14.5px); line-height:1.7; color:rgba(255,255,255,0.6); margin:0; max-width:26ch; }
+        .cx-step-n { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:2px; color:${GREEN}; }
+        .cx-step-t { font-family:'Eloma Sans Heading',sans-serif; font-weight:600; font-size:clamp(17px,1.5vw,22px); color:#fff; letter-spacing:-0.01em; margin:8px 0 8px; }
+        .cx-step-x { font-family:'Eloma Sans',sans-serif; font-size:clamp(13px,1vw,14.5px); line-height:1.7; color:rgba(255,255,255,0.6); margin:0; max-width:26ch; }
 
         /* 6 · CTA */
         .cx-cta { position:relative; overflow:hidden; background:linear-gradient(180deg,#f3faf7,#ffffff); padding:clamp(72px,9vw,140px) 45px; text-align:center; }
         .cx-cta-glow { position:absolute; top:-140px; left:50%; transform:translateX(-50%); width:600px; height:400px; border-radius:50%; background:radial-gradient(circle, rgba(60,185,140,0.14), transparent 64%); pointer-events:none; }
         .cx-cta-in { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; }
-        .cx-cta-h { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(34px,5.4vw,84px); letter-spacing:-0.035em; line-height:1.05; color:${NAVY}; margin:0; }
-        .cx-cta-p { font-family:'Inter',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; max-width:520px; margin:clamp(20px,2.4vw,28px) 0 clamp(28px,3.2vw,38px); }
-        .cx-cta-mail { font-family:'Inter',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:${MUTED}; margin-top:18px; }
+        .cx-cta-h { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(34px,5.4vw,84px); letter-spacing:-0.035em; line-height:1.05; color:${NAVY}; margin:0; }
+        .cx-cta-p { font-family:'Eloma Sans',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; max-width:520px; margin:clamp(20px,2.4vw,28px) 0 clamp(28px,3.2vw,38px); }
+        .cx-cta-mail { font-family:'Eloma Sans',sans-serif; font-size:13px; font-weight:600; letter-spacing:1px; color:${MUTED}; margin-top:18px; }
 
         /* responsive */
         @media (max-width:980px){

@@ -51,7 +51,7 @@ export function EgFoundation() {
         /* ── Left copy column ───────────────────────────────── */
         .eg-fd-eyebrow-wrap { display: flex; align-items: center; gap: 14px; margin: 0 0 clamp(20px,2.4vw,30px); }
         .eg-fd-eyebrow {
-          font-family:'Poppins',sans-serif; font-weight:800; font-size: clamp(11px,0.85vw,13px);
+          font-family:'Eloma Sans Heading',sans-serif; font-weight:800; font-size: clamp(11px,0.85vw,13px);
           letter-spacing: 2.5px; text-transform: uppercase; color: ${GREEN}; margin: 0;
         }
         .eg-fd-eyebrow-bar { display:block; width: 46px; height: 3px; border-radius: 3px; background: ${GREEN}; }
@@ -60,26 +60,26 @@ export function EgFoundation() {
         .eg-fd-eyebrow-dots i:first-child { background: rgba(26,43,60,0.40); }
 
         .eg-fd-h {
-          font-family:'Poppins',sans-serif; font-weight:800; text-transform:uppercase;
+          font-family:'Eloma Sans Heading',sans-serif; font-weight:800; text-transform:uppercase;
           font-size: clamp(38px,5.4vw,84px); line-height:0.98; letter-spacing:-0.035em;
           color:${NAVY}; margin: 0 0 clamp(22px,2.6vw,34px);
         }
         .eg-fd-h em { font-style: normal; color: ${GRAY}; }
 
         .eg-fd-lead {
-          font-family:'Inter',sans-serif; font-weight:400; font-size: clamp(16px,1.35vw,21px);
+          font-family:'Eloma Sans',sans-serif; font-weight:400; font-size: clamp(16px,1.35vw,21px);
           line-height:1.5; color:${NAVY}; margin: 0 0 clamp(14px,1.6vw,20px); max-width: 520px;
         }
         .eg-fd-lead b { font-weight: 700; color: ${GREEN}; }
         .eg-fd-body {
-          font-family:'Inter',sans-serif; font-size: clamp(14px,1.05vw,16.5px);
+          font-family:'Eloma Sans',sans-serif; font-size: clamp(14px,1.05vw,16.5px);
           line-height:1.8; color:${MUTED}; margin: 0 0 clamp(30px,3.4vw,42px); max-width: 500px;
         }
 
         .eg-fd-story { display:inline-flex; align-items:center; gap:18px; background:none; border:0; cursor:pointer; padding:0; }
         .eg-fd-story-label {
           display:flex; align-items:center; gap: clamp(20px,3vw,44px);
-          font-family:'Poppins',sans-serif; font-weight:700; font-size: clamp(12px,0.9vw,14px);
+          font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size: clamp(12px,0.9vw,14px);
           letter-spacing:2px; text-transform:uppercase; color:${NAVY};
         }
         .eg-fd-story-arrow { color: rgba(26,43,60,0.35); transition: transform 0.4s ${'cubic-bezier(0.16,1,0.3,1)'}, color 0.4s ease; }
@@ -136,7 +136,7 @@ export function EgFoundation() {
           padding: clamp(22px,2.4vw,34px) clamp(18px,1.8vw,30px);
         }
         .eg-fd-pill-no {
-          font-family:'Poppins',sans-serif; font-weight:700; font-size: clamp(30px,3vw,46px);
+          font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size: clamp(30px,3vw,46px);
           line-height:1; color: rgba(26,43,60,0.14); letter-spacing:-0.04em; flex-shrink:0;
         }
         .eg-fd-pill-ic {
@@ -151,11 +151,11 @@ export function EgFoundation() {
         .eg-fd-pill:hover .eg-fd-pill-ic { transform: translateY(-4px) scale(1.06); }
         .eg-fd-pill-txt { min-width:0; }
         .eg-fd-pill-label {
-          font-family:'Poppins',sans-serif; font-weight:700; font-size: clamp(12px,0.95vw,15px);
+          font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size: clamp(12px,0.95vw,15px);
           letter-spacing:1px; text-transform:uppercase; color:${GREEN}; margin:0 0 4px;
         }
         .eg-fd-pill-body {
-          font-family:'Inter',sans-serif; font-size: clamp(12px,0.85vw,14px); line-height:1.4;
+          font-family:'Eloma Sans',sans-serif; font-size: clamp(12px,0.85vw,14px); line-height:1.4;
           color:${MUTED}; margin:0;
         }
 

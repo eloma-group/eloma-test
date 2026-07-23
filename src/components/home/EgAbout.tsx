@@ -24,10 +24,10 @@ export function EgAbout() {
         .eg-ab { background: #ffffff; padding: clamp(56px, 8vw, 120px) 45px 0; overflow: hidden; }
         .eg-ab-inner { width: 100%; max-width: none; margin: 0 auto; }
         .eg-ab-eyebrow {
-          text-align: center; font-family:'Poppins',sans-serif; font-weight:700; text-transform:uppercase;
+          text-align: center; font-family:'Eloma Sans Heading',sans-serif; font-weight:700; text-transform:uppercase;
           font-size: clamp(16px,2vw,26px); color:#000; letter-spacing:0.08em; margin: 0;
         }
-        .eg-ab-tag { text-align:center; font-family:'Inter',sans-serif; font-size:clamp(11px,0.9vw,13px); letter-spacing:3px; text-transform:uppercase; color:${MUTED}; margin: 10px 0 clamp(6px,1.5vw,16px); }
+        .eg-ab-tag { text-align:center; font-family:'Eloma Sans',sans-serif; font-size:clamp(11px,0.9vw,13px); letter-spacing:3px; text-transform:uppercase; color:${MUTED}; margin: 10px 0 clamp(6px,1.5vw,16px); }
         .eg-ab-script {
           text-align:center; font-family:'Dancing Script', cursive !important; font-weight:700;
           font-size: clamp(44px, 8vw, 104px); color:#717C86; line-height:1; margin: 0 0 clamp(36px,5vw,60px);
@@ -52,9 +52,9 @@ export function EgAbout() {
         @keyframes eg-ab-drift { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
 
         .eg-ab-copy { display:flex; flex-direction:column; gap: clamp(16px,2vw,24px); }
-        .eg-ab-p { font-family:'Inter',sans-serif; font-size:clamp(14px,1.1vw,17px); line-height:1.85; color:${MUTED}; margin:0; }
+        .eg-ab-p { font-family:'Eloma Sans',sans-serif; font-size:clamp(14px,1.1vw,17px); line-height:1.85; color:${MUTED}; margin:0; }
         .eg-ab-p .dc {
-          float:left; font-family:'Poppins',sans-serif; font-weight:700; color:#6b7280;
+          float:left; font-family:'Eloma Sans Heading',sans-serif; font-weight:700; color:#6b7280;
           font-size: 2.9em; line-height:0.72; padding: 6px 10px 0 0;
         }
 
@@ -125,9 +125,9 @@ export function EgAbout() {
           transition: transform 0.7s cubic-bezier(0.16,1,0.3,1), filter 0.7s ease;
         }
         .eg-fo-photo:hover .eg-fo-frame img { transform: scale(1.035); filter: drop-shadow(0 34px 44px rgba(19,41,61,0.32)); }
-        .eg-fo-quote { font-family:'Inter',sans-serif; font-size:clamp(17px,1.55vw,24px); line-height:1.82; color:${NAVY}; font-weight:500; margin:0; letter-spacing:-0.01em; }
+        .eg-fo-quote { font-family:'Eloma Sans',sans-serif; font-size:clamp(17px,1.55vw,24px); line-height:1.82; color:${NAVY}; font-weight:500; margin:0; letter-spacing:-0.01em; }
         .eg-fo-sign { font-family:'Dancing Script',cursive; font-weight:700; font-size: clamp(30px,3.2vw,48px); color:${GREEN}; margin: clamp(20px,2.4vw,32px) 0 6px; }
-        .eg-fo-role { font-family:'Inter',sans-serif; font-size:clamp(14px,1.05vw,17px); color:${NAVY}; opacity:0.82; margin:0; }
+        .eg-fo-role { font-family:'Eloma Sans',sans-serif; font-size:clamp(14px,1.05vw,17px); color:${NAVY}; opacity:0.82; margin:0; }
 
         @media (max-width: 860px) {
           .eg-ab-grid { grid-template-columns: 1fr; }

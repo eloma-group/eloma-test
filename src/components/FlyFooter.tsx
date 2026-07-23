@@ -313,7 +313,7 @@ export function FlyFooter() {
                       borderRadius: 10, padding: '10px 16px',
                       color: GREEN, cursor: 'pointer',
                       fontSize: 12, fontWeight: 700, letterSpacing: '1.2px', textTransform: 'uppercase',
-                      fontFamily: "'Poppins', sans-serif",
+                      fontFamily: "'Eloma Sans Heading', sans-serif",
                     }}
                   >
                     <ArrowUp className="ff-top-arrow" size={15} strokeWidth={2.4} />

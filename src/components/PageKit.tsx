@@ -19,7 +19,7 @@ export function Eyebrow({ label, light, center }: { label: string; light?: boole
   return (
     <p style={{
       display: 'inline-flex', alignItems: 'center', gap: 10, margin: center ? '0 auto' : 0,
-      fontFamily: "'Inter', sans-serif", fontSize: 'clamp(10px,0.78vw,12px)',
+      fontFamily: "'Eloma Sans', sans-serif", fontSize: 'clamp(10px,0.78vw,12px)',
       fontWeight: 700, letterSpacing: '2.5px', textTransform: 'uppercase',
       color: GREEN,
     }}>
@@ -52,13 +52,13 @@ export function PageHero({ badge, line1, line2, description, stats, inline }: He
           text-align: center;
         }
         .pk-hero-h1 {
-          font-family: 'Poppins', sans-serif; font-weight: 700;
+          font-family: 'Eloma Sans Heading', sans-serif; font-weight: 700;
           font-size: clamp(42px,7vw,92px); line-height: 1.12; letter-spacing: -0.03em;
           margin: clamp(20px,2.4vw,30px) 0 0; text-transform: none;
           padding-bottom: 0.08em;
         }
         .pk-hero-p {
-          font-family: 'Inter', sans-serif; font-size: clamp(15px,1.25vw,19px);
+          font-family: 'Eloma Sans', sans-serif; font-size: clamp(15px,1.25vw,19px);
           line-height: 1.85; color: ${MUTED}; max-width: 600px;
           margin: clamp(22px,2.6vw,30px) auto 0;
         }
@@ -73,8 +73,8 @@ export function PageHero({ badge, line1, line2, description, stats, inline }: He
         .pk-stat { padding: clamp(22px,2.4vw,34px) clamp(14px,1.6vw,24px); position: relative; transition: background 0.4s ease; }
         .pk-stat + .pk-stat { border-left: 1px solid rgba(26,43,60,0.09); }
         .pk-stat:hover { background: rgba(60,185,140,0.05); }
-        .pk-stat-n { font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(30px,3.4vw,52px); line-height:0.95; letter-spacing:-0.04em; }
-        .pk-stat-l { font-family:'Inter',sans-serif; font-size:clamp(11px,0.85vw,13px); color:${MUTED}; margin-top:8px; letter-spacing:0.3px; }
+        .pk-stat-n { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(30px,3.4vw,52px); line-height:0.95; letter-spacing:-0.04em; }
+        .pk-stat-l { font-family:'Eloma Sans',sans-serif; font-size:clamp(11px,0.85vw,13px); color:${MUTED}; margin-top:8px; letter-spacing:0.3px; }
         @media (max-width: 720px) {
           .pk-hero-stats { grid-template-columns: 1fr 1fr; }
           .pk-stat:nth-child(3), .pk-stat:nth-child(4) { border-top: 1px solid rgba(26,43,60,0.09); }
@@ -127,10 +127,10 @@ export function PageCTA({ line1, line2, sub, href = '/contact#contact-form', but
       <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', bottom: -120, right: '8%', width: 520, height: 520, borderRadius: '50%', background: `radial-gradient(circle, rgba(60,185,140,0.12) 0%, transparent 62%)`, pointerEvents: 'none' }} />
       <motion.div initial={{ opacity: 0, y: 36 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, ease: EASE }} style={{ position: 'relative', zIndex: 1 }}>
-        <h2 style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(34px,5.6vw,84px)', fontWeight: 700, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1.1, paddingBottom: '0.08em', margin: `0 0 ${sub ? 20 : 36}px` }}>
+        <h2 style={{ fontFamily: "'Eloma Sans Heading',sans-serif", fontSize: 'clamp(34px,5.6vw,84px)', fontWeight: 700, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1.1, paddingBottom: '0.08em', margin: `0 0 ${sub ? 20 : 36}px` }}>
           {line1}<br /><span style={{ color: GREEN }}>{line2}</span>
         </h2>
-        {sub && <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 16, color: 'rgba(255,255,255,0.5)', margin: '0 auto 40px', maxWidth: 500, lineHeight: 1.8 }}>{sub}</p>}
+        {sub && <p style={{ fontFamily: "'Eloma Sans',sans-serif", fontSize: 16, color: 'rgba(255,255,255,0.5)', margin: '0 auto 40px', maxWidth: 500, lineHeight: 1.8 }}>{sub}</p>}
         <button className="pk-cta-btn" onClick={() => navigate(href)}>
           <span>{buttonLabel}</span>
           <ArrowRight size={17} strokeWidth={2.4} />
@@ -142,7 +142,7 @@ export function PageCTA({ line1, line2, sub, href = '/contact#contact-form', but
           display: inline-flex; align-items: center; gap: 10px;
           background: ${GREEN}; color: #fff; border: none; border-radius: 14px;
           padding: 16px 40px; cursor: pointer;
-          font-family: 'Poppins', sans-serif; font-size: clamp(15px,1.1vw,18px); font-weight: 500;
+          font-family: 'Eloma Sans Heading', sans-serif; font-size: clamp(15px,1.1vw,18px); font-weight: 500;
           box-shadow: 0 16px 34px -14px rgba(60,185,140,0.75);
           transition: transform 0.25s ${'cubic-bezier(0.16,1,0.3,1)'}, background 0.25s ease, box-shadow 0.25s ease;
         }

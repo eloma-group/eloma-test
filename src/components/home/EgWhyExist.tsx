@@ -49,8 +49,8 @@ export function EgWhyExist() {
         }
         .eg-wy-inner { position:relative; z-index:2; max-width: none; margin:0 auto; padding: clamp(56px,8vw,120px) 45px; }
         .eg-wy-head { text-align:center; margin-bottom: clamp(36px,5vw,60px); }
-        .eg-wy-title { font-family:'Poppins',sans-serif; font-weight:700; text-transform:uppercase; font-size:clamp(26px,3.4vw,46px); color:#000; margin:0; letter-spacing:0.04em; }
-        .eg-wy-sub { font-family:'Inter',sans-serif; font-size:clamp(11px,0.9vw,13px); letter-spacing:3px; text-transform:uppercase; color:rgba(19,41,61,0.55); margin:12px 0 0; }
+        .eg-wy-title { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; text-transform:uppercase; font-size:clamp(26px,3.4vw,46px); color:#000; margin:0; letter-spacing:0.04em; }
+        .eg-wy-sub { font-family:'Eloma Sans',sans-serif; font-size:clamp(11px,0.9vw,13px); letter-spacing:3px; text-transform:uppercase; color:rgba(19,41,61,0.55); margin:12px 0 0; }
         .eg-wy-rule { display:block; width:clamp(150px,18vw,250px); height:2px; margin:clamp(14px,2vw,22px) auto 0; position:relative;
           background: linear-gradient(90deg, rgba(19,41,61,0) 0%, rgba(19,41,61,0.18) 28%, rgba(19,41,61,0.18) 72%, rgba(19,41,61,0) 100%); }
         .eg-wy-rule::after { content:''; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:52px; height:8px; border-radius:6px; background:#D4AF37; }
@@ -105,9 +105,9 @@ export function EgWhyExist() {
         }
         .egw-card-ic.is-green { background:rgba(60,185,140,0.20); border-color:rgba(60,185,140,0.42); color:${GREEN}; }
         .egw-card:hover .egw-card-ic { transform: translateY(-3px) scale(1.1) rotate(-5deg); }
-        .egw-card-h { position:relative; font-family:'Poppins',sans-serif; font-weight:600; font-size:clamp(20px,1.95vw,28px); color:#13293D; margin:0; }
-        .egw-card-tag { position:relative; font-family:'Inter',sans-serif; font-size:clamp(12.5px,1vw,15px); color:${GREEN}; font-weight:700; margin:5px 0 13px; letter-spacing:0.3px; }
-        .egw-card-b { position:relative; font-family:'Inter',sans-serif; font-size:clamp(14px,1.12vw,16.5px); line-height:1.62; color:rgba(19,41,61,0.82); margin:0; }
+        .egw-card-h { position:relative; font-family:'Eloma Sans Heading',sans-serif; font-weight:600; font-size:clamp(20px,1.95vw,28px); color:#13293D; margin:0; }
+        .egw-card-tag { position:relative; font-family:'Eloma Sans',sans-serif; font-size:clamp(12.5px,1vw,15px); color:${GREEN}; font-weight:700; margin:5px 0 13px; letter-spacing:0.3px; }
+        .egw-card-b { position:relative; font-family:'Eloma Sans',sans-serif; font-size:clamp(14px,1.12vw,16.5px); line-height:1.62; color:rgba(19,41,61,0.82); margin:0; }
 
         /* bottom two cards (The Canopy / The Horizon): text + icon all white, heading stays dark */
         .egw-card.is-dark .egw-card-ic { color:#fff; }
@@ -137,10 +137,10 @@ export function EgWhyExist() {
         .eg-wy-panel-logo { display:flex; justify-content:flex-end; }
         .eg-wy-panel-logo img { width: clamp(104px,12vw,168px); height:auto; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
         .eg-wy-panel:hover .eg-wy-panel-logo img { transform: scale(1.06) rotate(2deg); }
-        .eg-wy-panel-p { font-family:'Inter',sans-serif; font-size:clamp(14px,1.18vw,18px); line-height:1.78; color:rgba(19,41,61,0.82); margin: clamp(20px,3vw,32px) 0 auto; }
+        .eg-wy-panel-p { font-family:'Eloma Sans',sans-serif; font-size:clamp(14px,1.18vw,18px); line-height:1.78; color:rgba(19,41,61,0.82); margin: clamp(20px,3vw,32px) 0 auto; }
         .eg-wy-btn {
           display:inline-flex; align-items:center; gap:14px; align-self:flex-start; margin-top: clamp(24px,3vw,32px);
-          cursor:pointer; font-family:'Poppins',sans-serif; font-weight:700; letter-spacing:1.5px;
+          cursor:pointer; font-family:'Eloma Sans Heading',sans-serif; font-weight:700; letter-spacing:1.5px;
           text-transform:uppercase; font-size:clamp(12px,0.9vw,13px); color:#000;
           background:none; border:1.5px solid #fff; border-radius:8px;
           padding: clamp(14px,1.4vw,18px) clamp(22px,2vw,30px);

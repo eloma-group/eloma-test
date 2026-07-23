@@ -208,13 +208,13 @@ export function EgDigitalPage() {
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
         .dg-wrap { max-width: none; margin: 0 auto; }
         .dg-hl { color:${INDIGO}; }
-        .dg-eyebrow { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'JetBrains Mono',monospace; font-weight:600; font-size:clamp(10px,0.8vw,12px); letter-spacing:1.5px; text-transform:uppercase; color:${INDIGO}; }
+        .dg-eyebrow { display:inline-flex; align-items:center; gap:10px; margin:0; font-family:'Eloma Sans',sans-serif; font-weight:600; font-size:clamp(10px,0.8vw,12px); letter-spacing:1.5px; text-transform:uppercase; color:${INDIGO}; }
         .dg-eyebrow-dot { width:7px; height:7px; border-radius:2px; background:${INDIGO}; box-shadow:0 0 0 4px rgba(79,70,229,0.16); flex-shrink:0; }
-        .dg-h2 { font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(30px,4.2vw,60px); line-height:1.04; letter-spacing:-0.03em; color:${INK}; margin:16px 0 0; }
+        .dg-h2 { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(30px,4.2vw,60px); line-height:1.12; letter-spacing:-0.02em; color:${INK}; margin:16px 0 0; }
         .dg-sec-head { max-width:900px; margin-bottom:clamp(34px,4vw,58px); }
-        .dg-sec-p { font-family:'Inter',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; margin:clamp(16px,1.8vw,24px) 0 0; max-width:58ch; }
+        .dg-sec-p { font-family:'Eloma Sans',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; margin:clamp(16px,1.8vw,24px) 0 0; max-width:58ch; }
 
-        .dg-btn { display:inline-flex; align-items:center; gap:9px; cursor:pointer; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(14px,1vw,16px); border-radius:10px; padding:15px 28px; border:none; text-decoration:none; transition:transform .25s cubic-bezier(0.16,1,0.3,1), background .25s ease, box-shadow .25s ease, color .25s ease, border-color .25s ease; }
+        .dg-btn { display:inline-flex; align-items:center; gap:9px; cursor:pointer; font-family:'Eloma Sans Heading',sans-serif; font-weight:600; font-size:clamp(14px,1vw,16px); border-radius:10px; padding:15px 28px; border:none; text-decoration:none; transition:transform .25s cubic-bezier(0.16,1,0.3,1), background .25s ease, box-shadow .25s ease, color .25s ease, border-color .25s ease; }
         .dg-btn-p { position:relative; overflow:hidden; background:${INDIGO}; color:#fff; box-shadow:0 18px 40px -16px rgba(79,70,229,0.6); }
         .dg-btn-p span { position:relative; z-index:1; }
         .dg-btn-p::after { content:''; position:absolute; top:0; left:-120%; width:55%; height:100%; background:linear-gradient(110deg,transparent,rgba(255,255,255,0.4),transparent); transform:skewX(-18deg); transition:left .7s cubic-bezier(0.16,1,0.3,1); }
@@ -227,12 +227,12 @@ export function EgDigitalPage() {
         .dg-hero { position:relative; overflow:hidden; background:linear-gradient(180deg,#ffffff 0%,${PAPER} 100%); padding:clamp(120px,13vw,185px) 45px clamp(60px,7vw,110px); }
         .dg-hero-blob { position:absolute; top:-140px; right:-60px; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle, rgba(99,102,241,0.14), transparent 62%); pointer-events:none; }
         .dg-hero-in { position:relative; z-index:1; display:grid; grid-template-columns:1.02fr 0.98fr; gap:clamp(36px,5vw,72px); align-items:center; }
-        .dg-crumb { display:flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:clamp(10px,0.82vw,12px); color:${MUTED}; margin-bottom:clamp(20px,2.2vw,28px); flex-wrap:wrap; }
+        .dg-crumb { display:flex; align-items:center; gap:9px; font-family:'Eloma Sans',sans-serif; font-size:clamp(10px,0.82vw,12px); color:${MUTED}; margin-bottom:clamp(20px,2.2vw,28px); flex-wrap:wrap; }
         .dg-crumb a { color:${MUTED}; text-decoration:none; transition:color .2s ease; }
         .dg-crumb a:hover { color:${INDIGO}; }
         .dg-crumb em { color:${INK}; font-style:normal; font-weight:600; }
-        .dg-h1 { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(46px,6.8vw,104px); line-height:1.0; letter-spacing:-0.04em; color:${INK}; margin:clamp(16px,2vw,22px) 0 0; }
-        .dg-lead { font-family:'Inter',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; max-width:50ch; margin:clamp(18px,2vw,26px) 0 0; }
+        .dg-h1 { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(46px,6.8vw,104px); line-height:1.0; letter-spacing:-0.04em; color:${INK}; margin:clamp(16px,2vw,22px) 0 0; }
+        .dg-lead { font-family:'Eloma Sans',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.8; color:${MUTED}; max-width:50ch; margin:clamp(18px,2vw,26px) 0 0; }
         .dg-cta-row { display:flex; flex-wrap:wrap; gap:13px; margin-top:clamp(26px,3vw,36px); }
 
         /* UI showcase */
@@ -242,19 +242,19 @@ export function EgDigitalPage() {
         .dg-card-bar { display:flex; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid rgba(17,19,24,0.07); }
         .dg-card-dots { display:inline-flex; gap:6px; }
         .dg-card-dots i { width:9px; height:9px; border-radius:50%; background:rgba(17,19,24,0.14); }
-        .dg-card-url { font-family:'JetBrains Mono',monospace; font-size:11px; color:${MUTED}; }
+        .dg-card-url { font-family:'Eloma Sans',sans-serif; font-size:11px; color:${MUTED}; }
         .dg-card-body { padding:clamp(18px,2vw,26px); }
         .dg-card-row { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px; }
-        .dg-card-lb { font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:${MUTED}; }
-        .dg-card-up { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(16px,1.6vw,22px); color:${INDIGO}; letter-spacing:-0.02em; }
+        .dg-card-lb { font-family:'Eloma Sans',sans-serif; font-size:13px; font-weight:600; color:${MUTED}; }
+        .dg-card-up { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(16px,1.6vw,22px); color:${INDIGO}; letter-spacing:-0.02em; }
         .dg-chart { display:flex; align-items:flex-end; gap:clamp(7px,0.9vw,13px); height:clamp(96px,11vw,140px); }
         .dg-bar { flex:1; border-radius:6px 6px 3px 3px; background:linear-gradient(180deg, ${INDIGO2}, ${INDIGO}); opacity:0.9; }
         .dg-bar:last-child { background:linear-gradient(180deg,#A5B4FC,${INDIGO2}); box-shadow:0 8px 20px -8px rgba(79,70,229,0.7); opacity:1; }
         .dg-card-stat { bottom:0; left:0; display:flex; align-items:center; gap:14px; padding:clamp(16px,1.8vw,22px) clamp(18px,2vw,26px); }
-        .dg-card-stat-n { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(30px,3.4vw,50px); color:${INDIGO}; letter-spacing:-0.04em; line-height:1; }
+        .dg-card-stat-n { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(30px,3.4vw,50px); color:${INDIGO}; letter-spacing:-0.04em; line-height:1; }
         .dg-card-stat-n i { font-size:0.55em; font-style:normal; }
-        .dg-card-stat-l { font-family:'Inter',sans-serif; font-size:clamp(11px,0.95vw,13px); line-height:1.35; color:${MUTED}; }
-        .dg-chip { position:absolute; top:clamp(-6px,-0.6vw,-6px); left:clamp(6px,3vw,40px); display:inline-flex; align-items:center; gap:7px; background:${INK}; color:#fff; font-family:'Inter',sans-serif; font-weight:600; font-size:clamp(11px,0.95vw,13px); padding:9px 15px; border-radius:99px; box-shadow:0 18px 40px -20px rgba(17,19,24,0.7); }
+        .dg-card-stat-l { font-family:'Eloma Sans',sans-serif; font-size:clamp(11px,0.95vw,13px); line-height:1.35; color:${MUTED}; }
+        .dg-chip { position:absolute; top:clamp(-6px,-0.6vw,-6px); left:clamp(6px,3vw,40px); display:inline-flex; align-items:center; gap:7px; background:${INK}; color:#fff; font-family:'Eloma Sans',sans-serif; font-weight:600; font-size:clamp(11px,0.95vw,13px); padding:9px 15px; border-radius:99px; box-shadow:0 18px 40px -20px rgba(17,19,24,0.7); }
         .dg-chip svg { color:#FBBF24; }
 
         /* CAPABILITIES spec grid */
@@ -265,12 +265,12 @@ export function EgDigitalPage() {
         .dg-cell:hover { transform:translateY(-6px); background:#fff; border-color:rgba(79,70,229,0.4); box-shadow:0 40px 80px -50px rgba(17,19,24,0.35); }
         .dg-cell:hover::before { transform:scaleX(1); }
         .dg-cell-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:clamp(22px,2.4vw,32px); }
-        .dg-cell-code { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.5px; color:rgba(17,19,24,0.32); }
+        .dg-cell-code { font-family:'Eloma Sans',sans-serif; font-size:12px; letter-spacing:0.5px; color:rgba(17,19,24,0.32); }
         .dg-cell-ic { display:inline-flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:13px; background:rgba(79,70,229,0.1); color:${INDIGO}; transition:transform .45s cubic-bezier(0.16,1,0.3,1), background .4s ease, color .4s ease; }
         .dg-cell:hover .dg-cell-ic { transform:translateY(-3px) rotate(-6deg); background:${INDIGO}; color:#fff; }
-        .dg-cell-t { font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(19px,1.7vw,25px); letter-spacing:-0.02em; color:${INK}; margin:0 0 10px; }
-        .dg-cell-d { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.75; color:${MUTED}; margin:0 0 16px; }
-        .dg-cell-tag { font-family:'JetBrains Mono',monospace; font-size:11px; color:${INDIGO}; opacity:0.85; }
+        .dg-cell-t { font-family:'Eloma Sans Heading',sans-serif; font-weight:600; font-size:clamp(19px,1.7vw,25px); letter-spacing:-0.02em; color:${INK}; margin:0 0 10px; }
+        .dg-cell-d { font-family:'Eloma Sans',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.75; color:${MUTED}; margin:0 0 16px; }
+        .dg-cell-tag { font-family:'Eloma Sans',sans-serif; font-size:11px; color:${INDIGO}; opacity:0.85; }
 
         /* WORK SHOWCASE */
         .dg-work { background:${PAPER}; padding:clamp(60px,7vw,120px) 45px; }
@@ -280,20 +280,20 @@ export function EgDigitalPage() {
         .dg-work-img { position:relative; aspect-ratio:16/11; overflow:hidden; }
         .dg-work-img img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .7s cubic-bezier(0.16,1,0.3,1); }
         .dg-work-card:hover .dg-work-img img { transform:scale(1.06); }
-        .dg-work-cat { position:absolute; top:14px; left:14px; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.5px; text-transform:uppercase; color:#fff; background:rgba(17,19,24,0.72); backdrop-filter:blur(4px); padding:6px 12px; border-radius:99px; }
+        .dg-work-cat { position:absolute; top:14px; left:14px; font-family:'Eloma Sans',sans-serif; font-size:10.5px; letter-spacing:0.5px; text-transform:uppercase; color:#fff; background:rgba(17,19,24,0.72); backdrop-filter:blur(4px); padding:6px 12px; border-radius:99px; }
         .dg-work-body { padding:clamp(22px,2.2vw,32px); display:flex; align-items:flex-end; justify-content:space-between; gap:16px; }
-        .dg-work-t { font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(18px,1.6vw,23px); letter-spacing:-0.02em; color:${INK}; margin:0; max-width:16ch; }
+        .dg-work-t { font-family:'Eloma Sans Heading',sans-serif; font-weight:600; font-size:clamp(18px,1.6vw,23px); letter-spacing:-0.02em; color:${INK}; margin:0; max-width:16ch; }
         .dg-work-result { text-align:right; flex-shrink:0; }
-        .dg-work-n { display:block; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(24px,2.4vw,36px); letter-spacing:-0.03em; color:${INDIGO}; line-height:1; }
-        .dg-work-l { display:block; font-family:'JetBrains Mono',monospace; font-size:10px; color:${MUTED}; margin-top:5px; }
+        .dg-work-n { display:block; font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(24px,2.4vw,36px); letter-spacing:-0.03em; color:${INDIGO}; line-height:1; }
+        .dg-work-l { display:block; font-family:'Eloma Sans',sans-serif; font-size:10px; color:${MUTED}; margin-top:5px; }
 
         /* METRICS (light band) */
         .dg-metrics { background:#fff; padding:clamp(60px,7vw,120px) 45px; }
         .dg-metrics-in { display:grid; grid-template-columns:0.85fr 1.15fr; gap:clamp(32px,5vw,72px); align-items:center; }
         .dg-metrics-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(22px,2.6vw,40px); }
         .dg-stat { display:flex; flex-direction:column; gap:8px; padding-left:clamp(18px,2vw,26px); border-left:2px solid rgba(79,70,229,0.35); }
-        .dg-stat-n { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(36px,4vw,64px); line-height:0.92; letter-spacing:-0.04em; color:${INK}; }
-        .dg-stat-l { font-family:'JetBrains Mono',monospace; font-size:clamp(11px,0.9vw,13.5px); color:${INDIGO}; }
+        .dg-stat-n { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(36px,4vw,64px); line-height:0.92; letter-spacing:-0.04em; color:${INK}; }
+        .dg-stat-l { font-family:'Eloma Sans',sans-serif; font-size:clamp(11px,0.9vw,13.5px); color:${INDIGO}; }
 
         /* SPLIT */
         .dg-split { background:${PAPER}; padding:clamp(60px,7vw,120px) 45px; }
@@ -301,16 +301,16 @@ export function EgDigitalPage() {
         .dg-split-media { border-radius:16px; overflow:hidden; aspect-ratio:5/4; box-shadow:0 44px 84px -48px rgba(17,19,24,0.4); }
         .dg-split-media img { width:100%; height:100%; object-fit:cover; display:block; }
         .dg-check { list-style:none; margin:clamp(24px,3vw,34px) 0 0; padding:0; display:flex; flex-direction:column; gap:15px; }
-        .dg-check li { display:flex; align-items:center; gap:13px; font-family:'Inter',sans-serif; font-weight:500; font-size:clamp(15px,1.2vw,18px); color:${INK}; }
+        .dg-check li { display:flex; align-items:center; gap:13px; font-family:'Eloma Sans',sans-serif; font-weight:500; font-size:clamp(15px,1.2vw,18px); color:${INK}; }
         .dg-check-ic { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:rgba(79,70,229,0.12); color:${INDIGO}; flex-shrink:0; }
 
         /* CTA (light, full-width closing band) */
         .dg-cta { position:relative; background:#fff; border-top:1px solid rgba(17,19,24,0.1); padding:clamp(64px,8vw,128px) 45px; }
         .dg-cta::before { content:''; position:absolute; top:-1px; left:15px; width:60px; height:3px; background:${INDIGO}; }
         .dg-cta-in { display:grid; grid-template-columns:1.15fr 0.85fr; gap:clamp(28px,4vw,72px); align-items:end; }
-        .dg-cta-h { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(34px,4.6vw,72px); line-height:1.0; letter-spacing:-0.04em; color:${INK}; margin:16px 0 0; }
+        .dg-cta-h { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(34px,4.6vw,72px); line-height:1.0; letter-spacing:-0.04em; color:${INK}; margin:16px 0 0; }
         .dg-cta-act { display:flex; flex-direction:column; align-items:flex-start; gap:clamp(20px,2.4vw,28px); padding-bottom:6px; }
-        .dg-cta-sub { font-family:'Inter',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.75; color:${MUTED}; margin:0; max-width:42ch; }
+        .dg-cta-sub { font-family:'Eloma Sans',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.75; color:${MUTED}; margin:0; max-width:42ch; }
 
         /* responsive */
         @media (max-width:1024px){

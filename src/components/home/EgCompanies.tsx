@@ -189,7 +189,7 @@ export function EgCompanies() {
         .eg-oc-head { text-align: center; margin: 0 auto clamp(30px, 4vw, 60px); }
         .eg-oc-eyebrow {
           display: inline-flex; align-items: center; gap: 10px;
-          font-family: 'Inter', sans-serif; font-weight: 800; text-transform: uppercase;
+          font-family: 'Eloma Sans', sans-serif; font-weight: 800; text-transform: uppercase;
           font-size: clamp(10px, 0.8vw, 13px); letter-spacing: 2.4px;
           color: ${GOLD_MID}; margin: 0 0 clamp(12px, 1.4vw, 18px);
         }
@@ -199,7 +199,7 @@ export function EgCompanies() {
         }
         .eg-oc-eyebrow::after { background: linear-gradient(90deg, ${GOLD}, transparent); }
         .eg-oc-title {
-          font-family: 'Poppins', sans-serif; font-weight: 800; text-transform: uppercase;
+          font-family: 'Eloma Sans Heading', sans-serif; font-weight: 800; text-transform: uppercase;
           font-size: clamp(30px, 4.4vw, 64px); line-height: 0.98; letter-spacing: -0.035em;
           color: ${NAVY}; margin: 0; text-align: center;
         }
@@ -208,7 +208,7 @@ export function EgCompanies() {
           -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
         }
         .eg-oc-sub {
-          font-family: 'Inter', sans-serif; color: ${MUTED};
+          font-family: 'Eloma Sans', sans-serif; color: ${MUTED};
           font-size: clamp(14px, 1.1vw, 17px); line-height: 1.6;
           margin: clamp(12px, 1.4vw, 18px) auto 0; max-width: 52ch;
         }
@@ -318,14 +318,14 @@ export function EgCompanies() {
           transform: translateY(5.5%);
         }
         .eg-oc-brand-name {
-          font-family: 'Poppins', sans-serif; font-weight: 800; text-transform: uppercase;
+          font-family: 'Eloma Sans Heading', sans-serif; font-weight: 800; text-transform: uppercase;
           letter-spacing: -0.02em; line-height: 1; font-size: clamp(20px, 1.8vw, 30px);
           color: #A6B0B9; -webkit-text-fill-color: #A6B0B9;
           text-shadow: 0 1px 0 rgba(255,255,255,0.6);
         }
         .eg-oc-brand-tag {
           margin-top: clamp(6px, 0.7vw, 10px);
-          font-family: 'Inter', sans-serif; font-weight: 700; text-transform: uppercase;
+          font-family: 'Eloma Sans', sans-serif; font-weight: 700; text-transform: uppercase;
           letter-spacing: 2.2px; font-size: clamp(9px, 0.72vw, 12px); color: ${NAVY}; opacity: 0.62;
         }
 
@@ -395,14 +395,14 @@ export function EgCompanies() {
         }
         .eg-oc-name {
           margin: clamp(10px, 0.8vw, 14px) 0 clamp(5px, 0.4vw, 8px);
-          font-family: 'Poppins', sans-serif; font-weight: 800; text-transform: uppercase;
+          font-family: 'Eloma Sans Heading', sans-serif; font-weight: 800; text-transform: uppercase;
           letter-spacing: -0.01em; line-height: 1.06; color: ${NAVY};
           font-size: clamp(14px, 1vw, 18px);
           padding-right: 24px;
         }
         .eg-oc-blurb {
           margin: 0 0 clamp(2px, 0.3vw, 5px);
-          font-family: 'Inter', sans-serif; color: ${MUTED};
+          font-family: 'Eloma Sans', sans-serif; color: ${MUTED};
           font-size: clamp(11px, 0.74vw, 13px); line-height: 1.48;
         }
         .eg-oc-go {

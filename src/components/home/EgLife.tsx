@@ -67,7 +67,7 @@ export function EgLife() {
         }
 
         /* ── Left copy ──────────────────────────────────────── */
-        .eg-life-eyebrow { font-family:'Poppins',sans-serif; font-weight:700; letter-spacing:2.5px;
+        .eg-life-eyebrow { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; letter-spacing:2.5px;
           text-transform:uppercase; font-size:clamp(11px,0.85vw,13px); color:${GOLD}; margin:0; }
         .eg-life-rule {
           display:block; position:relative; width: clamp(180px,20vw,250px); height:1px;
@@ -78,18 +78,18 @@ export function EgLife() {
           transform: translate(-1px,-50%) rotate(45deg); background:${GOLD};
         }
         .eg-life-h {
-          font-family:'Poppins',sans-serif; font-weight:800; text-transform:none;
+          font-family:'Eloma Sans Heading',sans-serif; font-weight:800; text-transform:none;
           font-size: clamp(38px,5vw,76px); line-height:1.0; letter-spacing:-0.03em;
           color:${NAVY}; margin: 0 0 clamp(20px,2.4vw,32px);
         }
         .eg-life-h span { display:block; color:${GOLD}; }
         .eg-life-body {
-          font-family:'Inter',sans-serif; font-size:clamp(14px,1.05vw,17px); line-height:1.8;
+          font-family:'Eloma Sans',sans-serif; font-size:clamp(14px,1.05vw,17px); line-height:1.8;
           color:${MUTED}; margin: 0 0 clamp(26px,3vw,40px); max-width: 470px;
         }
         .eg-life-btn {
           display:inline-flex; align-items:center; gap:14px; cursor:pointer;
-          font-family:'Poppins',sans-serif; font-weight:700; letter-spacing:1.5px;
+          font-family:'Eloma Sans Heading',sans-serif; font-weight:700; letter-spacing:1.5px;
           text-transform:uppercase; font-size:clamp(12px,0.9vw,13px); color:${GOLD};
           background:none; border:1.5px solid rgba(176,137,74,0.55); border-radius:8px;
           padding: clamp(14px,1.4vw,18px) clamp(22px,2vw,30px);
@@ -112,7 +112,7 @@ export function EgLife() {
         .eg-life-tab {
           flex:1; position:relative; display:flex; flex-direction:column; align-items:center;
           gap:9px; padding: clamp(14px,1.4vw,20px) 6px; background:none; border:0; cursor:pointer;
-          color:${MUTED}; transition: color .3s ease; font-family:'Poppins',sans-serif;
+          color:${MUTED}; transition: color .3s ease; font-family:'Eloma Sans Heading',sans-serif;
         }
         .eg-life-tab svg { transition: transform .35s cubic-bezier(0.16,1,0.3,1); }
         .eg-life-tab-label { font-size:clamp(12px,0.9vw,14px); font-weight:600; letter-spacing:0.2px; }
@@ -161,11 +161,11 @@ export function EgLife() {
         .eg-life-card:hover .eg-life-badge { transform: translateY(-3px) scale(1.05); }
         .eg-life-text { position:relative; z-index:2; padding: clamp(16px,1.8vw,26px); }
         .eg-life-card-h {
-          font-family:'Poppins',sans-serif; font-weight:700; font-size:clamp(17px,1.5vw,24px);
+          font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(17px,1.5vw,24px);
           color:#fff; margin:0 0 6px; letter-spacing:-0.01em;
         }
         .eg-life-card-p {
-          font-family:'Inter',sans-serif; font-size:clamp(12.5px,0.95vw,15px); line-height:1.5;
+          font-family:'Eloma Sans',sans-serif; font-size:clamp(12.5px,0.95vw,15px); line-height:1.5;
           color:rgba(255,255,255,0.86); margin:0; max-width:300px;
         }
 

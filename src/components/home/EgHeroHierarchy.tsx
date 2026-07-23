@@ -54,14 +54,14 @@ export function EgHeroHierarchy() {
         .eg-heroh-copy { position: relative; z-index: 2; max-width: 54%; margin-top: clamp(40px, 9vh, 130px); }
         .eg-heroh-eyebrow {
           display: inline-flex; align-items: center; gap: 12px;
-          font-family: 'Inter', sans-serif; font-weight: 800; text-transform: uppercase;
+          font-family: 'Eloma Sans', sans-serif; font-weight: 800; text-transform: uppercase;
           font-size: clamp(11px, 1vw, 15px); letter-spacing: 2.6px;
           color: rgba(255,255,255,0.82); margin: 0 0 clamp(18px, 2.4vw, 30px);
         }
         .eg-heroh-eyebrow::before { content: ''; width: clamp(26px, 4vw, 54px); height: 1px;
           background: linear-gradient(90deg, ${GREEN}, transparent); }
         .eg-heroh-h1 {
-          font-family: 'Poppins', sans-serif; font-weight: 600;
+          font-family: 'Eloma Sans Heading', sans-serif; font-weight: 600;
           font-size: clamp(48px, 6.3vw, 108px); line-height: 1.02; letter-spacing: -0.02em;
           margin: 0; color: #fff; text-shadow: 0 2px 40px rgba(0,0,0,0.45);
         }
@@ -73,14 +73,14 @@ export function EgHeroHierarchy() {
           margin: clamp(22px, 2.6vw, 34px) 0;
         }
         .eg-heroh-p {
-          font-family: 'Inter', sans-serif;
+          font-family: 'Eloma Sans', sans-serif;
           font-size: clamp(16px, 1.5vw, 23px); line-height: 1.72;
           color: rgba(255,255,255,0.82); max-width: 620px; margin: 0 0 clamp(30px, 3.6vw, 44px);
           text-shadow: 0 2px 20px rgba(0,0,0,0.4);
         }
         .eg-heroh-btn {
           display: inline-flex; align-items: center; gap: 14px;
-          cursor: pointer; font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: 1.5px;
+          cursor: pointer; font-family: 'Eloma Sans Heading', sans-serif; font-weight: 700; letter-spacing: 1.5px;
           text-transform: uppercase; font-size: clamp(13px, 1vw, 15px); color: #fff;
           background: none; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 8px;
           padding: clamp(14px, 1.4vw, 18px) clamp(22px, 2vw, 30px);

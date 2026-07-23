@@ -320,7 +320,7 @@ export function EgBusinesses() {
 
         /* ── header ── */
         .egb-h {
-          font-family: 'Poppins', sans-serif; font-weight: 800; text-transform: uppercase;
+          font-family: 'Eloma Sans Heading', sans-serif; font-weight: 800; text-transform: uppercase;
           font-size: clamp(30px, 4.6vw, 68px); line-height: 0.96; letter-spacing: -0.035em;
           color: ${NAVY}; margin: 0 0 clamp(24px, 3.4vw, 46px);
         }
@@ -412,7 +412,7 @@ export function EgBusinesses() {
         /* ghost number in corner */
         .egb-no {
           position: absolute; top: clamp(14px, 1.4vw, 24px); right: clamp(16px, 1.5vw, 26px);
-          font-family: 'Poppins', sans-serif; font-weight: 800; letter-spacing: -0.03em;
+          font-family: 'Eloma Sans Heading', sans-serif; font-weight: 800; letter-spacing: -0.03em;
           font-size: clamp(22px, 1.9vw, 34px); line-height: 1;
           color: rgba(19,41,61,0.05);
           -webkit-text-stroke: 1.3px rgba(19,41,61,0.32);
@@ -445,14 +445,14 @@ export function EgBusinesses() {
         .egb-hd .egb-title { margin: clamp(2px, 0.4vw, 6px) 0 0; }
 
         .egb-title {
-          font-family: 'Poppins', sans-serif; font-weight: 700; text-transform: uppercase;
+          font-family: 'Eloma Sans Heading', sans-serif; font-weight: 700; text-transform: uppercase;
           letter-spacing: -0.01em; font-size: clamp(16px, 1.25vw, 23px); line-height: 1.14;
           color: ${NAVY}; margin: 0 0 clamp(9px, 0.9vw, 13px); max-width: 20ch;
         }
         .egb-title-sm { font-size: clamp(14px, 1vw, 18px); }
         .egb-card.v-featured .egb-title { font-size: clamp(21px, 1.9vw, 34px); }
         .egb-text {
-          font-family: 'Inter', sans-serif; font-size: clamp(12.5px, 0.9vw, 15px);
+          font-family: 'Eloma Sans', sans-serif; font-size: clamp(12.5px, 0.9vw, 15px);
           line-height: 1.6; color: ${MUTED}; margin: 0; max-width: 44ch;
         }
 
@@ -470,12 +470,12 @@ export function EgBusinesses() {
           background: rgba(19,41,61,0.16);
         }
         .egb-stat-v {
-          font-family: 'Poppins', sans-serif; font-weight: 800; letter-spacing: -0.03em;
+          font-family: 'Eloma Sans Heading', sans-serif; font-weight: 800; letter-spacing: -0.03em;
           font-size: clamp(22px, 1.9vw, 34px); line-height: 1; color: ${NAVY};
           font-variant-numeric: tabular-nums;
         }
         .egb-stat-l {
-          font-family: 'Inter', sans-serif; font-weight: 600; text-transform: uppercase;
+          font-family: 'Eloma Sans', sans-serif; font-weight: 600; text-transform: uppercase;
           letter-spacing: 1px; font-size: clamp(9.5px, 0.68vw, 11.5px); color: ${MUTED};
         }
 
@@ -483,7 +483,7 @@ export function EgBusinesses() {
         .egb-cta {
           align-self: flex-start; margin-top: clamp(18px, 1.9vw, 28px);
           display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
-          font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: 0.6px;
+          font-family: 'Eloma Sans', sans-serif; font-weight: 700; letter-spacing: 0.6px;
           font-size: clamp(11px, 0.82vw, 13px); text-transform: uppercase; color: #B0894A;
           padding: clamp(11px, 0.95vw, 15px) clamp(18px, 1.5vw, 26px);
           min-height: 44px; border: 1.5px solid rgba(176,137,74,0.55); border-radius: 8px;

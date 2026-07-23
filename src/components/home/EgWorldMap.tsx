@@ -66,7 +66,7 @@ export function EgWorldMap({
         .egw-svg { position:absolute; inset:0; width:100%; height:100%; }
         .egw-lbl {
           position:absolute; transform:translate(-50%,-150%); white-space:nowrap; pointer-events:none;
-          font-family:'Inter',sans-serif; font-weight:700; letter-spacing:0.3px; font-size:clamp(9px,0.8vw,12px);
+          font-family:'Eloma Sans',sans-serif; font-weight:700; letter-spacing:0.3px; font-size:clamp(9px,0.8vw,12px);
           color:#13293D; background:rgba(255,255,255,0.94); border:1px solid rgba(19,41,61,0.1);
           border-radius:6px; padding:4px 8px; box-shadow:0 6px 14px -8px rgba(19,41,61,0.5);
         }

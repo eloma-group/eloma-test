@@ -320,13 +320,13 @@ export function ElomaGroupPage() {
         @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&display=swap');
         .eg-wrap { max-width: none; margin: 0 auto; }
         .eg-hl { color:${GREEN}; }
-        .eg-eyebrow { display:inline-flex; align-items:center; gap:14px; margin:0; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(10px,0.82vw,12.5px); letter-spacing:2.5px; text-transform:uppercase; color:${GREEN}; }
+        .eg-eyebrow { display:inline-flex; align-items:center; gap:14px; margin:0; font-family:'Eloma Sans',sans-serif; font-weight:700; font-size:clamp(10px,0.82vw,12.5px); letter-spacing:2.5px; text-transform:uppercase; color:${GREEN}; }
         .eg-eyebrow-line { width:32px; height:1.5px; background:${GREEN}; flex-shrink:0; }
-        .eg-h1 { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(44px,6.6vw,104px); line-height:0.98; letter-spacing:-0.03em; color:${INK}; margin:clamp(20px,2.4vw,30px) 0 0; }
-        .eg-h2 { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(29px,4vw,58px); line-height:1.04; letter-spacing:-0.025em; color:${INK}; margin:16px 0 0; }
-        .eg-p { font-family:'Inter',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.85; color:${MUTED}; margin:clamp(18px,2vw,26px) 0 0; max-width:60ch; }
+        .eg-h1 { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(44px,6.6vw,104px); line-height:0.98; letter-spacing:-0.03em; color:${INK}; margin:clamp(20px,2.4vw,30px) 0 0; }
+        .eg-h2 { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(29px,4vw,58px); line-height:1.04; letter-spacing:-0.025em; color:${INK}; margin:16px 0 0; }
+        .eg-p { font-family:'Eloma Sans',sans-serif; font-size:clamp(15px,1.2vw,18px); line-height:1.85; color:${MUTED}; margin:clamp(18px,2vw,26px) 0 0; max-width:60ch; }
 
-        .eg-btn { display:inline-flex; align-items:center; gap:9px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; font-size:clamp(14px,1vw,16px); border-radius:10px; padding:15px 28px; border:none; text-decoration:none; transition:transform .3s cubic-bezier(0.16,1,0.3,1), background .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease; }
+        .eg-btn { display:inline-flex; align-items:center; gap:9px; cursor:pointer; font-family:'Eloma Sans',sans-serif; font-weight:600; font-size:clamp(14px,1vw,16px); border-radius:10px; padding:15px 28px; border:none; text-decoration:none; transition:transform .3s cubic-bezier(0.16,1,0.3,1), background .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease; }
         .eg-btn-p { background:${INK}; color:#fff; box-shadow:0 18px 40px -18px rgba(12,28,42,0.6); }
         .eg-btn-p:hover { transform:translateY(-2px); background:${GREEN}; color:${INK}; box-shadow:0 22px 46px -18px rgba(60,185,140,0.6); }
         .eg-btn-g { background:transparent; color:${INK}; border:1.5px solid rgba(12,28,42,0.2); }
@@ -335,30 +335,30 @@ export function ElomaGroupPage() {
         /* HERO */
         .eg-hero { position:relative; background:linear-gradient(180deg,#ffffff 0%,${PAPER} 100%); padding:clamp(120px,13vw,185px) 45px clamp(60px,7vw,110px); }
         .eg-hero-in { display:grid; grid-template-columns:1.08fr 0.92fr; gap:clamp(36px,5vw,80px); align-items:center; }
-        .eg-crumb { display:flex; align-items:center; gap:9px; font-family:'Inter',sans-serif; font-size:clamp(11px,0.85vw,13px); color:${MUTED}; margin-bottom:clamp(20px,2.4vw,30px); flex-wrap:wrap; }
+        .eg-crumb { display:flex; align-items:center; gap:9px; font-family:'Eloma Sans',sans-serif; font-size:clamp(11px,0.85vw,13px); color:${MUTED}; margin-bottom:clamp(20px,2.4vw,30px); flex-wrap:wrap; }
         .eg-crumb a { color:${MUTED}; text-decoration:none; transition:color .2s ease; }
         .eg-crumb a:hover { color:${GREEN}; }
         .eg-crumb em { color:${INK}; font-style:normal; font-weight:600; }
-        .eg-lead { font-family:'Inter',sans-serif; font-size:clamp(15px,1.25vw,19px); line-height:1.85; color:${MUTED}; max-width:52ch; margin:clamp(22px,2.6vw,32px) 0 0; }
+        .eg-lead { font-family:'Eloma Sans',sans-serif; font-size:clamp(15px,1.25vw,19px); line-height:1.85; color:${MUTED}; max-width:52ch; margin:clamp(22px,2.6vw,32px) 0 0; }
         .eg-cta-row { display:flex; flex-wrap:wrap; gap:14px; margin-top:clamp(28px,3.2vw,40px); }
         .eg-hero-media { position:relative; }
         .eg-hero-media > img { width:100%; aspect-ratio:4/5; object-fit:cover; display:block; border-radius:16px; box-shadow:0 50px 90px -50px rgba(12,28,42,0.5); }
         .eg-hero-plate { position:absolute; left:clamp(-4px,-0.6vw,-4px); bottom:clamp(20px,2.4vw,32px); display:flex; align-items:center; gap:13px; background:#fff; border:1px solid rgba(12,28,42,0.08); border-radius:12px; padding:13px 18px; box-shadow:0 24px 50px -30px rgba(12,28,42,0.5); }
-        .eg-hero-plate-mark { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border:1.5px solid ${GREEN}; border-radius:10px; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:18px; color:${GREEN}; letter-spacing:-0.02em; flex-shrink:0; }
-        .eg-hero-plate-est { display:block; font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:clamp(14px,1.2vw,17px); color:${INK}; letter-spacing:-0.01em; }
-        .eg-hero-plate-txt { display:block; font-family:'Inter',sans-serif; font-size:clamp(11px,0.9vw,13px); color:${MUTED}; margin-top:2px; }
+        .eg-hero-plate-mark { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border:1.5px solid ${GREEN}; border-radius:10px; font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:18px; color:${GREEN}; letter-spacing:-0.02em; flex-shrink:0; }
+        .eg-hero-plate-est { display:block; font-family:'Eloma Sans Heading',sans-serif; font-weight:600; font-size:clamp(14px,1.2vw,17px); color:${INK}; letter-spacing:-0.01em; }
+        .eg-hero-plate-txt { display:block; font-family:'Eloma Sans',sans-serif; font-size:clamp(11px,0.9vw,13px); color:${MUTED}; margin-top:2px; }
 
         /* SHARED SERVICES */
         .eg-svc { background:#fff; padding:clamp(64px,8vw,130px) 45px; }
         .eg-svc-head { display:grid; grid-template-columns:1.1fr 0.9fr; gap:clamp(24px,4vw,64px); align-items:end; margin-bottom:clamp(38px,4.5vw,64px); }
-        .eg-svc-lead { font-family:'Inter',sans-serif; font-size:clamp(14px,1.1vw,17px); line-height:1.8; color:${MUTED}; margin:0; }
+        .eg-svc-lead { font-family:'Eloma Sans',sans-serif; font-size:clamp(14px,1.1vw,17px); line-height:1.8; color:${MUTED}; margin:0; }
         .eg-svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.4vw,20px); }
         .eg-svc-card { background:${PAPER}; border:1px solid rgba(12,28,42,0.07); border-radius:18px; padding:clamp(26px,2.6vw,38px); transition:transform .45s cubic-bezier(0.16,1,0.3,1), background .4s ease, box-shadow .45s ease; }
         .eg-svc-card:hover { transform:translateY(-6px); background:#fff; box-shadow:0 40px 80px -50px rgba(12,28,42,0.3); }
         .eg-svc-ic { display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:14px; background:rgba(60,185,140,0.12); color:${GREEN}; margin-bottom:clamp(18px,2vw,26px); transition:transform .45s cubic-bezier(0.16,1,0.3,1), background .4s ease, color .4s ease; }
         .eg-svc-card:hover .eg-svc-ic { transform:translateY(-3px); background:${GREEN}; color:#fff; }
-        .eg-svc-t { font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:clamp(19px,1.7vw,25px); letter-spacing:-0.02em; color:${INK}; margin:0 0 10px; }
-        .eg-svc-d { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.75; color:${MUTED}; margin:0; }
+        .eg-svc-t { font-family:'Eloma Sans Heading',sans-serif; font-weight:600; font-size:clamp(19px,1.7vw,25px); letter-spacing:-0.02em; color:${INK}; margin:0 0 10px; }
+        .eg-svc-d { font-family:'Eloma Sans',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.75; color:${MUTED}; margin:0; }
 
         /* HOLDINGS — org-chart hierarchy tree (light stage) */
         .eg-tree { position:relative; background:linear-gradient(180deg,#ffffff 0%,${PAPER} 100%); padding:clamp(64px,8vw,128px) 45px; overflow:hidden; }
@@ -370,7 +370,7 @@ export function ElomaGroupPage() {
         .eg-tree-title { color:${INK}; }
         .eg-tree-line { display:block; overflow:hidden; padding-bottom:0.04em; }
         .eg-tree-anim { display:block; }
-        .eg-tree-lead { font-family:'Inter',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.8; color:${MUTED}; margin:clamp(16px,1.8vw,22px) auto 0; max-width:62ch; }
+        .eg-tree-lead { font-family:'Eloma Sans',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.8; color:${MUTED}; margin:clamp(16px,1.8vw,22px) auto 0; max-width:62ch; }
 
         .eg-tree-chart { max-width:none; margin:0 auto; }
 
@@ -386,8 +386,8 @@ export function ElomaGroupPage() {
         .eg-parent-ic::after { content:''; position:absolute; inset:0; border-radius:13px; border:1px solid rgba(60,185,140,0.6); animation:egParentPing 4.8s ease-out infinite; }
         @keyframes egParentPing { 0%{ transform:scale(1); opacity:0.75; } 11%{ transform:scale(1.5); opacity:0; } 100%{ transform:scale(1.5); opacity:0; } }
         .eg-parent-txt { display:flex; flex-direction:column; transform:translateZ(24px); }
-        .eg-parent-kicker { font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(9px,0.8vw,11.5px); letter-spacing:2px; text-transform:uppercase; color:${GREEN}; }
-        .eg-parent-name { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(23px,2.5vw,36px); letter-spacing:-0.025em; color:#fff; line-height:1.05; margin-top:3px; }
+        .eg-parent-kicker { font-family:'Eloma Sans',sans-serif; font-weight:700; font-size:clamp(9px,0.8vw,11.5px); letter-spacing:2px; text-transform:uppercase; color:${GREEN}; }
+        .eg-parent-name { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(23px,2.5vw,36px); letter-spacing:-0.025em; color:#fff; line-height:1.05; margin-top:3px; }
 
         /* connectors — faint base line + a green energy pulse that flows parent → bus → subsidiaries */
         .eg-tree-wire { position:relative; height:clamp(66px,7vw,104px); margin:clamp(2px,0.5vw,6px) 0; }
@@ -435,9 +435,9 @@ export function ElomaGroupPage() {
         .eg-tree-kid:nth-child(4) .eg-kid-card { animation-delay:2.1s; }
         @keyframes egCardFloat { 0%,100%{ transform:translateZ(20px) translateY(0); } 50%{ transform:translateZ(20px) translateY(-7px); } }
         .eg-kid-node.is-active .eg-kid-card { border-color:rgba(60,185,140,0.5); box-shadow:0 34px 64px -34px rgba(12,28,42,0.42); }
-        .eg-kid-name { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(16px,1.5vw,21px); letter-spacing:-0.015em; color:${INK}; line-height:1.1; }
-        .eg-kid-sector { font-family:'Inter',sans-serif; font-size:clamp(12px,0.95vw,14px); line-height:1.4; color:${MUTED}; }
-        .eg-kid-tag { display:inline-flex; align-items:center; gap:5px; margin-top:5px; font-family:'Inter',sans-serif; font-weight:600;
+        .eg-kid-name { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(16px,1.5vw,21px); letter-spacing:-0.015em; color:${INK}; line-height:1.1; }
+        .eg-kid-sector { font-family:'Eloma Sans',sans-serif; font-size:clamp(12px,0.95vw,14px); line-height:1.4; color:${MUTED}; }
+        .eg-kid-tag { display:inline-flex; align-items:center; gap:5px; margin-top:5px; font-family:'Eloma Sans',sans-serif; font-weight:600;
           font-size:clamp(10px,0.82vw,12px); letter-spacing:0.3px; color:${GREEN}; opacity:0; transform:translateY(4px); transition:opacity .35s ease, transform .35s ease; }
         .eg-kid-node.is-active .eg-kid-tag { opacity:1; transform:translateY(0); }
 
@@ -449,36 +449,36 @@ export function ElomaGroupPage() {
         .eg-prin-card { border:1px solid rgba(12,28,42,0.1); border-radius:18px; padding:clamp(26px,2.6vw,38px); transition:transform .45s cubic-bezier(0.16,1,0.3,1), border-color .4s ease, box-shadow .45s ease; }
         .eg-prin-card:hover { transform:translateY(-6px); border-color:rgba(60,185,140,0.5); box-shadow:0 40px 80px -50px rgba(12,28,42,0.3); }
         .eg-prin-ic { display:inline-flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:13px; background:rgba(60,185,140,0.12); color:${GREEN}; margin-bottom:clamp(16px,1.8vw,22px); }
-        .eg-prin-t { font-family:'Bricolage Grotesque',sans-serif; font-weight:600; font-size:clamp(19px,1.7vw,26px); letter-spacing:-0.02em; color:${INK}; margin:0 0 10px; }
-        .eg-prin-d { font-family:'Inter',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.75; color:${MUTED}; margin:0; }
+        .eg-prin-t { font-family:'Eloma Sans Heading',sans-serif; font-weight:600; font-size:clamp(19px,1.7vw,26px); letter-spacing:-0.02em; color:${INK}; margin:0 0 10px; }
+        .eg-prin-d { font-family:'Eloma Sans',sans-serif; font-size:clamp(13.5px,1vw,15.5px); line-height:1.75; color:${MUTED}; margin:0; }
 
         /* NUMBERS BAND (light) */
         .eg-band { background:${PAPER}; padding:clamp(48px,5.5vw,88px) 45px; }
         .eg-band-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(20px,2vw,32px); }
         .eg-band-item { display:flex; flex-direction:column; gap:8px; }
         .eg-band-item + .eg-band-item { padding-left:clamp(20px,2vw,32px); border-left:1px solid rgba(12,28,42,0.14); }
-        .eg-band-n { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(40px,5vw,78px); line-height:0.9; color:${INK}; letter-spacing:-0.03em; }
+        .eg-band-n { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(40px,5vw,78px); line-height:0.9; color:${INK}; letter-spacing:-0.03em; }
         .eg-band-n::first-letter { color:${GREEN}; }
-        .eg-band-l { font-family:'Inter',sans-serif; font-size:clamp(11px,0.9vw,14px); color:${MUTED}; letter-spacing:0.4px; }
+        .eg-band-l { font-family:'Eloma Sans',sans-serif; font-size:clamp(11px,0.9vw,14px); color:${MUTED}; letter-spacing:0.4px; }
 
         /* STEWARDSHIP */
         .eg-stew { background:#fff; padding:clamp(60px,7vw,120px) 45px; }
         .eg-stew-grid { display:grid; grid-template-columns:0.9fr 1.1fr; gap:clamp(32px,5vw,72px); align-items:center; }
         .eg-stew-media { border-radius:14px; overflow:hidden; aspect-ratio:1/1; box-shadow:0 44px 84px -48px rgba(12,28,42,0.45); }
         .eg-stew-media img { width:100%; height:100%; object-fit:cover; display:block; }
-        .eg-stew-mark { display:block; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(70px,8vw,140px); line-height:0.6; color:${GREEN}; }
-        .eg-stew-txt { font-family:'Bricolage Grotesque',sans-serif; font-weight:500; font-size:clamp(23px,3vw,46px); line-height:1.22; letter-spacing:-0.02em; color:${INK}; margin:clamp(10px,1.4vw,20px) 0 0; }
+        .eg-stew-mark { display:block; font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(70px,8vw,140px); line-height:0.6; color:${GREEN}; }
+        .eg-stew-txt { font-family:'Eloma Sans Heading',sans-serif; font-weight:500; font-size:clamp(23px,3vw,46px); line-height:1.22; letter-spacing:-0.02em; color:${INK}; margin:clamp(10px,1.4vw,20px) 0 0; }
         .eg-stew-by { margin-top:clamp(24px,3vw,36px); }
-        .eg-stew-name { display:block; font-family:'Inter',sans-serif; font-weight:700; font-size:clamp(15px,1.2vw,18px); color:${INK}; }
-        .eg-stew-role { display:block; font-family:'Inter',sans-serif; font-size:clamp(12px,1vw,14px); letter-spacing:1.5px; text-transform:uppercase; color:${GREEN}; margin-top:5px; }
+        .eg-stew-name { display:block; font-family:'Eloma Sans',sans-serif; font-weight:700; font-size:clamp(15px,1.2vw,18px); color:${INK}; }
+        .eg-stew-role { display:block; font-family:'Eloma Sans',sans-serif; font-size:clamp(12px,1vw,14px); letter-spacing:1.5px; text-transform:uppercase; color:${GREEN}; margin-top:5px; }
 
         /* CTA (light, full-width closing band) */
         .eg-cta { position:relative; background:${PAPER}; border-top:1px solid rgba(12,28,42,0.1); padding:clamp(64px,8vw,128px) 45px; }
         .eg-cta::before { content:''; position:absolute; top:-1px; left:15px; width:60px; height:3px; background:${GREEN}; }
         .eg-cta-in { display:grid; grid-template-columns:1.15fr 0.85fr; gap:clamp(28px,4vw,72px); align-items:end; }
-        .eg-cta-h { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(34px,4.6vw,72px); line-height:1.0; letter-spacing:-0.03em; color:${INK}; margin:16px 0 0; }
+        .eg-cta-h { font-family:'Eloma Sans Heading',sans-serif; font-weight:700; font-size:clamp(34px,4.6vw,72px); line-height:1.0; letter-spacing:-0.03em; color:${INK}; margin:16px 0 0; }
         .eg-cta-act { display:flex; flex-direction:column; align-items:flex-start; gap:clamp(20px,2.4vw,28px); padding-bottom:6px; }
-        .eg-cta-sub { font-family:'Inter',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.75; color:${MUTED}; margin:0; max-width:42ch; }
+        .eg-cta-sub { font-family:'Eloma Sans',sans-serif; font-size:clamp(14px,1.15vw,17px); line-height:1.75; color:${MUTED}; margin:0; max-width:42ch; }
 
         /* responsive */
         @media (max-width:1024px){
